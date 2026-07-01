@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ta-Te-Ti</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#222;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+#menu,#game{
+text-align:center;
+}
+
+button{
+padding:12px 25px;
+font-size:20px;
+margin:10px;
+cursor:pointer;
+border:none;
+border-radius:10px;
+}
+
+#board{
+width:300px;
+height:300px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+grid-template-rows:repeat(3,1fr);
+gap:5px;
+margin:20px auto;
+}
+
+.cell{
+background:white;
+color:black;
+font-size:70px;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+}
+
+.hidden{
+display:none;
+}
+</style>
+
+</head>
+<body>
+
+<div id="menu">
+
+<h1>TA-TE-TI</h1>
+
+<button id="friend">👥 Jugar con un amigo</button>
+
+<button id="robot">🤖 Jugar contra robot</button>
+
+</div>
+
+<div id="game" class="hidden">
+
+<h2 id="turn">Turno de X</h2>
+
+<div id="board">
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+<div class="cell"></div>
+<div class="cell"></div>
+<div class="cell"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const menu=document.getElementById("menu");
+const game=document.getElementById("game");
+
+document.getElementById("friend").onclick=()=>{
+menu.classList.add("hidden");
+game.classList.remove("hidden");
+};
+
+document.getElementById("robot").onclick=()=>{
+alert("El modo Robot llegará en la siguiente parte.");
+};
+
+</script>
+
+</body>
+  </html>
