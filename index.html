@@ -1,423 +1,356 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Pixel Highway</title>
+  <title>LGC.FUN</title>
 
-<style>
-body{
-  margin:0;
-  background:black;
-  overflow:hidden;
-  font-family:monospace;
-}
+  <style>
+    body {
+      font-family: Arial;
+      background: white;
+      color: black;
+      text-align: center;
+      margin: 0;
+      padding: 30px;
+      overflow-x: hidden;
+    }
 
-canvas{
-  display:block;
-  image-rendering: pixelated;
-}
+    .logo {
+      font-size: 60px;
+      letter-spacing: 8px;
+      transform: scaleY(1.6);
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
 
-.menuBtn{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  width:200px;
-  height:55px;
-  border-radius:12px;
-  border:2px solid white;
-  background:rgba(255,255,255,0.12);
-  color:white;
-  font-size:18px;
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
+    /* PANTALLAS CON ANIMACIÓN */
+    .screen {
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: 0.4s ease;
+      position: absolute;
+      width: 100%;
+      left: 0;
+    }
 
-#playBtn{ top:45%; }
-#skinBtnMenu{ top:55%; }
+    .active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      position: relative;
+    }
 
-.btn{
-  position:absolute;
-  bottom:25px;
-  width:85px;
-  height:85px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.12);
-  border:2px solid white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  color:white;
-}
-#left{ left:25px; }
-#right{ left:120px; }
-</style>
+    .menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      width: 260px;
+      padding: 14px;
+      border: 2px solid black;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: black;
+      color: white;
+    }
+
+    .big {
+      font-size: 40px;
+      margin: 20px;
+    }
+
+    /* BACK BUTTON */
+    .back {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      background: black;
+      border-radius: 12px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .arrow {
+      color: white;
+      font-size: 24px;
+    }
+
+    canvas {
+      border: 2px solid black;
+      border-radius: 12px;
+      touch-action: none;
+    }
+
+    @keyframes shake {
+      0% {transform: translate(2px,2px);}
+      50% {transform: translate(-2px,-2px);}
+      100% {transform: translate(2px,2px);}
+    }
+
+    .shake {
+      animation: shake 0.1s infinite;
+    }
+  </style>
 </head>
 
 <body>
 
-<canvas id="game"></canvas>
+<div id="backBtn" class="back" onclick="show('menu')">
+  <div class="arrow">←</div>
+</div>
 
-<div id="playBtn" class="menuBtn">▶ JUGAR</div>
-<div id="skinBtnMenu" class="menuBtn">🎨 SKINS</div>
+<h1 class="logo">LGC.FUN</h1>
 
-<div id="left" class="btn">⬅</div>
-<div id="right" class="btn">➡</div>
+<!-- ================= MENU ================= -->
+<div id="menu" class="screen active">
+  <div class="menu">
+    <button class="btn" onclick="show('clicks')">🖱️ Click infinito</button>
+    <button class="btn" onclick="show('money')">💸 Dinero infinito</button>
+    <button class="btn" onclick="show('chaos')">🎲 Ruleta caótica</button>
+    <button class="btn" onclick="show('country')">🌍 País random</button>
+    <button class="btn" onclick="show('destroy')">💥 Romper pantalla</button>
+    <button class="btn" onclick="show('destiny')">🔮 Destino</button>
+    <button class="btn" onclick="show('circle')">🔵 Círculo perfecto (IA)</button>
+  </div>
+</div>
+
+<!-- CLICK -->
+<div id="clicks" class="screen">
+  <h2>🖱️ Click infinito</h2>
+  <div class="big" id="c1">0</div>
+  <button class="btn" onclick="addClick()">CLICK</button>
+</div>
+
+<!-- MONEY -->
+<div id="money" class="screen">
+  <h2>💸 Dinero infinito</h2>
+  <div class="big">$<span id="m1">0</span></div>
+  <button class="btn" onclick="addMoney()">Generar</button>
+</div>
+
+<!-- CHAOS -->
+<div id="chaos" class="screen">
+  <h2>🎲 Ruleta caótica</h2>
+  <div class="big" id="ch">---</div>
+  <button class="btn" onclick="spin()">Girar</button>
+</div>
+
+<!-- COUNTRY -->
+<div id="country" class="screen">
+  <h2>🌍 País random</h2>
+  <div class="big" id="co">---</div>
+  <button class="btn" onclick="genCountry()">Generar</button>
+</div>
+
+<!-- DESTROY -->
+<div id="destroy" class="screen">
+  <h2>💥 Romper pantalla</h2>
+  <button class="btn" onclick="boom()">Activar caos</button>
+</div>
+
+<!-- DESTINY -->
+<div id="destiny" class="screen">
+  <h2>🔮 Destino</h2>
+  <div class="big" id="de">---</div>
+  <button class="btn" onclick="go()">Descubrir</button>
+</div>
+
+<!-- CIRCLE -->
+<div id="circle" class="screen">
+  <h2>🔵 Círculo perfecto (IA)</h2>
+
+  <canvas id="canvas" width="300" height="300"></canvas>
+
+  <div class="big" id="res">Dibuja un círculo</div>
+
+  <div class="big" id="best">Mejor récord: 0%</div>
+
+  <button class="btn" onclick="resetCircle()">🔁 Volver a intentar</button>
+</div>
 
 <script>
-const c=document.getElementById("game");
-const ctx=c.getContext("2d");
-ctx.imageSmoothingEnabled=false;
 
-function resize(){
-  c.width=window.innerWidth;
-  c.height=window.innerHeight;
-}
-window.addEventListener("resize",resize);
-resize();
-
-/* =====================
-   ESTADO
-===================== */
-let state="menu";
-let score=0;
-let speed=2;
-
-/* =====================
-   JUGADOR
-===================== */
-let player={lane:1,skin:0};
-
-/* =====================
-   ENTIDADES
-===================== */
-let enemies=[];
-let particles=[];
-let laneCooldown=[0,0,0]; // 🔥 FIX CRUCES
-
-/* =====================
-   SKINS
-===================== */
-const skins=[
-  {body:"#fff",shadow:"#bbb",window:"#222"},
-  {body:"#111",shadow:"#000",window:"#333"},
-  {body:"#ff3b3b",shadow:"#8b0000",window:"#2a0000"},
-  {body:"#ffd84a",shadow:"#a87a00",window:"#2b2200"},
-  {body:"#3cff6a",shadow:"#1e8f3a",window:"#0b2a14"}
-];
-
-/* =====================
-   CARRILES AAA (SIN CRUCES)
-===================== */
-function lanes(){
-  const left=c.width*0.2;
-  const right=c.width*0.8;
-  const step=(right-left)/2;
-  return [left,left+step,right];
-}
-
-/* =====================
-   UI
-===================== */
-const playBtn=document.getElementById("playBtn");
-const skinBtnMenu=document.getElementById("skinBtnMenu");
-
-playBtn.addEventListener("touchstart",start);
-
-skinBtnMenu.addEventListener("touchstart",()=>{
-  player.skin=(player.skin+1)%skins.length;
-});
-
-/* CONTROLES */
-document.getElementById("left").addEventListener("touchstart",()=>{
-  if(state!=="play") return;
-  player.lane=Math.max(0,player.lane-1);
-});
-
-document.getElementById("right").addEventListener("touchstart",()=>{
-  if(state!=="play") return;
-  player.lane=Math.min(2,player.lane+1);
-});
-
-/* =====================
-   SPAWN AAA (SIN ENCierros)
-===================== */
-function spawn(){
-  let lane=Math.floor(Math.random()*3);
-
-  if(laneCooldown[lane]>0) return;
-
-  enemies.push({
-    lane,
-    y:-200,
-    type:Math.random()<0.2?"truck":Math.random()<0.35?"bus":"car",
-    passed:false
+/* ================= NAV ================= */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>{
+    s.classList.remove('active');
   });
 
-  laneCooldown[lane]=110; // bloqueo anti-cruce
+  setTimeout(()=>{
+    document.getElementById(id).classList.add('active');
+  },50);
+
+  document.getElementById("backBtn").style.display =
+    (id === "menu") ? "none" : "flex";
+
+  if(id === "circle") loadRecord();
 }
 
-/* =====================
-   SCORE FIX
-===================== */
-function handleScore(e){
-  if(e.passed) return;
-
-  if(e.y>c.height){
-    e.passed=true;
-    score+=e.type==="truck"?10:e.type==="bus"?15:5;
-  }
+/* ================= CLICK ================= */
+let c1=0;
+function addClick(){
+  c1++;
+  document.getElementById("c1").innerText=c1;
 }
 
-/* =====================
-   HITBOX AAA
-===================== */
-function hit(e){
-  return (
-    e.lane===player.lane &&
-    e.y>c.height-190 &&
-    e.y<c.height-110
-  );
+/* ================= MONEY ================= */
+let m=0;
+function addMoney(){
+  m += Math.floor(Math.random()*100);
+  document.getElementById("m1").innerText=m;
 }
 
-/* =====================
-   EXPLOSION
-===================== */
-function explosion(x,y){
-  for(let i=0;i<25;i++){
-    particles.push({
-      x,y,
-      vx:(Math.random()-0.5)*8,
-      vy:(Math.random()-0.5)*8,
-      life:25
-    });
-  }
+/* ================= CHAOS ================= */
+function spin(){
+  let a=["💀 Perdiste","🔥 Ganaste","😂 Nada","💰 Bonus","⚡ Boom"];
+  document.getElementById("ch").innerText =
+    a[Math.floor(Math.random()*a.length)];
 }
 
-/* =====================
-   FONDO CIUDAD
-===================== */
-function city(){
-  ctx.fillStyle="#080808";
-  ctx.fillRect(0,0,c.width,c.height);
+/* ================= COUNTRY ================= */
+function genCountry(){
+  let a=[
+    "Argentina","Brasil","Francia","Alemania","España","Inglaterra",
+    "Portugal","Italia","Países Bajos","Bélgica","Croacia","Uruguay",
+    "México","EEUU","Canadá","Colombia","Chile","Perú","Japón","Corea del Sur"
+  ];
 
-  for(let i=0;i<70;i++){
-    let x=i*16;
-    let h=80+(Math.sin(i)*50);
-
-    ctx.fillStyle="#111";
-    ctx.fillRect(x,c.height/2-h,12,h);
-  }
+  document.getElementById("co").innerText =
+    a[Math.floor(Math.random()*a.length)];
 }
 
-/* =====================
-   CARRETERA
-===================== */
-function road(){
-  ctx.fillStyle="#6b6b6b";
-  ctx.fillRect(0,0,c.width,c.height);
-
-  ctx.strokeStyle="#ffd400";
-  ctx.lineWidth=5;
-
-  ctx.beginPath();
-  ctx.moveTo(c.width/2,0);
-  ctx.lineTo(c.width/2,c.height);
-  ctx.stroke();
+/* ================= DESTROY ================= */
+function boom(){
+  document.body.classList.toggle("shake");
 }
 
-/* =====================
-   CARRO AAA
-===================== */
-function drawCar(x,y,s){
-  ctx.fillStyle=s.body;
-  ctx.fillRect(x-25,y,50,90);
+/* ================= DESTINY ================= */
+function go(){
+  let a=[
+    "Serás millonario 💰",
+    "Te irá bien 👍",
+    "Algo raro 👀",
+    "Cambio de vida 🔄",
+    "Serás famoso ⭐"
+  ];
 
-  ctx.fillStyle=s.shadow;
-  ctx.fillRect(x+10,y+5,10,80);
-
-  ctx.fillStyle=s.window;
-  ctx.fillRect(x-12,y+12,24,35);
-
-  ctx.fillStyle="#000";
-  ctx.fillRect(x-28,y+20,8,24);
-  ctx.fillRect(x+20,y+20,8,24);
-  ctx.fillRect(x-28,y+60,8,24);
-  ctx.fillRect(x+20,y+60,8,24);
+  document.getElementById("de").innerText =
+    a[Math.floor(Math.random()*a.length)];
 }
 
-/* =====================
-   TRUCK
-===================== */
-function drawTruck(x,y){
-  ctx.fillStyle="#b30000";
-  ctx.fillRect(x-27,y,54,70);
+/* ================= CIRCLE IA ================= */
 
-  ctx.fillStyle="#444";
-  ctx.fillRect(x-34,y+70,68,90);
-}
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
 
-/* =====================
-   BUS
-===================== */
-function drawBus(x,y){
-  ctx.fillStyle="#2b6cff";
-  ctx.fillRect(x-27,y,54,120);
+let drawing=false;
+let points=[];
+let finished=false;
 
-  ctx.fillStyle="#111";
-  for(let i=0;i<5;i++){
-    ctx.fillRect(x-20,y+10+i*18,40,10);
-  }
-}
+canvas.addEventListener("mousedown",start);
+canvas.addEventListener("mousemove",move);
+canvas.addEventListener("mouseup",end);
 
-/* =====================
-   PLAYER
-===================== */
-function drawPlayer(){
-  let l=lanes();
-  drawCar(l[player.lane],c.height-180,skins[player.skin]);
-}
+canvas.addEventListener("touchstart",start);
+canvas.addEventListener("touchmove",move);
+canvas.addEventListener("touchend",end);
 
-/* =====================
-   ENEMIGOS AAA LOOP
-===================== */
-function drawEnemies(){
-  let l=lanes();
-
-  enemies.forEach(e=>{
-    e.y+=speed;
-    let x=l[e.lane];
-
-    if(e.type==="truck") drawTruck(x,e.y);
-    else if(e.type==="bus") drawBus(x,e.y);
-    else drawCar(x,e.y,skins[2]);
-
-    handleScore(e);
-
-    if(hit(e)){
-      explosion(x,e.y);
-      state="gameover";
-    }
-  });
-
-  enemies=enemies.filter(e=>e.y<c.height+300);
-}
-
-/* =====================
-   PARTÍCULAS
-===================== */
-function drawParticles(){
-  particles.forEach(p=>{
-    p.x+=p.vx;
-    p.y+=p.vy;
-    p.life--;
-
-    ctx.fillStyle="#ff4444";
-    ctx.fillRect(p.x,p.y,3,3);
-  });
-
-  particles=particles.filter(p=>p.life>0);
-}
-
-/* =====================
-   COOLDOWN LANES FIX
-===================== */
-function updateCooldown(){
-  for(let i=0;i<3;i++){
-    if(laneCooldown[i]>0) laneCooldown[i]--;
-  }
-}
-
-/* =====================
-   UI UPDATE
-===================== */
-function updateUI(){
-  playBtn.style.display=state==="menu"?"flex":"none";
-  skinBtnMenu.style.display=state==="menu"?"flex":"none";
-}
-
-/* =====================
-   MENÚ
-===================== */
-function drawMenu(){
-  city();
-
-  ctx.fillStyle="white";
-  ctx.textAlign="center";
-
-  ctx.font="32px monospace";
-  ctx.fillText("PIXEL HIGHWAY",c.width/2,c.height/2-60);
-
-  ctx.font="16px monospace";
-  ctx.fillText("AAA MOTOR FINAL ESTABLE",c.width/2,c.height/2-20);
-}
-
-/* =====================
-   GAME OVER
-===================== */
-function drawGameOver(){
-  ctx.fillStyle="#000";
-  ctx.fillRect(0,0,c.width,c.height);
-
-  ctx.fillStyle="white";
-  ctx.textAlign="center";
-
-  ctx.font="30px monospace";
-  ctx.fillText("GAME OVER",c.width/2,c.height/2-40);
-
-  ctx.font="16px monospace";
-  ctx.fillText("Score: "+score,c.width/2,c.height/2);
-
-  ctx.fillText("Toca JUGAR",c.width/2,c.height/2+40);
-}
-
-/* =====================
-   START
-===================== */
 function start(){
-  state="play";
-  enemies=[];
-  particles=[];
-  score=0;
-  player.lane=1;
-  laneCooldown=[0,0,0];
+  if(finished) return;
+  drawing=true;
+  points=[];
 }
 
-/* =====================
-   LOOP
-===================== */
-function loop(){
+function move(e){
+  if(!drawing || finished) return;
 
-  updateUI();
-  updateCooldown();
+  const r=canvas.getBoundingClientRect();
+  const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+  const y=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
 
-  if(state==="menu") drawMenu();
+  points.push({x,y});
+  ctx.fillRect(x,y,2,2);
+}
 
-  if(state==="play"){
-    city();
-    road();
-    drawPlayer();
-    drawEnemies();
-    drawParticles();
+function end(){
+  drawing=false;
+  if(!finished) calc();
+}
 
-    ctx.fillStyle="white";
-    ctx.fillText("Score: "+score,20,40);
+/* IA + score */
+function calc(){
+  if(points.length<10) return;
+
+  let cx=0,cy=0;
+  points.forEach(p=>{cx+=p.x;cy+=p.y});
+  cx/=points.length;
+  cy/=points.length;
+
+  let avg=0;
+  points.forEach(p=>{
+    avg+=Math.hypot(p.x-cx,p.y-cy);
+  });
+  avg/=points.length;
+
+  let err=0;
+  points.forEach(p=>{
+    err+=Math.abs(Math.hypot(p.x-cx,p.y-cy)-avg);
+  });
+
+  let base=Math.max(0,100-err*2);
+  let noise=Math.random()*6-3;
+
+  let score=Math.round(Math.max(0,Math.min(100,base+noise)));
+
+  document.getElementById("res").innerText =
+    "Perfección IA: " + score + "% " + (score>80?"🔥 Lo hiciste":"");
+
+  finished=true;
+  saveRecord(score);
+}
+
+/* RECORD */
+function saveRecord(score){
+  let best=localStorage.getItem("circle_best")||0;
+
+  if(score>best){
+    localStorage.setItem("circle_best",score);
+    best=score;
   }
 
-  if(state==="gameover") drawGameOver();
-
-  requestAnimationFrame(loop);
+  document.getElementById("best").innerText =
+    "Mejor récord: " + best + "%";
 }
 
-/* SPAWN */
-setInterval(()=>{
-  if(state==="play") spawn();
-},800);
+function loadRecord(){
+  let best=localStorage.getItem("circle_best")||0;
+  document.getElementById("best").innerText =
+    "Mejor récord: " + best + "%";
+}
 
-loop();
+/* RESET */
+function resetCircle(){
+  finished=false;
+  points=[];
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  document.getElementById("res").innerText="Dibuja un círculo";
+}
+
 </script>
 
 </body>
-  </html>
+                      </html>
