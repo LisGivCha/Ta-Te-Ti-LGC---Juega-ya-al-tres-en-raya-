@@ -3,354 +3,373 @@
 <head>
   <title>LGC.FUN</title>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    body {
-      font-family: Arial;
-      background: white;
-      color: black;
-      text-align: center;
-      margin: 0;
-      padding: 30px;
-      overflow-x: hidden;
+    body{
+      margin:0;
+      font-family:Arial;
+      background:white;
+      overflow:hidden;
     }
 
-    .logo {
-      font-size: 60px;
-      letter-spacing: 8px;
-      transform: scaleY(1.6);
-      font-weight: bold;
-      margin-bottom: 10px;
+    /* TITULO */
+    .logo{
+      text-align:center;
+      font-size:64px;
+      transform:scaleY(2.2);
+      margin-top:10px;
+      letter-spacing:2px;
     }
 
-    /* PANTALLAS CON ANIMACIÓN */
-    .screen {
-      opacity: 0;
-      transform: translateY(10px);
-      pointer-events: none;
-      transition: 0.4s ease;
-      position: absolute;
-      width: 100%;
-      left: 0;
+    /* PANTALLAS */
+    .screen{
+      display:none;
+      min-height:100vh;
+      padding:10px;
+      box-sizing:border-box;
+
+      opacity:0;
+      transform:translateY(25px);
+      transition:0.35s ease;
     }
 
-    .active {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-      position: relative;
+    .active{
+      display:block;
+      opacity:1;
+      transform:translateY(0);
     }
 
-    .menu {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      margin-top: 20px;
+    .center{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      height:calc(100vh - 90px);
+      gap:12px;
+      text-align:center;
     }
 
-    .btn {
-      width: 260px;
-      padding: 14px;
-      border: 2px solid black;
-      border-radius: 12px;
-      background: white;
-      cursor: pointer;
-      transition: 0.2s;
+    .btn{
+      width:min(340px,88vw);
+      padding:16px;
+      border:2px solid black;
+      border-radius:14px;
+      background:white;
+      cursor:pointer;
+      font-size:16px;
     }
 
-    .btn:hover {
-      background: black;
-      color: white;
+    .big{
+      font-size:34px;
+      text-align:center;
     }
 
-    .big {
-      font-size: 40px;
-      margin: 20px;
+    .back{
+      position:fixed;
+      top:12px;
+      left:12px;
+      width:48px;
+      height:48px;
+      background:black;
+      color:white;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      border-radius:12px;
+      cursor:pointer;
+      z-index:999;
+      font-size:20px;
     }
 
-    /* BACK BUTTON */
-    .back {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 50px;
-      height: 50px;
-      background: black;
-      border-radius: 12px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 10;
+    canvas{
+      border:2px solid black;
+      border-radius:12px;
+      touch-action:none;
+      width:min(340px,88vw);
+      height:340px;
     }
 
-    .arrow {
-      color: white;
-      font-size: 24px;
-    }
-
-    canvas {
-      border: 2px solid black;
-      border-radius: 12px;
-      touch-action: none;
-    }
-
-    @keyframes shake {
-      0% {transform: translate(2px,2px);}
-      50% {transform: translate(-2px,-2px);}
-      100% {transform: translate(2px,2px);}
-    }
-
-    .shake {
-      animation: shake 0.1s infinite;
+    #clickBtn{
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      font-size:22px;
+      font-weight:bold;
     }
   </style>
 </head>
 
 <body>
 
-<div id="backBtn" class="back" onclick="show('menu')">
-  <div class="arrow">←</div>
+<div class="back" id="back" onclick="show('menu')">←</div>
+
+<div class="logo">LGC.FUN</div>
+
+<!-- MENU -->
+<div id="menu" class="screen active">
+  <div class="center">
+    <button class="btn" onclick="show('circle')">🔵 Círculo perfecto</button>
+    <button class="btn" onclick="show('money')">💸 Dinero infinito</button>
+    <button class="btn" onclick="show('clicks')">🖱️ Click infinito</button>
+    <button class="btn" onclick="show('country')">🌍 País random</button>
+    <button class="btn" onclick="show('chaos')">🎲 Ruleta caótica</button>
+    <button class="btn" onclick="show('cps')">⚡ Click por segundo</button>
+  </div>
 </div>
 
-<h1 class="logo">LGC.FUN</h1>
+<!-- CIRCLE -->
+<div id="circle" class="screen">
+  <div class="center">
+    <h2>🔵 Dibuja un círculo perfecto</h2>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <div class="big" id="res">Dibuja un círculo</div>
+    <button class="btn" onclick="resetCircle()">🔁 Intentar de nuevo</button>
+  </div>
+</div>
 
-<!-- ================= MENU ================= -->
-<div id="menu" class="screen active">
-  <div class="menu">
-    <button class="btn" onclick="show('clicks')">🖱️ Click infinito</button>
-    <button class="btn" onclick="show('money')">💸 Dinero infinito</button>
-    <button class="btn" onclick="show('chaos')">🎲 Ruleta caótica</button>
-    <button class="btn" onclick="show('country')">🌍 País random</button>
-    <button class="btn" onclick="show('destroy')">💥 Romper pantalla</button>
-    <button class="btn" onclick="show('destiny')">🔮 Destino</button>
-    <button class="btn" onclick="show('circle')">🔵 Círculo perfecto (IA)</button>
+<!-- MONEY -->
+<div id="money" class="screen">
+  <div class="center">
+    <h2>💸 Dinero infinito</h2>
+    <div class="big">$<span id="m1">0</span></div>
+    <button class="btn" onclick="money()">Generar dinero</button>
   </div>
 </div>
 
 <!-- CLICK -->
 <div id="clicks" class="screen">
-  <h2>🖱️ Click infinito</h2>
-  <div class="big" id="c1">0</div>
-  <button class="btn" onclick="addClick()">CLICK</button>
-</div>
-
-<!-- MONEY -->
-<div id="money" class="screen">
-  <h2>💸 Dinero infinito</h2>
-  <div class="big">$<span id="m1">0</span></div>
-  <button class="btn" onclick="addMoney()">Generar</button>
-</div>
-
-<!-- CHAOS -->
-<div id="chaos" class="screen">
-  <h2>🎲 Ruleta caótica</h2>
-  <div class="big" id="ch">---</div>
-  <button class="btn" onclick="spin()">Girar</button>
+  <div class="center">
+    <h2>🖱️ Click infinito</h2>
+    <div class="big" id="c1">0</div>
+    <button class="btn" onclick="clicks()">CLICK</button>
+  </div>
 </div>
 
 <!-- COUNTRY -->
 <div id="country" class="screen">
-  <h2>🌍 País random</h2>
-  <div class="big" id="co">---</div>
-  <button class="btn" onclick="genCountry()">Generar</button>
+  <div class="center">
+    <h2>🌍 País random</h2>
+    <div class="big" id="co">---</div>
+    <button class="btn" onclick="country()">Generar país</button>
+  </div>
 </div>
 
-<!-- DESTROY -->
-<div id="destroy" class="screen">
-  <h2>💥 Romper pantalla</h2>
-  <button class="btn" onclick="boom()">Activar caos</button>
+<!-- CHAOS -->
+<div id="chaos" class="screen">
+  <div class="center">
+    <h2>🎲 Ruleta caótica</h2>
+    <div class="big" id="ch">---</div>
+    <button class="btn" onclick="spin()">Girar</button>
+  </div>
 </div>
 
-<!-- DESTINY -->
-<div id="destiny" class="screen">
-  <h2>🔮 Destino</h2>
-  <div class="big" id="de">---</div>
-  <button class="btn" onclick="go()">Descubrir</button>
+<!-- CPS -->
+<div id="cps" class="screen">
+  <div class="center">
+    <h2>⚡ Click por segundo</h2>
+
+    <div id="cpsMenu">
+      <button class="btn" onclick="startCPS(1)">1 segundo</button>
+      <button class="btn" onclick="startCPS(2)">2 segundos</button>
+      <button class="btn" onclick="startCPS(5)">5 segundos</button>
+      <button class="btn" onclick="startCPS(10)">10 segundos</button>
+    </div>
+
+    <button id="clickBtn" style="display:none;" onclick="addClick()">CLICK</button>
+
+    <div class="big" id="cpsCount" style="display:none;">0</div>
+  </div>
 </div>
 
-<!-- CIRCLE -->
-<div id="circle" class="screen">
-  <h2>🔵 Círculo perfecto (IA)</h2>
-
-  <canvas id="canvas" width="300" height="300"></canvas>
-
-  <div class="big" id="res">Dibuja un círculo</div>
-
-  <div class="big" id="best">Mejor récord: 0%</div>
-
-  <button class="btn" onclick="resetCircle()">🔁 Volver a intentar</button>
+<!-- RESULTADO CPS -->
+<div id="result" class="screen">
+  <div class="center">
+    <div class="big" id="finalText"></div>
+    <button class="btn" onclick="show('cps')">🔁 Intentar de nuevo</button>
+  </div>
 </div>
 
 <script>
 
-/* ================= NAV ================= */
+/* NAV CON ANIMACIÓN */
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>{
-    s.classList.remove('active');
+    s.style.opacity="0";
+    s.style.transform="translateY(25px)";
   });
 
   setTimeout(()=>{
-    document.getElementById(id).classList.add('active');
-  },50);
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
 
-  document.getElementById("backBtn").style.display =
-    (id === "menu") ? "none" : "flex";
+    const next=document.getElementById(id);
+    next.classList.add('active');
 
-  if(id === "circle") loadRecord();
+    document.getElementById("back").style.display =
+      id==="menu"?"none":"flex";
+
+    setTimeout(()=>{
+      next.style.opacity="1";
+      next.style.transform="translateY(0)";
+    },50);
+
+  },180);
+
+  resetCPS();
 }
 
-/* ================= CLICK ================= */
-let c1=0;
-function addClick(){
-  c1++;
-  document.getElementById("c1").innerText=c1;
+/* VARIABLES */
+let m=0,c=0;
+
+/* CLICK */
+function clicks(){
+  c++;
+  document.getElementById("c1").innerText=c;
+  if(navigator.vibrate) navigator.vibrate(10);
 }
 
-/* ================= MONEY ================= */
-let m=0;
-function addMoney(){
-  m += Math.floor(Math.random()*100);
+/* MONEY */
+function money(){
+  m+=Math.floor(Math.random()*100);
   document.getElementById("m1").innerText=m;
 }
 
-/* ================= CHAOS ================= */
+/* COUNTRY */
+function country(){
+  let a=["Argentina","Brasil","España","Francia","Japón","EEUU","México","Italia"];
+  document.getElementById("co").innerText=a[Math.floor(Math.random()*a.length)];
+}
+
+/* RUEDA */
 function spin(){
-  let a=["💀 Perdiste","🔥 Ganaste","😂 Nada","💰 Bonus","⚡ Boom"];
-  document.getElementById("ch").innerText =
-    a[Math.floor(Math.random()*a.length)];
-}
-
-/* ================= COUNTRY ================= */
-function genCountry(){
   let a=[
-    "Argentina","Brasil","Francia","Alemania","España","Inglaterra",
-    "Portugal","Italia","Países Bajos","Bélgica","Croacia","Uruguay",
-    "México","EEUU","Canadá","Colombia","Chile","Perú","Japón","Corea del Sur"
+    "💀 Muerte instantánea",
+    "🔥 Fuego extremo",
+    "😂 Risa infinita",
+    "💰 Dinero gratis",
+    "⚡ Energía pura",
+    "🌪️ Tormenta",
+    "👽 Alien",
+    "💥 Explosión total"
   ];
-
-  document.getElementById("co").innerText =
-    a[Math.floor(Math.random()*a.length)];
+  document.getElementById("ch").innerText=a[Math.floor(Math.random()*a.length)];
 }
 
-/* ================= DESTROY ================= */
-function boom(){
-  document.body.classList.toggle("shake");
-}
-
-/* ================= DESTINY ================= */
-function go(){
-  let a=[
-    "Serás millonario 💰",
-    "Te irá bien 👍",
-    "Algo raro 👀",
-    "Cambio de vida 🔄",
-    "Serás famoso ⭐"
-  ];
-
-  document.getElementById("de").innerText =
-    a[Math.floor(Math.random()*a.length)];
-}
-
-/* ================= CIRCLE IA ================= */
+/* ================= CÍRCULO (IA MÁS FÁCIL) ================= */
 
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
 
-let drawing=false;
-let points=[];
-let finished=false;
+let drawing=false,points=[];
 
-canvas.addEventListener("mousedown",start);
-canvas.addEventListener("mousemove",move);
-canvas.addEventListener("mouseup",end);
-
-canvas.addEventListener("touchstart",start);
-canvas.addEventListener("touchmove",move);
-canvas.addEventListener("touchend",end);
-
-function start(){
-  if(finished) return;
-  drawing=true;
-  points=[];
-}
-
-function move(e){
-  if(!drawing || finished) return;
-
+function pos(e){
   const r=canvas.getBoundingClientRect();
-  const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
-  const y=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
-
-  points.push({x,y});
-  ctx.fillRect(x,y,2,2);
+  return {
+    x:(e.touches?e.touches[0].clientX:e.clientX)-r.left,
+    y:(e.touches?e.touches[0].clientY:e.clientY)-r.top
+  };
 }
 
-function end(){
-  drawing=false;
-  if(!finished) calc();
+canvas.onmousedown=()=>{drawing=true;points=[]};
+canvas.onmouseup=()=>{drawing=false;calc()};
+canvas.onmousemove=e=>{if(drawing) draw(pos(e))};
+
+canvas.ontouchstart=()=>{drawing=true;points=[]};
+canvas.ontouchend=()=>{drawing=false;calc()};
+canvas.ontouchmove=e=>{if(drawing) draw(pos(e))};
+
+function draw(p){
+  if(points.length){
+    let l=points.at(-1);
+    ctx.beginPath();
+    ctx.moveTo(l.x,l.y);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+  }
+  points.push(p);
 }
 
-/* IA + score */
+/* 👇 IA MÁS FÁCIL (scores más altos) */
 function calc(){
-  if(points.length<10) return;
+  if(points.length<10)return;
 
   let cx=0,cy=0;
   points.forEach(p=>{cx+=p.x;cy+=p.y});
-  cx/=points.length;
-  cy/=points.length;
-
-  let avg=0;
-  points.forEach(p=>{
-    avg+=Math.hypot(p.x-cx,p.y-cy);
-  });
-  avg/=points.length;
+  cx/=points.length;cy/=points.length;
 
   let err=0;
   points.forEach(p=>{
-    err+=Math.abs(Math.hypot(p.x-cx,p.y-cy)-avg);
+    err+=Math.abs(Math.hypot(p.x-cx,p.y-cy));
   });
 
-  let base=Math.max(0,100-err*2);
-  let noise=Math.random()*6-3;
+  let score=100-err*0.2; // MÁS FÁCIL
+  score+=15;             // BONUS GENEROSO
+  score+=Math.random()*10;
+  score=Math.max(20,Math.min(100,score));
+  score=Math.round(score);
 
-  let score=Math.round(Math.max(0,Math.min(100,base+noise)));
-
-  document.getElementById("res").innerText =
-    "Perfección IA: " + score + "% " + (score>80?"🔥 Lo hiciste":"");
-
-  finished=true;
-  saveRecord(score);
+  document.getElementById("res").innerText=
+    score<40?"😬 Malo "+score+"%":
+    score<60?"🙂 Normal "+score+"%":
+    score<80?"🔥 Bueno "+score+"%":
+    score<95?"💯 Muy bueno "+score+"%":
+    "👑 PERFECTO";
 }
 
-/* RECORD */
-function saveRecord(score){
-  let best=localStorage.getItem("circle_best")||0;
-
-  if(score>best){
-    localStorage.setItem("circle_best",score);
-    best=score;
-  }
-
-  document.getElementById("best").innerText =
-    "Mejor récord: " + best + "%";
-}
-
-function loadRecord(){
-  let best=localStorage.getItem("circle_best")||0;
-  document.getElementById("best").innerText =
-    "Mejor récord: " + best + "%";
-}
-
-/* RESET */
 function resetCircle(){
-  finished=false;
+  ctx.clearRect(0,0,300,300);
   points=[];
-  ctx.clearRect(0,0,canvas.width,canvas.height);
   document.getElementById("res").innerText="Dibuja un círculo";
+}
+
+/* ================= CPS ================= */
+
+let cpsTime=0;
+let cpsClicks=0;
+let cpsRunning=false;
+
+function startCPS(time){
+  cpsTime=time;
+  cpsClicks=0;
+  cpsRunning=true;
+
+  document.getElementById("cpsMenu").style.display="none";
+  document.getElementById("clickBtn").style.display="block";
+  document.getElementById("cpsCount").style.display="block";
+  document.getElementById("cpsCount").innerText=0;
+
+  setTimeout(()=>{
+    cpsRunning=false;
+    finishCPS();
+  },time*1000);
+}
+
+function addClick(){
+  if(!cpsRunning)return;
+  cpsClicks++;
+  document.getElementById("cpsCount").innerText=cpsClicks;
+  if(navigator.vibrate) navigator.vibrate(10);
+}
+
+function finishCPS(){
+  let cps=(cpsClicks/cpsTime).toFixed(2);
+
+  document.getElementById("finalText").innerText=
+    "⏰ ¡EL TIEMPO HA TERMINADO!\n\n🎯 Tu puntuación es:\n"+cps+" clicks/segundo";
+
+  show("result");
+}
+
+function resetCPS(){
+  cpsRunning=false;
+  cpsClicks=0;
+
+  document.getElementById("cpsMenu").style.display="block";
+  document.getElementById("clickBtn").style.display="none";
+  document.getElementById("cpsCount").style.display="none";
 }
 
 </script>
 
 </body>
-                      </html>
+      </html>
