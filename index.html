@@ -1,333 +1,242 @@
-‎<!DOCTYPE html>
-‎<html>
-‎<head>
-‎  <title>LGC.FUN</title>
-‎  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-‎
-‎  <style>
-‎    body{
-‎      margin:0;
-‎      font-family:Arial;
-‎      background:linear-gradient(#fff,#fafafa);
-‎      overflow:hidden;
-‎    }
-‎
-‎    .logo{
-‎      text-align:center;
-‎      font-size:64px;
-‎      transform:scaleY(2.2);
-‎      margin-top:10px;
-‎      letter-spacing:2px;
-‎    }
-‎
-‎    .screen{
-‎      display:none;
-‎      min-height:100vh;
-‎      padding:10px;
-‎      box-sizing:border-box;
-‎      opacity:0;
-‎      transform:translateY(25px);
-‎      transition:0.35s ease;
-‎    }
-‎
-‎    .active{
-‎      display:block;
-‎      opacity:1;
-‎      transform:translateY(0);
-‎    }
-‎
-‎    .center{
-‎      display:flex;
-‎      flex-direction:column;
-‎      justify-content:center;
-‎      align-items:center;
-‎      height:calc(100vh - 90px);
-‎      gap:12px;
-‎      text-align:center;
-‎    }
-‎
-‎    .btn{
-‎      width:min(340px,88vw);
-‎      padding:16px;
-‎      border:2px solid black;
-‎      border-radius:16px;
-‎      background:white;
-‎      font-size:16px;
-‎      cursor:pointer;
-‎      transition:0.15s;
-‎    }
-‎
-‎    .btn:active{
-‎      transform:scale(0.98);
-‎      background:#f5f5f5;
-‎    }
-‎
-‎    .big{font-size:34px;}
-‎
-‎    .back{
-‎      position:fixed;
-‎      top:12px;
-‎      left:12px;
-‎      width:48px;
-‎      height:48px;
-‎      background:black;
-‎      color:white;
-‎      display:none;
-‎      align-items:center;
-‎      justify-content:center;
-‎      border-radius:12px;
-‎      cursor:pointer;
-‎      z-index:999;
-‎      font-size:20px;
-‎    }
-‎
-‎    canvas{
-‎      border:2px solid black;
-‎      border-radius:12px;
-‎      touch-action:none;
-‎      width:min(340px,88vw);
-‎      height:340px;
-‎    }
-‎
-‎    #clickBtn{
-‎      width:260px;
-‎      height:260px;
-‎      border-radius:50%;
-‎      font-size:22px;
-‎      font-weight:bold;
-‎    }
-‎  </style>
-‎</head>
-‎
-‎<body>
-‎
-‎<div class="back" id="back" onclick="show('menu')">←</div>
-‎<div class="logo">LGC.FUN</div>
-‎
-‎<!-- MENU -->
-‎<div id="menu" class="screen active">
-‎  <div class="center">
-‎    <button class="btn" onclick="show('circle')">🔵 Círculo perfecto</button>
-‎    <button class="btn" onclick="show('money')">💸 Dinero infinito</button>
-‎    <button class="btn" onclick="show('clicks')">🖱️ Click infinito</button>
-‎    <button class="btn" onclick="show('country')">🌍 País random</button>
-‎    <button class="btn" onclick="show('chaos')">🎲 Ruleta caótica</button>
-‎    <button class="btn" onclick="show('cps')">⚡ Click por segundo</button>
-‎  </div>
-‎</div>
-‎
-‎<!-- CÍRCULO -->
-‎<div id="circle" class="screen">
-‎  <div class="center">
-‎    <h2>🔵 Círculo perfecto</h2>
-‎    <canvas id="canvas" width="300" height="300"></canvas>
-‎    <div class="big" id="res">Dibuja un círculo</div>
-‎    <button class="btn" onclick="resetCircle()">🔁 Intentar de nuevo</button>
-‎    <div>🏆 Récord: <span id="bestC">0</span>%</div>
-‎  </div>
-‎</div>
-‎
-‎<!-- OTROS -->
-‎<div id="money" class="screen"><div class="center"><h2>💸 Dinero</h2><div class="big">$<span id="m1">0</span></div><button class="btn" onclick="money()">Generar</button></div></div>
-‎
-‎<div id="clicks" class="screen"><div class="center"><h2>🖱️ Click</h2><div class="big" id="c1">0</div><button class="btn" onclick="clicks()">CLICK</button></div></div>
-‎
-‎<div id="country" class="screen"><div class="center"><h2>🌍 País</h2><div class="big" id="co">---</div><button class="btn" onclick="country()">Generar</button></div></div>
-‎
-‎<div id="chaos" class="screen"><div class="center"><h2>🎲 Ruleta</h2><div class="big" id="ch">---</div><button class="btn" onclick="spin()">Girar</button></div></div>
-‎
-‎<!-- CPS -->
-‎<div id="cps" class="screen">
-‎  <div class="center">
-‎    <h2>⚡ CPS</h2>
-‎
-‎    <div id="cpsMenu">
-‎      <button class="btn" onclick="startCPS(1)">1s</button>
-‎      <button class="btn" onclick="startCPS(2)">2s</button>
-‎      <button class="btn" onclick="startCPS(5)">5s</button>
-‎      <button class="btn" onclick="startCPS(10)">10s</button>
-‎    </div>
-‎
-‎    <button id="clickBtn" style="display:none;" onclick="addClick()">CLICK</button>
-‎    <div class="big" id="cpsCount" style="display:none;">0</div>
-‎
-‎    <div>🏆 Récord CPS: <span id="bestCPSText">0</span></div>
-‎  </div>
-‎</div>
-‎
-‎<!-- RESULT -->
-‎<div id="result" class="screen">
-‎  <div class="center">
-‎    <div class="big" id="finalText"></div>
-‎    <button class="btn" onclick="show('cps')">🔁 Intentar</button>
-‎  </div>
-‎</div>
-‎
-‎<script>
-‎
-‎/* ===== AUDIO ARCADE ===== */
-‎const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-‎
-‎function beep(f,t,type="sine"){
-‎  const o=audioCtx.createOscillator();
-‎  const g=audioCtx.createGain();
-‎  o.type=type;o.frequency.value=f;
-‎  o.connect(g);g.connect(audioCtx.destination);
-‎  g.gain.value=0.08;
-‎  o.start();o.stop(audioCtx.currentTime+t);
-‎}
-‎
-‎function sClick(){beep(800,0.05)}
-‎function sGood(){beep(1200,0.1)}
-‎function sBad(){beep(200,0.2,"square")}
-‎function sFinish(){beep(600,0.15);setTimeout(()=>beep(900,0.15),100)}
-‎
-‎/* ===== RECORDS ===== */
-‎let bestCPS=parseFloat(localStorage.getItem("bestCPS")||0);
-‎let bestCircle=parseFloat(localStorage.getItem("bestCircle")||0);
-‎
-‎document.getElementById("bestCPSText").innerText=bestCPS;
-‎document.getElementById("bestC").innerText=bestCircle;
-‎
-‎/* ===== NAV ===== */
-‎function show(id){
-‎  document.querySelectorAll('.screen').forEach(s=>{
-‎    s.style.opacity="0";
-‎    s.style.transform="translateY(25px)";
-‎  });
-‎
-‎  setTimeout(()=>{
-‎    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-‎    let n=document.getElementById(id);
-‎    n.classList.add('active');
-‎
-‎    document.getElementById("back").style.display =
-‎      id==="menu"?"none":"flex";
-‎
-‎    setTimeout(()=>{
-‎      n.style.opacity="1";
-‎      n.style.transform="translateY(0)";
-‎    },50);
-‎
-‎  },180);
-‎
-‎  resetCPS();
-‎}
-‎
-‎/* ===== OTROS ===== */
-‎let m=0,c=0;
-‎
-‎function clicks(){c++;sClick();if(navigator.vibrate)navigator.vibrate(10);document.getElementById("c1").innerText=c;}
-‎function money(){m+=Math.floor(Math.random()*100);document.getElementById("m1").innerText=m;}
-‎function country(){let a=["Argentina","Brasil","España","Francia","Japón","EEUU","México","Italia"];document.getElementById("co").innerText=a[Math.floor(Math.random()*a.length)];}
-‎function spin(){let a=["💀Muerte","🔥Celebridad","😂Comediante","💰Millonario","⚡Muy conocido","🌪️Caza Tornados","🦷Dentista","🧑‍🚀Iras a la Luna","💪Fisicoculturista"];document.getElementById("ch").innerText=a[Math.floor(Math.random()*a.length)];}
-‎
-‎/* ===== CÍRCULO ===== */
-‎const canvas=document.getElementById("canvas");
-‎const ctx=canvas.getContext("2d");
-‎let drawing=false,points=[];
-‎
-‎function pos(e){
-‎  let r=canvas.getBoundingClientRect();
-‎  return{x:(e.touches?e.touches[0].clientX:e.clientX)-r.left,y:(e.touches?e.touches[0].clientY:e.clientY)-r.top};
-‎}
-‎
-‎canvas.onmousedown=()=>{drawing=true;points=[]};
-‎canvas.onmouseup=()=>{drawing=false;calc()};
-‎canvas.onmousemove=e=>{if(drawing)draw(pos(e))};
-‎canvas.ontouchstart=()=>{drawing=true;points=[]};
-‎canvas.ontouchend=()=>{drawing=false;calc()};
-‎canvas.ontouchmove=e=>{if(drawing)draw(pos(e))};
-‎
-‎function draw(p){
-‎  if(points.length){
-‎    let l=points.at(-1);
-‎    ctx.beginPath();
-‎    ctx.moveTo(l.x,l.y);
-‎    ctx.lineTo(p.x,p.y);
-‎    ctx.stroke();
-‎  }
-‎  points.push(p);
-‎}
-‎
-‎function calc(){
-‎  if(points.length<10)return;
-‎
-‎  let s=points[0],e=points.at(-1);
-‎  if(Math.hypot(s.x-e.x,s.y-e.y)>40){sBad();document.getElementById("res").innerText="⚠️ Te faltó cerrar el círculo";return;}
-‎
-‎  let cx=0,cy=0;
-‎  points.forEach(p=>{cx+=p.x;cy+=p.y});
-‎  cx/=points.length;cy/=points.length;
-‎
-‎  let d=[],avg=0;
-‎  points.forEach(p=>{let dist=Math.hypot(p.x-cx,p.y-cy);d.push(dist);avg+=dist});
-‎  avg/=points.length;
-‎
-‎  let v=0;
-‎  d.forEach(x=>v+=Math.abs(x-avg));
-‎  v/=points.length;
-‎
-‎  let score=100-(v/avg)*100;
-‎  score+=5;score+=Math.random()*3-1.5;
-‎  score=Math.max(0,Math.min(100,score));
-‎  score=Math.round(score);
-‎
-‎  if(score>=80)sGood();else if(score<40)sBad();else sClick();
-‎
-‎  if(score>bestCircle){
-‎    bestCircle=score;
-‎    localStorage.setItem("bestCircle",bestCircle);
-‎    document.getElementById("bestC").innerText=bestCircle;
-‎  }
-‎
-‎  document.getElementById("res").innerText=score+"%";
-‎}
-‎
-‎function resetCircle(){ctx.clearRect(0,0,300,300);points=[];document.getElementById("res").innerText="Dibuja un círculo";}
-‎
-‎/* ===== CPS ===== */
-‎let cpsT=0,cpsC=0,cpsR=false;
-‎
-‎function startCPS(t){
-‎  cpsT=t;cpsC=0;cpsR=true;
-‎  document.getElementById("cpsMenu").style.display="none";
-‎  document.getElementById("clickBtn").style.display="block";
-‎  document.getElementById("cpsCount").style.display="block";
-‎  setTimeout(()=>{cpsR=false;finishCPS()},t*1000);
-‎}
-‎
-‎function addClick(){
-‎  if(!cpsR)return;
-‎  cpsC++;
-‎  sClick();
-‎  if(navigator.vibrate)navigator.vibrate(10);
-‎  document.getElementById("cpsCount").innerText=cpsC;
-‎}
-‎
-‎function finishCPS(){
-‎  let r=(cpsC/cpsT).toFixed(2);
-‎  sFinish();
-‎
-‎  if(r>bestCPS){
-‎    bestCPS=r;
-‎    localStorage.setItem("bestCPS",bestCPS);
-‎    document.getElementById("bestCPSText").innerText=bestCPS;
-‎  }
-‎
-‎  document.getElementById("finalText").innerText="⏰ "+r+" CPS\n🏆 "+bestCPS;
-‎  show("result");
-‎}
-‎
-‎function resetCPS(){
-‎  cpsR=false;cpsC=0;
-‎  document.getElementById("cpsMenu").style.display="block";
-‎  document.getElementById("clickBtn").style.display="none";
-‎  document.getElementById("cpsCount").style.display="none";
-‎}
-‎
-‎</script>
-‎
-‎</body>
-‎</html>
-‎
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LGC.FUN</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  
+  body {
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  /* Fondo de estrellas */
+  #stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #222;
+    backdrop-filter: blur(5px);
+  }
+  
+  header h1 { color: #00f7ff; text-shadow: 0 0 10px #00f7ff; }
+
+  nav button {
+    background: #111;
+    border: 1px solid #00f7ff;
+    color: #00f7ff;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  nav button:hover {
+    background: #00f7ff;
+    color: #000;
+    box-shadow: 0 0 15px #00f7ff;
+  }
+
+  .container { padding: 30px; text-align: center; }
+
+  .card {
+    background: rgba(17,17,17,0.8);
+    border: 1px solid #333;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 500px;
+    backdrop-filter: blur(10px);
+  }
+
+  input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #222;
+    color: #fff;
+    margin: 5px;
+  }
+
+  .time-btn {
+    background: #222;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .time-btn.active {
+    background: #00f7ff;
+    color: #000;
+    border-color: #00f7ff;
+  }
+
+  #gameArea {
+    width: 100%;
+    height: 200px;
+    background: rgba(0,247,255,0.05);
+    border: 2px dashed #00f7ff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-top: 15px;
+    cursor: pointer;
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<header>
+  <h1>LGC.FUN</h1>
+  <nav>
+    <button onclick="show('menu')">Menú</button>
+    <button onclick="show('about')">Sobre Nosotros</button>
+    <button onclick="show('lab')">Laboratorio</button>
+    <button onclick="show('login')">Login</button>
+  </nav>
+</header>
+
+<div class="container">
+  <div id="menu" class="card">
+    <h2>Bienvenido al Laboratorio</h2>
+    <p>Probá el Experimento #1: Click de Estrellas</p>
+  </div>
+
+  <div id="about" class="card" style="display:none">
+    <h2>Sobre Nosotros</h2>
+    <p>Somos LGC. Hacemos cosas raras con código y nos divertimos.</p>
+  </div>
+
+  <div id="lab" class="card" style="display:none">
+    <h2>Experimento #1: Click de Estrellas</h2>
+    <p>Elegí el tiempo y hace click como loco</p>
+    
+    <div>
+      <button class="time-btn" onclick="setTime(1)">1s</button>
+      <button class="time-btn" onclick="setTime(2)">2s</button>
+      <button class="time-btn active" onclick="setTime(5)">5s</button>
+      <button class="time-btn" onclick="setTime(10)">10s</button>
+    </div>
+
+    <button onclick="startGame()">Empezar</button>
+    <h3 id="score">Puntaje: 0</h3>
+    <h3 id="timer">Tiempo: 5s</h3>
+    <div id="gameArea" onclick="count()">Haz Click Aquí</div>
+  </div>
+
+  <div id="login" class="card" style="display:none">
+    <h2>Login</h2>
+    <input type="text" id="user" placeholder="Usuario">
+    <input type="password" id="pass" placeholder="Contraseña">
+    <button onclick="login()">Entrar</button>
+    <p id="msg"></p>
+  </div>
+</div>
+
+<script>
+// Estrellas moviéndose
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+for(let i=0; i<150; i++){
+  stars.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*2,
+    d: Math.random()*1 + 0.5
+  });
+}
+
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "white";
+  stars.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fill();
+    s.y += s.d;
+    if(s.y > canvas.height){ s.y = 0; s.x = Math.random()*canvas.width; }
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// Navegación
+function show(id){
+  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+// Juego de clicks
+let clicks = 0;
+let playing = false;
+let gameTime = 5;
+let timeLeft = 5;
+let timerInterval;
+
+function setTime(t){
+  gameTime = t;
+  timeLeft = t;
+  document.getElementById('timer').innerText = 'Tiempo: ' + t + 's';
+  document.querySelectorAll('.time-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function startGame(){
+  clicks = 0;
+  timeLeft = gameTime;
+  playing = true;
+  document.getElementById('score').innerText = 'Puntaje: 0';
+  document.getElementById('gameArea').innerText = '¡CLICK!';
+  
+  timerInterval = setInterval(()=>{
+    timeLeft--;
+    document.getElementById('timer').innerText = 'Tiempo: ' + timeLeft + 's';
+    if(timeLeft <= 0){
+      clearInterval(timerInterval);
+      playing = false;
+      document.getElementById('gameArea').innerText = 'Haz Click Aquí';
+      alert('Terminaste! Puntaje: ' + clicks);
+    }
+  }, 1000);
+}
+
+function count(){ 
+  if(playing){ 
+    clicks++; 
+    document.getElementById('score').innerText = 'Puntaje: ' + clicks; 
+  } 
+}
+
+// Login fake
+function login(){
+  const u = document.getElementById('user').value;
+  if(u) document.getElementById('msg').innerText = 'Bienvenido ' + u;
+  else document.getElementById('msg').innerText = 'Ingresa usuario';
+}
+
+window.onresize = ()=>{ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+</script>
+
+</body>
+  </html>
