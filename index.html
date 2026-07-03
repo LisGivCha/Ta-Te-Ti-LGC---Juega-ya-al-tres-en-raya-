@@ -27,7 +27,8 @@
 .logro.titulo { color: #00f7ff; font-weight: bold; font-size: 15px; }
 .novedad { background: #111; border-left: 3px solid #00f7ff; padding: 12px; margin: 10px 0; text-align: left; border-radius: 6px; }
 .version { color: #00f7ff; font-size: 22px; margin-bottom: 10px; }
-.quePasaria { font-size: 20px; color: #00f7ff; margin: 20px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; padding: 10px; }
+.quePasaria { font-size: 20px; color: #00f7ff; margin: 20px 0 10px 0; min-height: 60px; display: flex; align-items: center; justify-content: center; padding: 10px; }
+.respuesta { font-size: 15px; color: #aaa; margin-bottom: 15px; padding: 10px; background: rgba(0,247,255,0.05); border-radius: 8px; min-height: 40px; }
 .btnGrande { background: #00f7ff; color: #000; border: none; padding: 15px 30px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 .btnGrande:hover { box-shadow: 0 0 20px #00f7ff; }
 </style>
@@ -50,7 +51,7 @@
 <div class="container">
   <div id="menu" class="card">
     <h2>Bienvenido a LGC.FUN</h2>
-    <p>Versión 1.2</p>
+    <p>Versión 1.2.1</p>
   </div>
 
   <div id="novedades" class="card" style="display:none">
@@ -91,6 +92,7 @@
       <h3>Exp 3: ¿Qué pasaría si...?</h3>
       <p>Toca el botón para generar un escenario random</p>
       <div class="quePasaria" id="escenario">¿Qué pasaría si...?</div>
+      <div class="respuesta" id="respuesta"></div>
       <button class="btnGrande" onclick="generarEscenario()">Generar</button>
     </div>
   </div>
@@ -179,7 +181,7 @@ function startGame(){
 }
 function count(){ if(playing){ clicks++; document.getElementById('score').innerText = 'Puntaje: ' + clicks; }}
 
-// EXP 2: Dibujar circulo - NUEVO SISTEMA
+// EXP 2: Dibujar circulo
 const drawCanvas = document.getElementById('canvasDraw');
 const dctx = drawCanvas.getContext('2d');
 let drawing = false; let points = []; let startPoint = null;
@@ -193,7 +195,7 @@ function getPos(e){
 
 function startDraw(e){
   e.preventDefault();
-  clearCanvas(); // Auto-borrar al empezar
+  clearCanvas();
   drawing = true;
   points = [];
   startPoint = getPos(e);
@@ -216,22 +218,16 @@ function moveDraw(e){
 function endDraw(){
   if(!drawing) return;
   drawing = false;
-
   if(points.length < 20){
     document.getElementById('circleScore').innerText = '¡TE FALTO COMPLETAR EL CIRCULO!';
     return;
   }
-
-  // Verificar si cerró el círculo
   let endPoint = points[points.length-1];
   let dist = Math.hypot(endPoint.x - startPoint.x, endPoint.y - startPoint.y);
-
   if(dist > 40){
     document.getElementById('circleScore').innerText = '¡TE FALTO COMPLETAR EL CIRCULO!';
     return;
   }
-
-  // Calcular precisión
   let cx = points.reduce((a,p)=>a+p.x,0)/points.length;
   let cy = points.reduce((a,p)=>a+p.y,0)/points.length;
   let avgR = points.reduce((a,p)=>a+Math.hypot(p.x-cx,p.y-cy),0)/points.length;
@@ -249,20 +245,21 @@ function clearCanvas(){
   document.getElementById('circleScore').innerText = 'Precisión: -';
 }
 
-// EXP 3: ¿Qué pasaría si...?
+// EXP 3: ¿Qué pasaría si...? CON RESPUESTAS
 const escenarios = [
-  "los gatos dominaran el mundo?",
-  "en el sistema solar hubieran 2 soles?",
-  "tuvieramos 2 lunas?",
-  "pudieras respirar bajo el agua?",
-  "el tiempo fuera dinero?",
-  "los dinosaurios nunca se extinguieron?",
-  "pudieras teletransportarte?",
-  "la gravedad fuera la mitad?"
+  {p: "los gatos dominaran el mundo?", r: "Habría siestas obligatorias cada 2 horas y el atún sería moneda oficial."},
+  {p: "en el sistema solar hubieran 2 soles?", r: "Tendríamos el doble de calor y 2 amaneceres. Bronceado x2."},
+  {p: "tuvieramos 2 lunas?", r: "Habría mareas gigantes y las noches serían mucho más brillantes."},
+  {p: "pudieras respirar bajo el agua?", r: "Los delfines serían tus nuevos vecinos y las vacaciones serían en el fondo del mar."},
+  {p: "el tiempo fuera dinero?", r: "Dormir sería carísimo y procrastinar te dejaría en bancarrota."},
+  {p: "los dinosaurios nunca se extinguieron?", r: "Manejar sería un caos. Un T-Rex no entra en el garage."},
+  {p: "pudieras teletransportarte?", r: "Llegarías tarde igual porque dirías 'ya voy' 5 minutos antes."},
+  {p: "la gravedad fuera la mitad?", r: "Podrías saltar edificios de un brinco. El básquet sería muy tramposo."}
 ];
 function generarEscenario(){
   const random = escenarios[Math.floor(Math.random()*escenarios.length)];
-  document.getElementById('escenario').innerText = "¿Qué pasaría si " + random;
+  document.getElementById('escenario').innerText = "¿Qué pasaría si " + random.p;
+  document.getElementById('respuesta').innerText = "Respuesta: " + random.r;
   data.escenarios++;
   checkLogros();
   saveData();
@@ -310,15 +307,18 @@ function updatePerfil(){
   document.getElementById('logrosList').innerHTML = html;
 }
 
-// LOGIN
+// LOGIN ARREGLADO
 function login(){
   const u = document.getElementById('user').value;
-  if(u){
+  const p = document.getElementById('pass').value;
+  if(u && p === 'lgc2025'){ // Contraseña fija
     currentUser = u;
     localStorage.setItem('lgc_user', u);
     data = JSON.parse(localStorage.getItem('lgc_data_' + u)) || {bestCPS:0, bestCircle:0, escenarios:0, logros:[]};
     document.getElementById('msg').innerText = 'Bienvenido ' + u;
     updatePerfil();
+  } else {
+    document.getElementById('msg').innerText = 'Usuario o contraseña incorrecta';
   }
 }
 function logout(){
@@ -335,4 +335,4 @@ updatePerfil();
 </script>
 
 </body>
-   </html>
+     </html>
