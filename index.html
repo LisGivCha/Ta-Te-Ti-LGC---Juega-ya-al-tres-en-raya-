@@ -7,12 +7,12 @@
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
   
-  body { background: #000; color: #fff; overflow: hidden; }
+  body { background: #000; color: #fff; overflow-x: hidden; }
 
   #stars { position: fixed; width: 100%; height: 100%; z-index: -1; }
 
   header { padding: 20px; text-align: center; border-bottom: 1px solid #222; backdrop-filter: blur(5px); }
-  header h1 { color: #00f7ff; text-shadow: 0 0 10px #00f7ff; }
+  header h1 { color: #00f7ff; text-shadow: 0 0 10px #00f7ff; font-size: 32px; }
 
   nav button {
     background: #111; border: 1px solid #00f7ff; color: #00f7ff;
@@ -22,11 +22,18 @@
 
   .container { padding: 30px; text-align: center; }
   .card {
-    background: rgba(17,17,17,0.8); border: 1px solid #333; padding: 20px;
-    border-radius: 12px; margin: 20px auto; max-width: 500px; backdrop-filter: blur(10px);
+    background: rgba(17,17,17,0.8); border: 1px solid #333; padding: 25px;
+    border-radius: 12px; margin: 20px auto; max-width: 600px; backdrop-filter: blur(10px);
   }
 
-  input { padding: 10px; border-radius: 6px; border: 1px solid #555; background: #222; color: #fff; margin: 5px; }
+  .divider { border-top: 1px solid #333; margin: 15px 0; }
+
+  .lab-btn {
+    background: #222; border: 1px solid #00f7ff; color: #00f7ff;
+    padding: 15px; margin: 10px; border-radius: 10px; cursor: pointer; 
+    width: 90%; font-size: 16px; transition: 0.2s;
+  }
+  .lab-btn:hover { background: #00f7ff; color: #000; transform: scale(1.02); }
 
   .time-btn {
     background: #222; border: 1px solid #555; color: #fff; padding: 8px 15px;
@@ -42,7 +49,8 @@
   }
   #gameArea:active { transform: scale(0.95); background: rgba(0,247,255,0.2); }
 
-  #canvasDraw { background: #111; border: 2px solid #00f7ff; border-radius: 12px; cursor: crosshair; }
+  #canvasDraw { background: #111; border: 2px solid #00f7ff; border-radius: 12px; cursor: crosshair; width: 100%; max-width: 400px; height: 200px; }
+  input { padding: 10px; border-radius: 6px; border: 1px solid #555; background: #222; color: #fff; margin: 5px; }
 </style>
 </head>
 <body>
@@ -52,8 +60,9 @@
 <header>
   <h1>LGC.FUN</h1>
   <nav>
-    <button onclick="show('menu')">Menú</button>
-    <button onclick="show('about')">Sobre Nosotros</button>
+    <button onclick="show('menu')">Menu</button>
+    <button onclick="show('info')">Info</button>
+    <div class="divider"></div>
     <button onclick="show('lab')">Laboratorio</button>
     <button onclick="show('login')">Login</button>
   </nav>
@@ -61,42 +70,50 @@
 
 <div class="container">
   <div id="menu" class="card">
-    <h2>Bienvenido al Laboratorio</h2>
-    <p>Exp 1: Click Spam | Exp 2: Dibuja un Círculo</p>
+    <h2>Bienvenido</h2>
+    <p>Elegi una sección de arriba para empezar</p>
   </div>
 
-  <div id="about" class="card" style="display:none">
-    <h2>Sobre Nosotros</h2>
-    <p>Somos LGC. Hacemos experimentos raros.</p>
+  <div id="info" class="card" style="display:none">
+    <h2>Info</h2>
+    <p>Somos LGC. Laboratorio de juegos y experimentos random.</p>
+    <p>Guardamos puntajes cuando hagas login.</p>
   </div>
 
   <div id="lab" class="card" style="display:none">
-    <h2>Experimento #1: Click de Estrellas</h2>
-    <p>Elegí tiempo y dale click al cuadrado</p>
-    <div>
-      <button class="time-btn" onclick="setTime(1, event)">1s</button>
-      <button class="time-btn" onclick="setTime(2, event)">2s</button>
-      <button class="time-btn active" onclick="setTime(5, event)">5s</button>
-      <button class="time-btn" onclick="setTime(10, event)">10s</button>
+    <h2>Laboratorio</h2>
+    <p>Elegi un experimento:</p>
+    
+    <button class="lab-btn" onclick="showExp(1)">Click por segundo</button>
+    <button class="lab-btn" onclick="showExp(2)">Dibuja un circulo perfecto</button>
+
+    <div id="exp1" style="display:none; margin-top:20px;">
+      <h3>Exp 1: Click por segundo</h3>
+      <div>
+        <button class="time-btn" onclick="setTime(1, event)">1s</button>
+        <button class="time-btn" onclick="setTime(2, event)">2s</button>
+        <button class="time-btn active" onclick="setTime(5, event)">5s</button>
+        <button class="time-btn" onclick="setTime(10, event)">10s</button>
+      </div>
+      <h3 id="score">Puntaje: 0</h3>
+      <h3 id="timer">Tiempo: 5s</h3>
+      <div id="gameArea" onclick="handleClick()">Click para empezar</div>
     </div>
-    <h3 id="score">Puntaje: 0</h3>
-    <h3 id="timer">Tiempo: 5s</h3>
-    <div id="gameArea" onclick="handleClick()">Click para empezar</div>
 
-    <hr style="margin:20px 0; border-color:#333">
-
-    <h2>Experimento #2: Dibuja un Círculo</h2>
-    <p>Hace click y arrastra para dibujar. Solta para calificar</p>
-    <canvas id="canvasDraw" width="400" height="200"></canvas>
-    <h3 id="circleScore">Precisión: -</h3>
-    <button onclick="clearCanvas()">Borrar</button>
+    <div id="exp2" style="display:none; margin-top:20px;">
+      <h3>Exp 2: Dibuja un circulo perfecto</h3>
+      <p>Hace click y arrastra. Solta para calificar</p>
+      <canvas id="canvasDraw"></canvas>
+      <h3 id="circleScore">Precisión: -</h3>
+      <button class="time-btn" onclick="clearCanvas()">Borrar</button>
+    </div>
   </div>
 
   <div id="login" class="card" style="display:none">
     <h2>Login</h2>
     <input type="text" id="user" placeholder="Usuario">
     <input type="password" id="pass" placeholder="Contraseña">
-    <button onclick="login()">Entrar</button>
+    <button class="time-btn" onclick="login()">Entrar</button>
     <p id="msg"></p>
   </div>
 </div>
@@ -118,10 +135,16 @@ function drawStars(){
 }
 drawStars();
 
-// Navegación
+// Navegación principal
 function show(id){
   document.querySelectorAll('.card').forEach(c=>c.style.display='none');
   document.getElementById(id).style.display='block';
+}
+
+// Navegación de experimentos
+function showExp(n){
+  document.getElementById('exp1').style.display = n==1 ? 'block' : 'none';
+  document.getElementById('exp2').style.display = n==2 ? 'block' : 'none';
 }
 
 // EXP 1: Click
@@ -129,7 +152,7 @@ let clicks = 0; let playing = false; let gameTime = 5; let timeLeft = 5; let tim
 function setTime(t, e){
   gameTime = t; timeLeft = t;
   document.getElementById('timer').innerText = 'Tiempo: ' + t + 's';
-  document.querySelectorAll('.time-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#exp1 .time-btn').forEach(b=>b.classList.remove('active'));
   e.target.classList.add('active');
 }
 function handleClick(){
@@ -146,7 +169,7 @@ function startGame(){
     if(timeLeft <= 0){
       clearInterval(timerInterval); playing = false;
       document.getElementById('gameArea').innerText = 'Click para empezar';
-      alert('Terminaste! Puntaje: ' + clicks + ' | CPS: ' + (clicks/gameTime).toFixed(1));
+      alert('Terminaste! Puntaje: ' + clicks + ' | CPS: ' + (clicks/gameTime).toFixed(2));
     }
   }, 1000);
 }
@@ -167,7 +190,6 @@ drawCanvas.onmousemove = (e)=>{
 drawCanvas.onmouseup = ()=>{
   drawing = false;
   if(points.length < 10) return;
-  // Calcular que tan circular es
   let cx = points.reduce((a,p)=>a+p.x,0)/points.length;
   let cy = points.reduce((a,p)=>a+p.y,0)/points.length;
   let avgR = points.reduce((a,p)=>a+Math.hypot(p.x-cx,p.y-cy),0)/points.length;
@@ -188,4 +210,4 @@ window.onresize = ()=>{ canvas.width = window.innerWidth; canvas.height = window
 </script>
 
 </body>
-   </html>
+         </html>
