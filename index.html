@@ -6,57 +6,27 @@
 <title>LGC.FUN</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-
   body { background: #000; color: #fff; overflow-x: hidden; }
-
   #stars { position: fixed; width: 100%; height: 100%; z-index: -1; }
-
-  header { padding: 20px; text-align: center; border-bottom: 1px solid #222; backdrop-filter: blur(5px); }
+  header { padding: 20px; text-align: center; border-bottom: 1px solid #222; }
   header h1 { color: #00f7ff; text-shadow: 0 0 10px #00f7ff; font-size: 32px; }
-
-  nav button {
-    background: #111; border: 1px solid #00f7ff; color: #00f7ff;
-    padding: 10px 15px; margin: 5px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 14px;
-  }
-  nav button:hover { background: #00f7ff; color: #000; box-shadow: 0 0 15px #00f7ff; }
-
- .container { padding: 20px; text-align: center; }
- .card {
-    background: rgba(17,17,17,0.8); border: 1px solid #333; padding: 25px;
-    border-radius: 12px; margin: 20px auto; max-width: 600px; backdrop-filter: blur(10px);
-  }
-
- .divider { border-top: 1px solid #333; margin: 15px 0; }
-
- .lab-btn {
-    background: #222; border: 1px solid #00f7ff; color: #00f7ff;
-    padding: 15px; margin: 10px; border-radius: 10px; cursor: pointer;
-    width: 90%; font-size: 16px; transition: 0.2s;
-  }
- .lab-btn:hover { background: #00f7ff; color: #000; transform: scale(1.02); }
-
- .time-btn {
-    background: #222; border: 1px solid #555; color: #fff; padding: 8px 15px;
-    margin: 5px; border-radius: 6px; cursor: pointer;
-  }
- .time-btn.active { background: #00f7ff; color: #000; border-color: #00f7ff; }
-
-  #gameArea {
-    width: 100%; height: 200px; background: rgba(0,247,255,0.05);
-    border: 2px dashed #00f7ff; border-radius: 20px; display: flex;
-    align-items: center; justify-content: center; font-size: 24px;
-    margin-top: 15px; cursor: pointer; user-select: none; transition: 0.1s; touch-action: none;
-  }
-  #gameArea:active { transform: scale(0.95); background: rgba(0,247,255,0.2); }
-
-  #canvasDraw { background: #111; border: 2px solid #00f7ff; border-radius: 12px; cursor: crosshair; width: 100%; max-width: 400px; height: 200px; touch-action: none; }
+  nav button { background: #111; border: 1px solid #00f7ff; color: #00f7ff; padding: 10px 15px; margin: 5px; border-radius: 8px; cursor: pointer; }
+  nav button:hover { background: #00f7ff; color: #000; }
+.container { padding: 20px; text-align: center; }
+.card { background: rgba(17,17,17,0.8); border: 1px solid #333; padding: 25px; border-radius: 12px; margin: 20px auto; max-width: 600px; }
+.divider { border-top: 1px solid #333; margin: 15px 0; }
+.lab-btn { background: #222; border: 1px solid #00f7ff; color: #00f7ff; padding: 15px; margin: 10px; border-radius: 10px; cursor: pointer; width: 90%; font-size: 16px; }
+.lab-btn:hover { background: #00f7ff; color: #000; }
+.time-btn { background: #222; border: 1px solid #555; color: #fff; padding: 8px 15px; margin: 5px; border-radius: 6px; cursor: pointer; }
+.time-btn.active { background: #00f7ff; color: #000; }
+  #gameArea { width: 100%; height: 200px; background: rgba(0,247,255,0.05); border: 2px dashed #00f7ff; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-top: 15px; cursor: pointer; touch-action: none; }
+  #canvasDraw { background: #111; border: 2px solid #00f7ff; border-radius: 12px; width: 100%; max-width: 400px; height: 200px; touch-action: none; }
   input { padding: 10px; border-radius: 6px; border: 1px solid #555; background: #222; color: #fff; margin: 5px; width: 80%; }
-
- .logro {
-    background: #111; border: 1px solid #444; padding: 10px; margin: 8px; border-radius: 8px; text-align: left;
-  }
- .logro.unlocked { border-color: #00f7ff; background: rgba(0,247,255,0.1); }
- .logro.titulo { color: #00f7ff; font-weight: bold; }
+.logro { background: #111; border: 1px solid #444; padding: 12px; margin: 8px 0; border-radius: 8px; text-align: left; }
+.logro.unlocked { border-color: #00f7ff; background: rgba(0,247,255,0.1); }
+.logro.titulo { color: #00f7ff; font-weight: bold; font-size: 15px; }
+.novedad { background: #111; border-left: 3px solid #00f7ff; padding: 12px; margin: 10px 0; text-align: left; border-radius: 6px; }
+.version { color: #00f7ff; font-size: 22px; margin-bottom: 10px; }
 </style>
 </head>
 <body>
@@ -67,7 +37,7 @@
   <h1>LGC.FUN</h1>
   <nav>
     <button onclick="show('menu')">Menu</button>
-    <button onclick="show('info')">Info</button>
+    <button onclick="show('novedades')">Novedades</button>
     <button onclick="show('lab')">Laboratorio</button>
     <button onclick="show('perfil')">Perfil</button>
     <button onclick="show('login')">Login</button>
@@ -76,13 +46,19 @@
 
 <div class="container">
   <div id="menu" class="card">
-    <h2>Bienvenido</h2>
-    <p>Hace login para guardar puntajes y logros</p>
+    <h2>Bienvenido a LGC.FUN</h2>
+    <p>Versión 1.1</p>
   </div>
 
-  <div id="info" class="card" style="display:none">
-    <h2>Info</h2>
-    <p>Laboratorio de experimentos LGC</p>
+  <div id="novedades" class="card" style="display:none">
+    <h2>📢 Novedades</h2>
+    <div class="version">Novedades V1.1</div>
+
+    <div class="novedad">✨ Agregada sección Perfil con Logros</div>
+    <div class="novedad">📱 Exp 2 "Dibuja un circulo" ahora funciona en celu</div>
+    <div class="novedad">💾 Los puntajes se guardan automáticamente</div>
+    <div class="novedad">⚡ Menú cambiado: Info -> Novedades</div>
+
   </div>
 
   <div id="lab" class="card" style="display:none">
@@ -114,12 +90,12 @@
 
   <div id="perfil" class="card" style="display:none">
     <h2>Perfil</h2>
-    <p id="perfilUser">No logueado</p>
-    <p>Mejor CPS: <span id="bestCPS">0</span></p>
-    <p>Mejor Círculo: <span id="bestCircle">0</span>%</p>
+    <p id="perfilUser">Jugador Anónimo</p>
+    <p>Mejor CPS: <b id="bestCPS">0</b></p>
+    <p>Mejor Círculo: <b id="bestCircle">0</b>%</p>
     <div class="divider"></div>
     <h3>Logros</h3>
-    <div id="logrosList"></div>
+    <div id="logrosList">Cargando...</div>
   </div>
 
   <div id="login" class="card" style="display:none">
@@ -149,8 +125,8 @@ function drawStars(){
 }
 drawStars();
 
-// Datos
-let currentUser = localStorage.getItem('lgc_user') || null;
+// DATOS
+let currentUser = localStorage.getItem('lgc_user') || 'anonimo';
 let data = JSON.parse(localStorage.getItem('lgc_data_' + currentUser)) || {bestCPS:0, bestCircle:0, logros:[]};
 
 // Navegación
@@ -188,31 +164,24 @@ function startGame(){
       gameArea.innerText = 'Click para empezar';
       let cps = clicks/gameTime;
       alert('Terminaste! Puntaje: ' + clicks + ' | CPS: ' + cps.toFixed(2));
-      if(cps > data.bestCPS){ data.bestCPS = cps; checkLogros('cps', cps); saveData(); }
+      if(cps > data.bestCPS){ data.bestCPS = cps; checkLogros(); saveData(); }
     }
   }, 1000);
 }
 function count(){ if(playing){ clicks++; document.getElementById('score').innerText = 'Puntaje: ' + clicks; }}
 
-// EXP 2: Dibujar circulo - AHORA CON TOUCH
+// EXP 2: Dibujar circulo
 const drawCanvas = document.getElementById('canvasDraw');
 const dctx = drawCanvas.getContext('2d');
 let drawing = false; let points = [];
-
 function getPos(e){
   const rect = drawCanvas.getBoundingClientRect();
   let x = e.clientX || e.touches[0].clientX;
   let y = e.clientY || e.touches[0].clientY;
   return {x: x - rect.left, y: y - rect.top};
 }
-
 function startDraw(e){ e.preventDefault(); drawing = true; points = []; }
-function moveDraw(e){
-  if(!drawing) return; e.preventDefault();
-  const pos = getPos(e);
-  points.push(pos);
-  dctx.fillStyle = '#00f7ff'; dctx.beginPath(); dctx.arc(pos.x,pos.y,3,0,Math.PI*2); dctx.fill();
-}
+function moveDraw(e){ if(!drawing) return; e.preventDefault(); const pos = getPos(e); points.push(pos); dctx.fillStyle = '#00f7ff'; dctx.beginPath(); dctx.arc(pos.x,pos.y,3,0,Math.PI*2); dctx.fill(); }
 function endDraw(){
   drawing = false;
   if(points.length < 10) return;
@@ -222,46 +191,44 @@ function endDraw(){
   let variance = points.reduce((a,p)=>a+Math.abs(Math.hypot(p.x-cx,p.y-cy)-avgR),0)/points.length;
   let score = Math.max(0, 100 - (variance/avgR)*100);
   document.getElementById('circleScore').innerText = 'Precisión: ' + score.toFixed(0) + '%';
-  if(score > data.bestCircle){ data.bestCircle = score; checkLogros('circle', score); saveData(); }
+  if(score > data.bestCircle){ data.bestCircle = score; checkLogros(); saveData(); }
 }
-
-drawCanvas.onmousedown = startDraw;
-drawCanvas.onmousemove = moveDraw;
-drawCanvas.onmouseup = endDraw;
-drawCanvas.ontouchstart = startDraw;
-drawCanvas.ontouchmove = moveDraw;
-drawCanvas.ontouchend = endDraw;
-
+drawCanvas.onmousedown = startDraw; drawCanvas.onmousemove = moveDraw; drawCanvas.onmouseup = endDraw;
+drawCanvas.ontouchstart = startDraw; drawCanvas.ontouchmove = moveDraw; drawCanvas.ontouchend = endDraw;
 function clearCanvas(){ dctx.clearRect(0,0,drawCanvas.width,drawCanvas.height); document.getElementById('circleScore').innerText = 'Precisión: -'; }
 
 // LOGROS
 const logrosData = [
-  {id:'first_click', titulo:'Primer Click', desc:'Hace tu primer click', check:(d)=>d.bestCPS>0},
-  {id:'cps_5', titulo:'Dedos Rápidos', desc:'Llega a 5 CPS', check:(d)=>d.bestCPS>=5},
-  {id:'cps_9', titulo:'Ametralladora', desc:'Llega a 9 CPS', check:(d)=>d.bestCPS>=9},
-  {id:'circle_80', titulo:'Artista', desc:'80% de precisión en círculo', check:(d)=>d.bestCircle>=80},
-  {id:'circle_95', titulo:'Compás Humano', desc:'95% de precisión en círculo', check:(d)=>d.bestCircle>=95},
+  {id:'first_click', titulo:'Primer Click', desc:'Hace tu primer click'},
+  {id:'cps_5', titulo:'Dedos Rápidos', desc:'Llega a 5 CPS'},
+  {id:'cps_9', titulo:'Ametralladora', desc:'Llega a 9 CPS'},
+  {id:'circle_80', titulo:'Artista', desc:'80% de precisión en círculo'},
+  {id:'circle_95', titulo:'Compás Humano', desc:'95% de precisión en círculo'},
 ];
-
-function checkLogros(type, value){
+function checkLogros(){
   logrosData.forEach(l=>{
-    if(!data.logros.includes(l.id) && l.check(data)){
+    let unlocked = false;
+    if(l.id=='first_click' && data.bestCPS>0) unlocked=true;
+    if(l.id=='cps_5' && data.bestCPS>=5) unlocked=true;
+    if(l.id=='cps_9' && data.bestCPS>=9) unlocked=true;
+    if(l.id=='circle_80' && data.bestCircle>=80) unlocked=true;
+    if(l.id=='circle_95' && data.bestCircle>=95) unlocked=true;
+    if(unlocked &&!data.logros.includes(l.id)){
       data.logros.push(l.id);
       alert('🏆 Logro desbloqueado: ' + l.titulo);
     }
   });
 }
-
 function updatePerfil(){
-  document.getElementById('perfilUser').innerText = currentUser? 'Usuario: ' + currentUser : 'No logueado';
+  document.getElementById('perfilUser').innerText = currentUser=='anonimo'? 'Jugador Anónimo' : 'Usuario: ' + currentUser;
   document.getElementById('bestCPS').innerText = data.bestCPS.toFixed(2);
   document.getElementById('bestCircle').innerText = data.bestCircle.toFixed(0);
   let html = '';
   logrosData.forEach(l=>{
     let unlocked = data.logros.includes(l.id);
     html += `<div class="logro ${unlocked?'unlocked':''}">
-      <div class="titulo">${unlocked?'🏆':''} ${l.titulo}</div>
-      <div>${l.desc}</div>
+      <div class="titulo">${unlocked?'🏆 ':''}${l.titulo}</div>
+      <div style="font-size:13px; color:#aaa">${l.desc}</div>
     </div>`;
   });
   document.getElementById('logrosList').innerHTML = html;
@@ -275,19 +242,20 @@ function login(){
     localStorage.setItem('lgc_user', u);
     data = JSON.parse(localStorage.getItem('lgc_data_' + u)) || {bestCPS:0, bestCircle:0, logros:[]};
     document.getElementById('msg').innerText = 'Bienvenido ' + u;
+    updatePerfil();
   }
 }
 function logout(){
-  currentUser = null;
+  currentUser = 'anonimo';
   localStorage.removeItem('lgc_user');
-  data = {bestCPS:0, bestCircle:0, logros:[]};
-  document.getElementById('msg').innerText = 'Sesión cerrada';
+  data = JSON.parse(localStorage.getItem('lgc_data_anonimo')) || {bestCPS:0, bestCircle:0, logros:[]};
+  document.getElementById('msg').innerText = 'Modo Anónimo';
 }
 function saveData(){
-  if(currentUser) localStorage.setItem('lgc_data_' + currentUser, JSON.stringify(data));
+  localStorage.setItem('lgc_data_' + currentUser, JSON.stringify(data));
 }
-
 window.onresize = ()=>{ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+updatePerfil();
 </script>
 
 </body>
