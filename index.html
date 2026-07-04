@@ -10,7 +10,7 @@
   #stars { position: fixed; width: 100%; height: 100%; z-index: -1; }
   header { padding: 20px; text-align: center; border-bottom: 1px solid #222; }
   header h1 { color: #00f7ff; text-shadow: 0 0 10px #00f7ff; font-size: 32px; }
-  nav button { background: #111; border: 1px solid #00f7ff; color: #00f7ff; padding: 10px 15px; margin: 5px; border-radius: 8px; cursor: pointer; }
+  nav button { background: #111; border: 1px solid #00f7ff; color: #00f7ff; padding: 10px 12px; margin: 4px; border-radius: 8px; cursor: pointer; font-size: 13px; }
   nav button:hover { background: #00f7ff; color: #000; }
 .container { padding: 20px; text-align: center; }
 .card { background: rgba(17,17,17,0.8); border: 1px solid #333; padding: 25px; border-radius: 12px; margin: 20px auto; max-width: 600px; }
@@ -36,6 +36,8 @@
 .slider { width: 80%; margin: 10px auto; }
 .historial { background: #0a0a0a; border: 1px dashed #333; padding: 15px; margin-top: 15px; border-radius: 8px; text-align: left; }
 .historial h4 { color: #00f7ff; margin-bottom: 8px; }
+.reqPass { background: #111; padding: 12px; border-radius: 8px; margin: 10px 0; border: 1px solid #00f7ff; }
+.passScore { font-size: 24px; color: #00f7ff; margin: 10px 0; }
 </style>
 </head>
 <body>
@@ -57,21 +59,29 @@
 <div class="container">
   <div id="menu" class="card">
     <h2>Bienvenido a LGC.FUN</h2>
-    <p>Versión 1.3</p>
+    <p>Versión 1.4</p>
   </div>
 
   <div id="novedades" class="card" style="display:none">
     <h2>📢 Novedades</h2>
-    <div class="version">Novedades V1.3</div>
-    <div class="novedad">🌍 Exp 4: Gravedad - Controla la gravedad y mide tu salto</div>
-    <div class="novedad">🌀 Exp 3: +7 escenarios nuevos con respuestas</div>
-    <div class="novedad">🏆 +5 Logros nuevos: Teórico, Canguro, Cohete, Físico, Leyenda</div>
-    <div class="novedad">📰 Nuevo: Periódico para ver historial de versiones</div>
+    <div class="version">Novedades V1.4</div>
+    <div class="novedad">🛡️ Exp 5: Contraseña Perfecta - Crea la pass más segura</div>
+    <div class="novedad">🌀 Exp 3: +15 escenarios nuevos. Total 30</div>
+    <div class="novedad">🏆 +9 Logros nuevos. Total 21 logros</div>
+    <div class="novedad">⭕ Nuevo logro: Compás Divino - 99% en círculo</div>
   </div>
 
   <div id="periodico" class="card" style="display:none">
     <h2>📰 Periódico LGC</h2>
     <p>Historial de versiones</p>
+
+    <div class="historial">
+      <h4>V1.4 - "Maestro de LGC"</h4>
+      <p>- Exp 5: Contraseña Perfecta agregado</p>
+      <p>- 30 escenarios en ¿Qué pasaría si...?</p>
+      <p>- 21 logros totales</p>
+      <p>- Nuevo logro: Compás Divino 99%</p>
+    </div>
 
     <div class="historial">
       <h4>V1.3 - "Expansión Cósmica"</h4>
@@ -108,6 +118,7 @@
     <button class="lab-btn" onclick="showExp(2)">Dibuja un circulo perfecto</button>
     <button class="lab-btn" onclick="showExp(3)">¿Qué pasaría si...?</button>
     <button class="lab-btn" onclick="showExp(4)">Gravedad</button>
+    <button class="lab-btn" onclick="showExp(5)">Contraseña Perfecta</button>
 
     <div id="exp1" style="display:none; margin-top:20px;">
       <h3>Exp 1: Click por segundo</h3>
@@ -147,6 +158,15 @@
       </div>
       <button class="btnGrande" onclick="lanzarPelota()">Lanzar</button>
     </div>
+
+    <div id="exp5" style="display:none; margin-top:20px;">
+      <h3>Exp 5: Contraseña Perfecta</h3>
+      <p>Crea una contraseña que cumpla los requisitos</p>
+      <div class="reqPass" id="requisitos">Cargando requisitos...</div>
+      <input type="text" id="passInput" placeholder="Escribe tu contraseña">
+      <button class="btnGrande" onclick="checkPassword()">Probar</button>
+      <div class="passScore" id="passScore">Seguridad: 0%</div>
+    </div>
   </div>
 
   <div id="perfil" class="card" style="display:none">
@@ -156,6 +176,7 @@
     <p>Mejor Círculo: <b id="bestCircle">0</b>%</p>
     <p>Escenarios vistos: <b id="escenariosVistos">0</b></p>
     <p>Mejor Salto: <b id="mejorSalto">0</b>m</p>
+    <p>Mejor Pass: <b id="mejorPass">0</b>%</p>
     <div class="divider"></div>
     <h3>Logros</h3>
     <div id="logrosList">Cargando...</div>
@@ -190,21 +211,19 @@ drawStars();
 
 // DATOS
 let currentUser = localStorage.getItem('lgc_user') || 'anonimo';
-let data = JSON.parse(localStorage.getItem('lgc_data_' + currentUser)) || {bestCPS:0, bestCircle:0, escenarios:0, mejorSalto:0, logros:[]};
+let data = JSON.parse(localStorage.getItem('lgc_data_' + currentUser)) || {bestCPS:0, bestCircle:0, escenarios:0, mejorSalto:0, mejorPass:0, logros:[]};
 
 // Navegación
 function show(id){
   document.querySelectorAll('.card').forEach(c=>c.style.display='none');
   document.getElementById(id).style.display='block';
   if(id=='perfil') updatePerfil();
+  if(id=='lab') generarRequisitos();
 }
 
 // Experimentos
 function showExp(n){
-  document.getElementById('exp1').style.display = n==1? 'block' : 'none';
-  document.getElementById('exp2').style.display = n==2? 'block' : 'none';
-  document.getElementById('exp3').style.display = n==3? 'block' : 'none';
-  document.getElementById('exp4').style.display = n==4? 'block' : 'none';
+  for(let i=1; i<=5; i++) document.getElementById('exp'+i).style.display = n==i? 'block' : 'none';
 }
 
 // EXP 1: Click
@@ -270,7 +289,7 @@ drawCanvas.onmousedown = startDraw; drawCanvas.onmousemove = moveDraw; drawCanva
 drawCanvas.ontouchstart = startDraw; drawCanvas.ontouchmove = moveDraw; drawCanvas.ontouchend = endDraw;
 function clearCanvas(){ dctx.clearRect(0,0,drawCanvas.width,drawCanvas.height); document.getElementById('circleScore').innerText = 'Precisión: -'; }
 
-// EXP 3: ¿Qué pasaría si...? 15 ESCENARIOS
+// EXP 3: ¿Qué pasaría si...? 30 ESCENARIOS
 const escenarios = [
   {p: "los gatos dominaran el mundo?", r: "Habría siestas obligatorias cada 2 horas y el atún sería moneda oficial."},
   {p: "en el sistema solar hubieran 2 soles?", r: "Tendríamos el doble de calor y 2 amaneceres. Bronceado x2."},
@@ -286,7 +305,22 @@ const escenarios = [
   {p: "duraras despierto 1 semana entera?", r: "Verías cosas raras al día 3. Al día 7 serías un zombie."},
   {p: "la escuela fuera opcional?", r: "La mitad iría y la otra mitad estaría jugando todo el día."},
   {p: "pudieras clonar a tus amigos?", r: "Fiestas épicas. Pero también 5 veces más problemas."},
-  {p: "los emojis cobraran vida?", r: "El de caca te perseguiría. El de risa no pararía de molestar."}
+  {p: "los emojis cobraran vida?", r: "El de caca te perseguiría. El de risa no pararía de molestar."},
+  {p: "pudieras leer la mente?", r: "Sabrias que todos piensan en pizza a las 3AM."},
+  {p: "llovieran hamburguesas?", r: "El mejor problema del mundo. Y el más grasoso."},
+  {p: "los autos volaran?", r: "Los embotellamientos serían en 3D. Caos vertical."},
+  {p: "tuvieras 3 brazos?", r: "Jugarías play, comerías papas y scrollearías al mismo tiempo."},
+  {p: "el wifi fuera gratis en todo el mundo?", r: "La paz mundial finalmente."},
+  {p: "pudieras congelar el tiempo?", r: "Dormirías 20 horas y igual llegarías temprano."},
+  {p: "los zapatos hablaran?", r: "Se quejarían cada vez que corres. 'Otra vez no'."},
+  {p: "no existieran los lunes?", r: "Fin de semana infinito. Caos laboral."},
+  {p: "pudieras volar pero solo 2 metros del piso?", r: "Serías el rey de los baches y cordones."},
+  {p: "tu mochila fuera un portal?", r: "Llevarías tu pieza entera a todos lados."},
+  {p: "todos los días fueran sábado?", r: "Perderíamos la noción del tiempo en 3 días."},
+  {p: "las plantas pudieran caminar?", r: "Tu cactus te seguiría para pedir agua."},
+  {p: "tuvieras control remoto de la vida real?", r: "Pausa para ir al baño. Avance rápido en clases."},
+  {p: "pudieras pintar con la mente?", r: "Tus pensamientos serían arte. O memes."},
+  {p: "el chocolate engordara negativo?", r: "Comerías 10 barras y bajarías 5 kilos."}
 ];
 function generarEscenario(){
   const random = escenarios[Math.floor(Math.random()*escenarios.length)];
@@ -319,85 +353,47 @@ function lanzarPelota(){
   animate();
 }
 
-// LOGROS - 12 TOTALES
+// EXP 5: CONTRASEÑA PERFECTA
+let requisitosActuales = [];
+function generarRequisitos(){
+  const reqs = [
+    "Mínimo 8 caracteres",
+    "1 mayúscula",
+    "1 número",
+    "1 símbolo!@#$%",
+    "Contenga tu animal favorito",
+    "Sin espacios",
+    "Mínimo 12 caracteres"
+  ];
+  requisitosActuales = [];
+  for(let i=0; i<4; i++){
+    let r = reqs[Math.floor(Math.random()*reqs.length)];
+    if(!requisitosActuales.includes(r)) requisitosActuales.push(r);
+  }
+  document.getElementById('requisitos').innerHTML = "Requisitos:<br>- " + requisitosActuales.join("<br>- ");
+}
+function checkPassword(){
+  let pass = document.getElementById('passInput').value;
+  let score = 0;
+  requisitosActuales.forEach(req=>{
+    if(req.includes("8") && pass.length >= 8) score += 25;
+    if(req.includes("12") && pass.length >= 12) score += 25;
+    if(req.includes("mayúscula") && /[A-Z]/.test(pass)) score += 25;
+    if(req.includes("número") && /[0-9]/.test(pass)) score += 25;
+    if(req.includes("símbolo") && /[!@#$%]/.test(pass)) score += 25;
+    if(req.includes("espacios") &&!/\s/.test(pass)) score += 25;
+    if(req.includes("animal") && /(gato|perro|pajaro|pez)/i.test(pass)) score += 25;
+  });
+  score = Math.min(100, score);
+  document.getElementById('passScore').innerText = "Seguridad: " + score + "%";
+  if(score > data.mejorPass){ data.mejorPass = score; checkLogros(); saveData(); }
+  if(score == 100) alert("¡Contraseña Perfecta!");
+}
+
+// LOGROS - 21 TOTALES
 const logrosData = [
   {id:'first_click', titulo:'Primer Click', desc:'Hace tu primer click'},
   {id:'cps_5', titulo:'Dedos Rápidos', desc:'Llega a 5 CPS'},
   {id:'cps_9', titulo:'Ametralladora', desc:'Llega a 9 CPS'},
-  {id:'circle_80', titulo:'Artista', desc:'80% de precisión en círculo'},
-  {id:'circle_95', titulo:'Compás Humano', desc:'95% de precisión en círculo'},
-  {id:'esc_1', titulo:'Curioso', desc:'Genera tu primer escenario'},
-  {id:'esc_10', titulo:'Multiverso', desc:'Genera 10 escenarios diferentes'},
-  {id:'esc_15', titulo:'Teórico', desc:'Genera 15 escenarios diferentes'},
-  {id:'salto_5', titulo:'Canguro', desc:'Alcanza 5m de altura'},
-  {id:'salto_15', titulo:'Cohete', desc:'Alcanza 15m de altura'},
-  {id:'gravedad_1', titulo:'Físico', desc:'Juega con la gravedad'},
-  {id:'todo_80', titulo:'Leyenda', desc:'80% círculo + 9 CPS'}
-];
-function checkLogros(){
-  logrosData.forEach(l=>{
-    let unlocked = false;
-    if(l.id=='first_click' && data.bestCPS>0) unlocked=true;
-    if(l.id=='cps_5' && data.bestCPS>=5) unlocked=true;
-    if(l.id=='cps_9' && data.bestCPS>=9) unlocked=true;
-    if(l.id=='circle_80' && data.bestCircle>=80) unlocked=true;
-    if(l.id=='circle_95' && data.bestCircle>=95) unlocked=true;
-    if(l.id=='esc_1' && data.escenarios>=1) unlocked=true;
-    if(l.id=='esc_10' && data.escenarios>=10) unlocked=true;
-    if(l.id=='esc_15' && data.escenarios>=15) unlocked=true;
-    if(l.id=='salto_5' && data.mejorSalto>=5) unlocked=true;
-    if(l.id=='salto_15' && data.mejorSalto>=15) unlocked=true;
-    if(l.id=='gravedad_1' && data.mejorSalto>0) unlocked=true;
-    if(l.id=='todo_80' && data.bestCircle>=80 && data.bestCPS>=9) unlocked=true;
-    if(unlocked &&!data.logros.includes(l.id)){
-      data.logros.push(l.id);
-      alert('🏆 Logro desbloqueado: ' + l.titulo);
-    }
-  });
-}
-function updatePerfil(){
-  document.getElementById('perfilUser').innerText = currentUser=='anonimo'? 'Jugador Anónimo' : 'Usuario: ' + currentUser;
-  document.getElementById('bestCPS').innerText = data.bestCPS.toFixed(2);
-  document.getElementById('bestCircle').innerText = data.bestCircle.toFixed(0);
-  document.getElementById('escenariosVistos').innerText = data.escenarios;
-  document.getElementById('mejorSalto').innerText = data.mejorSalto;
-  let html = '';
-  logrosData.forEach(l=>{
-    let unlocked = data.logros.includes(l.id);
-    html += `<div class="logro ${unlocked?'unlocked':''}">
-      <div class="titulo">${unlocked?'🏆 ':''}${l.titulo}</div>
-      <div style="font-size:13px; color:#aaa">${l.desc}</div>
-    </div>`;
-  });
-  document.getElementById('logrosList').innerHTML = html;
-}
-
-// LOGIN
-function login(){
-  const u = document.getElementById('user').value;
-  const p = document.getElementById('pass').value;
-  if(u && p === 'lgc2025'){
-    currentUser = u;
-    localStorage.setItem('lgc_user', u);
-    data = JSON.parse(localStorage.getItem('lgc_data_' + u)) || {bestCPS:0, bestCircle:0, escenarios:0, mejorSalto:0, logros:[]};
-    document.getElementById('msg').innerText = 'Bienvenido ' + u;
-    updatePerfil();
-  } else {
-    document.getElementById('msg').innerText = 'Usuario o contraseña incorrecta';
-  }
-}
-function logout(){
-  currentUser = 'anonimo';
-  localStorage.removeItem('lgc_user');
-  data = JSON.parse(localStorage.getItem('lgc_data_anonimo')) || {bestCPS:0, bestCircle:0, escenarios:0, mejorSalto:0, logros:[]};
-  document.getElementById('msg').innerText = 'Modo Anónimo';
-}
-function saveData(){
-  localStorage.setItem('lgc_data_' + currentUser, JSON.stringify(data));
-}
-window.onresize = ()=>{ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-updatePerfil();
-</script>
-
-</body>
-   </html>
+  {id:'cps_12', titulo:'Velocista', desc:'Llega a 12 CPS'},
+  {id:'c
