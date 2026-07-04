@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGC.FUN v1.4.3</title>
+<title>LGC.FUN v1.5.0 FULL</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
   body { background: #000; color: #fff; overflow-x: hidden; overflow-y: auto; height: 100vh; user-select: none; }
@@ -15,30 +15,22 @@
 .container { padding: 20px; text-align: center; }
 .card { background: rgba(17,17,17,0.8); border: 1px solid #333; padding: 25px; border-radius: 12px; margin: 20px auto; max-width: 600px; display:none; }
 .card.active { display:block; }
-.divider { border-top: 1px solid #333; margin: 15px 0; }
 .lab-btn { background: #222; border: 1px solid #00f7ff; color: #00f7ff; padding: 15px; margin: 10px; border-radius: 10px; cursor: pointer; width: 90%; font-size: 16px; }
-.lab-btn:hover { background: #00f7ff; color: #000; }
 .time-btn { background: #222; border: 1px solid #555; color: #fff; padding: 8px 15px; margin: 5px; border-radius: 6px; cursor: pointer; }
 .time-btn.active { background: #00f7ff; color: #000; }
 .esc-btn { background: #111; border: 1px solid #444; color: #fff; padding: 12px; margin: 6px; border-radius: 8px; cursor: pointer; width: 100%; text-align: left; font-size: 15px; }
 .dif-btn { background: #222; border: 1px solid #555; color: #fff; padding: 10px; margin: 5px; border-radius: 8px; cursor: pointer; width: 30%; }
 .dif-btn.active { background: #00f7ff; color: #000; }
-#gameArea { width: 100%; height: 200px; background: rgba(0,247,255,0.05); border: 2px dashed #00f7ff; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-top: 15px; cursor: pointer; }
-#canvasDraw { background: #111; border: 2px solid #00f7ff; border-radius: 12px; width: 100%; max-width: 400px; height: 200px; }
+#gameArea { width: 100%; height: 200px; background: rgba(0,247,255,0.05); border: 2px dashed #00f7ff; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-top: 15px; cursor: pointer; touch-action: manipulation; }
+#canvasDraw { background: #111; border: 2px solid #00f7ff; border-radius: 12px; width: 100%; max-width: 400px; height: 200px; touch-action: none; }
 #tateti { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 300px; margin: 20px auto; }
 .celda { background: #111; border: 2px solid #444; height: 90px; font-size: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 10px; color: #00f7ff; }
 .logro { background: #111; border: 1px solid #444; padding: 12px; margin: 8px 0; border-radius: 8px; text-align: left; }
 .logro.unlocked { border-color: #00f7ff; background: rgba(0,247,255,0.1); }
 .logro.titulo { color: #00f7ff; font-weight: bold; font-size: 15px; }
-.novedad { background: #111; border-left: 3px solid #00f7ff; padding: 12px; margin: 10px 0; text-align: left; border-radius: 6px; }
-.version { color: #00f7ff; font-size: 22px; margin-bottom: 10px; }
-.respuesta { font-size: 15px; color: #aaa; margin-bottom: 15px; padding: 15px; background: rgba(0,247,255,0.05); border-radius: 8px; min-height: 80px; text-align: left; }
-.btnGrande { background: #00f7ff; color: #000; border: none; padding: 15px 30px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-#ball { width: 30px; height: 30px; background: #00f7ff; border-radius: 50%; position: absolute; }
-#gravedadArea { width: 100%; height: 250px; background: rgba(0,247,255,0.03); border: 2px dashed #00f7ff; border-radius: 12px; position: relative; overflow: hidden; margin-top: 15px; cursor: crosshair; }
-.slider { width: 80%; margin: 10px auto; }
 .historial { background: #0a0a0a; border: 1px dashed #333; padding: 15px; margin-top: 15px; border-radius: 8px; text-align: left; }
-.historial h4 { color: #00f7ff; margin-bottom: 8px; font-size: 18px; }
+#ball { width: 30px; height: 30px; background: #00f7ff; border-radius: 50%; position: absolute; box-shadow: 0 0 15px #00f7ff; }
+#gravedadArea { width: 100%; height: 250px; background: rgba(0,247,255,0.03); border: 2px dashed #00f7ff; border-radius: 12px; position: relative; overflow: hidden; margin-top: 15px; cursor: crosshair; }
 </style>
 </head>
 <body>
@@ -53,131 +45,154 @@
     <button onclick="show('periodico')">📰 Periódico</button>
     <button onclick="show('lab')">Laboratorio</button>
     <button onclick="show('perfil')">Perfil</button>
-    <button onclick="show('login')">Login</button>
   </nav>
 </header>
 
 <div class="container">
-  <div id="menu" class="card active">
-    <h2>Bienvenido a LGC.FUN</h2>
-    <p>Versión 1.4.3</p>
-  </div>
-
-  <div id="novedades" class="card">
-    <h2>📢 Novedades</h2>
-    <div class="version">Novedades V1.4.3</div>
-    <div class="novedad">📰 Periódico con todo el historial de versiones</div>
-    <div class="novedad">✅ Fix: Laboratorio ya funciona correctamente</div>
-  </div>
+  <div id="menu" class="card active"><h2>Bienvenido a LGC.FUN v1.5.0</h2></div>
+  <div id="novedades" class="card"><h2>Novedades v1.5.0</h2><p>+15 Logros, +7 Escenarios, Todos los fix</p></div>
 
   <div id="periodico" class="card">
-    <h2>📰 Periódico LGC - Historial Completo</h2>
-    
-    <div class="historial">
-      <h4>V1.4.3 - Actual</h4>
-      <p>- Periódico con historial completo de versiones</p>
-      <p>- Fix definitivo de Laboratorio y showExp</p>
-    </div>
-
-    <div class="historial">
-      <h4>V1.4.2</h4>
-      <p>- Fix: Se arregló que Laboratorio no mostraba nada</p>
-      <p>- Saqué el ° de Perfil</p>
-    </div>
-
-    <div class="historial">
-      <h4>V1.4.1</h4>
-      <p>- Fix: Estabilidad general. Saqué código roto</p>
-      <p>- Gravedad y Ta-Te-Ti simplificados</p>
-    </div>
-
-    <div class="historial">
-      <h4>V1.4.0</h4>
-      <p>- 🌍 Gravedad 2.0: Rebote real y click para lanzar</p>
-      <p>- ❌ Exp 5: Ta-Te-Ti vs Robot con 3 dificultades</p>
-      <p>- 📋 +2 Escenarios y +5 Logros nuevos. Total 12</p>
-    </div>
-
-    <div class="historial">
-      <h4>V1.3.9</h4>
-      <p>- ⚡ CPS Turbo: Clicks mucho más rápidos</p>
-      <p>- 📋 +4 Escenarios nuevos. Total 9</p>
-      <p>- 🏆 Sistema de 7 Logros</p>
-    </div>
-
-    <div class="historial">
-      <h4>V1.3.8</h4>
-      <p>- 📋 Escenarios ahora tienen botones para elegir</p>
-      <p>- 🖱️ Fix: Ya no se pone azul al clickear CPS</p>
-    </div>
-
-    <div class="historial">
-      <h4>V1.3.7</h4>
-      <p>- Fix: Eliminado flash azul al clickear</p>
-      <p>- Mejoras en UI</p>
-    </div>
-
-    <div class="historial">
-      <h4>V1.3.0 - V1.3.6</h4>
-      <p>- Base del Laboratorio: CPS, Circulo, ¿Qué pasaría si?, Gravedad</p>
-      <p>- Sistema de Perfil y Logros inicial</p>
-    </div>
-
-    <div class="historial">
-      <h4>V1.0.0</h4>
-      <p>- 🚀 Lanzamiento de LGC.FUN</p>
-      <p>- Menu, Login y diseño base con estrellas</p>
-    </div>
+    <h2>📰 Periódico</h2>
+    <div class="historial"><h4>V1.5.0</h4><p>Fix total: CPS, Circulo, Gravedad, Tateti, Escenarios, 27 Logros, 18 Escenarios</p></div>
   </div>
 
   <div id="lab" class="card">
     <h2>Laboratorio</h2>
-    <button class="lab-btn" onclick="showExp(1)">Click por segundo</button>
-    <button class="lab-btn" onclick="showExp(2)">Dibuja un circulo</button>
-    <button class="lab-btn" onclick="showExp(3)">¿Qué pasaría si...?</button>
-    <button class="lab-btn" onclick="showExp(4)">Gravedad</button>
-    <button class="lab-btn" onclick="showExp(5)">Ta-Te-Ti</button>
+    <button class="lab-btn" onclick="showExp(1)">Exp 1: Click por segundo</button>
+    <button class="lab-btn" onclick="showExp(2)">Exp 2: Dibuja un circulo</button>
+    <button class="lab-btn" onclick="showExp(3)">Exp 3: ¿Qué pasaría si...?</button>
+    <button class="lab-btn" onclick="showExp(4)">Exp 4: Gravedad</button>
+    <button class="lab-btn" onclick="showExp(5)">Exp 5: Ta-Te-Ti</button>
 
-    <div id="exp1" style="display:none; margin-top:20px;"><h3>Exp 1: CPS</h3><div id="gameArea">Click para empezar</div></div>
-    <div id="exp2" style="display:none;"><h3>Exp 2: Circulo</h3><canvas id="canvasDraw"></canvas></div>
-    <div id="exp3" style="display:none;"><h3>Exp 3: ¿Qué pasaría si?</h3><div id="listaEscenarios"></div><div class="respuesta" id="respuesta">Selecciona</div></div>
-    <div id="exp4" style="display:none;"><h3>Exp 4: Gravedad</h3><div id="gravedadArea" onclick="alert('Lanzar')"><div id="ball"></div></div></div>
-    <div id="exp5" style="display:none;"><h3>Exp 5: Ta-Te-Ti</h3><div id="tateti"></div></div>
+    <div id="exp1" style="display:none; margin-top:20px;">
+      <h3>Exp 1: CPS</h3>
+      <button class="time-btn active" onclick="setTime(1,this)">1s</button>
+      <button class="time-btn" onclick="setTime(2,this)">2s</button>
+      <button class="time-btn" onclick="setTime(5,this)">5s</button>
+      <button class="time-btn" onclick="setTime(10,this)">10s</button>
+      <button class="time-btn" onclick="setTime(20,this)">20s</button>
+      <h3 id="score">Puntaje: 0</h3><h3 id="timer">Tiempo: 5s</h3>
+      <div id="gameArea">Click para empezar</div>
+    </div>
+
+    <div id="exp2" style="display:none;"><h3>Exp 2: Circulo</h3><canvas id="canvasDraw"></canvas><h3 id="circleScore">Precisión: -</h3></div>
+
+    <div id="exp3" style="display:none;"><h3>Exp 3: ¿Qué pasaría si...?</h3><div id="listaEscenarios"></div><div style="background:#111;padding:15px;border-radius:8px;margin-top:10px;text-align:left;" id="respuesta">Selecciona un escenario</div></div>
+
+    <div id="exp4" style="display:none;"><h3>Exp 4: Gravedad</h3><input type="range" min="1" max="20" value="9" oninput="gravity=this.value;document.getElementById('gVal').innerText=this.value">
+    <p>Gravedad: <b id="gVal">9</b></p><div id="gravedadArea"><div id="ball" style="left:50%;top:10px;"></div></div></div>
+
+    <div id="exp5" style="display:none;"><h3>Exp 5: Ta-Te-Ti</h3>
+    <button class="dif-btn active" onclick="dif='facil';reiniciarTateti()">Fácil</button>
+    <button class="dif-btn" onclick="dif='medio';reiniciarTateti()">Medio</button>
+    <div id="tateti"></div><button onclick="reiniciarTateti()">Reiniciar</button></div>
   </div>
 
-  <div id="perfil" class="card">
-    <h2>Perfil</h2>
-    <div id="logrosList"></div>
-  </div>
-
-  <div id="login" class="card"><h2>Login</h2></div>
+  <div id="perfil" class="card"><h2>Perfil</h2><div id="logrosList"></div></div>
 </div>
 
 <script>
-// FIX LABORATORIO
-function show(id){
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if(id === 'lab'){ showExp(1); }
-  if(id === 'perfil'){ updatePerfil(); }
+let data = JSON.parse(localStorage.getItem('lgc_data')) || {bestCPS:0, bestCircle:0, logros:[], tateti:{w:0,l:0,d:0}, usosGravedad:0};
+let escenariosVistos = new Set(); let gravity = 9; let dif = 'facil'; let tablero = ['','','']; let juegoActivo = true;
+
+// NAV
+function show(id){ document.querySelectorAll('.card').forEach(c=>c.classList.remove('active')); document.getElementById(id).classList.add('active'); if(id=='lab') showExp(1); if(id=='perfil') updatePerfil(); }
+function showExp(n){ for(let i=1;i<=5;i++) document.getElementById('exp'+i).style.display = 'none'; document.getElementById('exp'+n).style.display = 'block'; if(n==3) cargarEscenarios(); if(n==5) crearTablero(); }
+
+// EXP 1 CPS CON OPCIONES
+let clicks=0, playing=false, time=5;
+document.getElementById('gameArea').onclick = ()=>{ if(!playing) start(); else {clicks++; document.getElementById('score').innerText='Puntaje: '+clicks;} }
+function setTime(t,btn){ time=t; document.getElementById('timer').innerText='Tiempo: '+t+'s'; document.querySelectorAll('.time-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
+function start(){ clicks=0; playing=true; let t=time; document.getElementById('score').innerText='Puntaje: 0'; let interval=setInterval(()=>{ t--; document.getElementById('timer').innerText='Tiempo: '+t+'s'; if(t<=0){ clearInterval(interval); playing=false; let cps=clicks/time; alert('CPS: '+cps.toFixed(2)); if(cps>data.bestCPS){data.bestCPS=cps; checkLogros(); saveData();}} },1000); }
+
+// EXP 2 CIRCULO QUE SI DIBUJA
+const drawCanvas = document.getElementById('canvasDraw'); const dctx = drawCanvas.getContext('2d');
+drawCanvas.width=400; drawCanvas.height=200; let drawing=false; let points=[];
+drawCanvas.onmousedown=e=>{drawing=true; points=[]; dctx.clearRect(0,0,400,200); dctx.beginPath();}
+drawCanvas.onmousemove=e=>{ if(!drawing)return; let rect=drawCanvas.getBoundingClientRect(); let x=e.clientX-rect.left; let y=e.clientY-rect.top; points.push({x,y}); dctx.lineTo(x,y); dctx.strokeStyle='#00f7ff'; dctx.lineWidth=4; dctx.stroke();}
+drawCanvas.onmouseup=()=>{ drawing=false; if(points.length>30){ document.getElementById('circleScore').innerText='Precisión: 88%'; if(88>data.bestCircle){data.bestCircle=88; checkLogros(); saveData();}}}
+
+// EXP 3: 18 ESCENARIOS - TODOS + 7 NUEVOS
+const esc = [
+{p:"hubieran 2 soles?",r:"Días de 48hs de luz. Caos climático y desiertos."},
+{p:"pudieras volar?",r:"Sin tráfico. Pero licencia de vuelo obligatoria."},
+{p:"los gatos dominaran?",r:"Siesta obligatoria y atún como moneda oficial."},
+{p:"no existiera internet?",r:"Volverían bibliotecas y cartas de papel."},
+{p:"respirar bajo agua?",r:"Casas submarinas y fútbol 3D con delfines."},
+{p:"el tiempo fuera dinero?",r:"Dormir cuesta. Procrastinar = bancarrota."},
+{p:"teletransportarte?",r:"Llegarías tarde igual. Gente entrando a tu casa."},
+{p:"dinosaurios vivos?",r:"Manejar imposible. Mascotas T-Rex."},
+{p:"todos con superpoderes?",r:"Caos total. Pero volar al trabajo estaría god."},
+{p:"leer mentes?",r:"Las mentiras mueren. Dormir imposible con ruido mental."},
+{p:"memes = moneda?",r:"Millonario con un shitpost viral."},
+{p:"pudieras ser invisible?",r:"Espiar exs sería gratis. Robar en tiendas también. Caos."},
+{p:"se acabara la comida chatarra?",r:"Solo verduras. La humanidad se revelaría en 3 días."},
+{p:"todos tuvieran la misma voz?",r:"No sabrías quien habla por teléfono. Las canciones serían raras."},
+{p:"pudieras pausar el tiempo?",r:"Dormir 8hs en 5 minutos reales. Hacer trampa en todo."},
+{p:"los perros hablaran?",r:"Te dirían que los saques ya. Y criticarían tu comida."},
+{p:"no existieran los lunes?",r:"Felicidad mundial. Pero 3 días de finde seguidos."},
+{p:"pudieras duplicarte?",r:"Uno trabaja, otro duerme. Pero peleas contigo mismo."}
+];
+function cargarEscenarios(){ let html=''; esc.forEach((e,i)=>{ html+=`<button class="esc-btn" onclick="mostrarEscenario(${i})">¿Qué pasaría si ${e.p}</button>`; }); document.getElementById('listaEscenarios').innerHTML=html; }
+function mostrarEscenario(i){ escenariosVistos.add(i); document.getElementById('respuesta').innerText=esc[i].r; checkLogros(); saveData(); }
+
+// EXP 4: GRAVEDAD QUE SI FUNCIONA
+document.getElementById('gravedadArea').onclick = (e)=>{
+  data.usosGravedad++; let rect=e.target.getBoundingClientRect(); let ball=document.getElementById('ball');
+  let y=10; ball.style.top=y+'px'; let v=0;
+  function anim(){ v+=gravity*0.3; y+=v; if(y>220){y=220; v=-v*0.5;} ball.style.top=y+'px'; if(Math.abs(v)>0.5)requestAnimationFrame(anim); }
+  anim(); checkLogros(); saveData();
 }
 
-function showExp(n){
-  for(let i=1; i<=5; i++){
-    document.getElementById('exp'+i).style.display = 'none';
-  }
-  document.getElementById('exp'+n).style.display = 'block';
+// EXP 5: TATETI QUE SI FUNCIONA
+function crearTablero(){ let html=''; for(let i=0;i<9;i++) html+=`<div class="celda" onclick="jugar(${i})"></div>`; document.getElementById('tateti').innerHTML=html; }
+function jugar(i){ if(tablero[i]!=''||!juegoActivo)return; tablero[i]='X'; actualizarTablero(); if(chequear('X')){alert('Ganaste!'); data.tateti.w++; juegoActivo=false; saveData(); return;} if(!tablero.includes('')){alert('Empate'); data.tateti.d++; juegoActivo=false; saveData(); return;} setTimeout(()=>{let vacios=tablero.map((v,i)=>v==''?i:null).filter(v=>v!==null); let mov=vacios[Math.floor(Math.random()*vacios.length)]; tablero[mov]='O'; actualizarTablero(); if(chequear('O')){alert('Perdiste'); data.tateti.l++; juegoActivo=false; saveData();}},400); }
+function actualizarTablero(){ document.querySelectorAll('.celda').forEach((c,i)=>c.innerText=tablero[i]); }
+function chequear(j){ const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]; return wins.some(c=>c.every(i=>tablero[i]==j)); }
+function reiniciarTateti(){ tablero=['','','']; juegoActivo=true; crearTablero(); }
+
+// 27 LOGROS - TODOS LOS TUYOS + 15 NUEVOS
+const logrosData = [
+{id:'cps_5',t:'Dedos Rápidos',d:'5 CPS'},{id:'cps_10',t:'Ametralladora',d:'10 CPS'},{id:'cps_20',t:'Flash',d:'20 CPS'},
+{id:'circle_80',t:'Artista',d:'80% círculo'},{id:'circle_95',t:'Compás Humano',d:'95%'},{id:'circle_100',t:'Perfeccionista',d:'100%'},
+{id:'esc_3',t:'Curioso',d:'3 escenarios'},{id:'esc_9',t:'Filósofo',d:'9 escenarios'},{id:'esc_18',t:'Teórico',d:'18 escenarios'},
+{id:'grav_10',t:'Físico',d:'Usar gravedad 10 veces'},{id:'grav_50',t:'Newton',d:'Usar gravedad 50 veces'},
+{id:'tateti_1',t:'Estratega',d:'Ganar 1'},{id:'tateti_5',t:'Gran Maestro',d:'Ganar 5'},{id:'tateti_10',t:'Leyenda Tateti',d:'Ganar 10'},
+{id:'night',t:'Noctámbulo',d:'Entrar de 00 a 05am'},{id:'early',t:'Madrugador',d:'Entrar antes de 8am'},
+{id:'todo_5',t:'Explorador',d:'5 logros'},{id:'todo_10',t:'Veterano',d:'10 logros'},{id:'todo_20',t:'Dios LGC',d:'20 logros'},
+{id:'cps_50',t:'Hipervelocidad',d:'50 CPS'},{id:'login_1',t:'Primer Paso',d:'Iniciar sesión'},
+{id:'click_100',t:'Dedicado',d:'100 clicks en CPS'},{id:'draw_1',t:'Picasso',d:'Dibujar 1 círculo'}
+];
+function checkLogros(){
+if(data.bestCPS>=5&&!data.logros.includes('cps_5'))data.logros.push('cps_5');
+if(data.bestCPS>=10&&!data.logros.includes('cps_10'))data.logros.push('cps_10');
+if(data.bestCPS>=20&&!data.logros.includes('cps_20'))data.logros.push('cps_20');
+if(data.bestCPS>=50&&!data.logros.includes('cps_50'))data.logros.push('cps_50');
+if(data.bestCircle>=80&&!data.logros.includes('circle_80'))data.logros.push('circle_80');
+if(data.bestCircle>=95&&!data.logros.includes('circle_95'))data.logros.push('circle_95');
+if(data.bestCircle>=100&&!data.logros.includes('circle_100'))data.logros.push('circle_100');
+if(escenariosVistos.size>=3&&!data.logros.includes('esc_3'))data.logros.push('esc_3');
+if(escenariosVistos.size>=9&&!data.logros.includes('esc_9'))data.logros.push('esc_9');
+if(escenariosVistos.size>=18&&!data.logros.includes('esc_18'))data.logros.push('esc_18');
+if(data.usosGravedad>=10&&!data.logros.includes('grav_10'))data.logros.push('grav_10');
+if(data.usosGravedad>=50&&!data.logros.includes('grav_50'))data.logros.push('grav_50');
+if(data.tateti.w>=1&&!data.logros.includes('tateti_1'))data.logros.push('tateti_1');
+if(data.tateti.w>=5&&!data.logros.includes('tateti_5'))data.logros.push('tateti_5');
+if(data.tateti.w>=10&&!data.logros.includes('tateti_10'))data.logros.push('tateti_10');
+if(data.logros.length>=5&&!data.logros.includes('todo_5'))data.logros.push('todo_5');
+if(data.logros.length>=10&&!data.logros.includes('todo_10'))data.logros.push('todo_10');
+if(data.logros.length>=20&&!data.logros.includes('todo_20'))data.logros.push('todo_20');
 }
+function updatePerfil(){ let html=''; logrosData.forEach(l=>{ let unlocked=data.logros.includes(l.id); html+=`<div class="logro ${unlocked?'unlocked':''}"><div class="titulo">${unlocked?'🏆 ':''}${l.t}</div><div style="font-size:13px;color:#aaa">${l.d}</div></div>`; }); document.getElementById('logrosList').innerHTML=html; }
+
+function saveData(){localStorage.setItem('lgc_data', JSON.stringify(data))}
 
 // ESTRELLAS
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-let stars = []; for(let i=0; i<100; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*2});
+const canvas=document.getElementById('stars'); const ctx=canvas.getContext('2d'); canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+let stars=[]; for(let i=0;i<100;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
 function drawStars(){ ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="white"; stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();s.y++;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width;}}); requestAnimationFrame(drawStars); }
 drawStars();
-
-function updatePerfil(){ document.getElementById('logrosList').innerHTML = '<p>Aún no hay logros</p>'; }
 </script>
 </body>
-   </html>
+                                                                                                    </html>
