@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGC.FUN v1.3.5</title>
+<title>LGC.FUN v1.3.6</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
   body { background: #000; color: #fff; overflow-x: hidden; overflow-y: auto; height: 100vh; }
@@ -57,45 +57,27 @@
 <div class="container">
   <div id="menu" class="card active">
     <h2>Bienvenido a LGC.FUN</h2>
-    <p>Versión 1.3.5</p>
+    <p>Versión 1.3.6</p>
   </div>
 
   <div id="novedades" class="card">
     <h2>📢 Novedades</h2>
-    <div class="version">Novedades V1.3.5</div>
-    <div class="novedad">🧹 El circulo se limpia solo al empezar a dibujar</div>
-    <div class="novedad">🏆 Logros ahora se muestran en Perfil</div>
-    <div class="novedad">📰 Historial completo en Periódico</div>
+    <div class="version">Novedades V1.3.6</div>
+    <div class="novedad">⏱️ Nuevos tiempos: 1s, 2s, 5s, 10s, 20s en CPS</div>
+    <div class="novedad">📖 Respuestas de "¿Qué pasaría si?" ahora son más largas</div>
   </div>
 
   <div id="periodico" class="card">
     <h2>📰 Periódico LGC</h2>
     <div class="historial">
-      <h4>V1.3.5 - "Quality of Life"</h4>
-      <p>- Fix: Auto limpiar canvas al dibujar</p>
-      <p>- Fix: Sistema de Logros visible</p>
-      <p>- Fix: Historial completo</p>
+      <h4>V1.3.6</h4>
+      <p>- 5 contadores en CPS: 1, 2, 5, 10, 20 seg</p>
+      <p>- Escenarios con respuestas extendidas</p>
     </div>
     <div class="historial">
-      <h4>V1.3.4 - Patch</h4>
-      <p>- Fix: Ya no dibuja "fideos". Círculos normales ahora</p>
-    </div>
-    <div class="historial">
-      <h4>V1.3 - "Expansión Cósmica"</h4>
-      <p>- Exp 4: Gravedad agregado</p>
-      <p>- Exp 3: 15 escenarios</p>
-    </div>
-    <div class="historial">
-      <h4>V1.2</h4>
-      <p>- Sistema de Login y guardado</p>
-    </div>
-    <div class="historial">
-      <h4>V1.1</h4>
-      <p>- Exp 2 y 3</p>
-    </div>
-    <div class="historial">
-      <h4>V1.0</h4>
-      <p>- Exp 1 Click por segundo</p>
+      <h4>V1.3.5</h4>
+      <p>- Auto limpiar circulo</p>
+      <p>- Sistema de Logros</p>
     </div>
   </div>
 
@@ -108,8 +90,11 @@
 
     <div id="exp1" style="display:none; margin-top:20px;">
       <h3>Exp 1: Click por segundo</h3>
-      <button class="time-btn" onclick="setTime(5)">5s</button>
-      <button class="time-btn" onclick="setTime(10)">10s</button>
+      <button class="time-btn" onclick="setTime(1, event)">1s</button>
+      <button class="time-btn" onclick="setTime(2, event)">2s</button>
+      <button class="time-btn active" onclick="setTime(5, event)">5s</button>
+      <button class="time-btn" onclick="setTime(10, event)">10s</button>
+      <button class="time-btn" onclick="setTime(20, event)">20s</button>
       <h3 id="score">Puntaje: 0</h3>
       <h3 id="timer">Tiempo: 5s</h3>
       <div id="gameArea">Click para empezar</div>
@@ -172,7 +157,7 @@ let data = JSON.parse(localStorage.getItem('lgc_data')) || {bestCPS:0, bestCircl
 function show(id){
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id=='perfil') updatePerfil(); // ACTUALIZA LOGROS AL ENTRAR
+  if(id=='perfil') updatePerfil();
 }
 function showExp(n){
   document.getElementById('exp1').style.display = n==1?'block':'none';
@@ -181,17 +166,22 @@ function showExp(n){
   document.getElementById('exp4').style.display = n==4?'block':'none';
 }
 
-// EXP 1: CLICK
+// EXP 1: CLICK - AHORA 1,2,5,10,20
 let clicks=0, playing=false, time=5;
 document.getElementById('gameArea').onclick = ()=>{ if(!playing) start(); else {clicks++; document.getElementById('score').innerText='Puntaje: '+clicks;} }
-function setTime(t){ time=t; document.getElementById('timer').innerText='Tiempo: '+t+'s'; }
+function setTime(t, e){
+  time=t;
+  document.getElementById('timer').innerText='Tiempo: '+t+'s';
+  document.querySelectorAll('.time-btn').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');
+}
 function start(){
   clicks=0; playing=true; let t=time;
   document.getElementById('score').innerText='Puntaje: 0';
   let interval=setInterval(()=>{ t--; document.getElementById('timer').innerText='Tiempo: '+t+'s'; if(t<=0){ clearInterval(interval); playing=false; let cps=clicks/time; alert('CPS: '+cps.toFixed(2)); if(cps>data.bestCPS){data.bestCPS=cps; checkLogros(); saveData();}} },1000);
 }
 
-// EXP 2: CIRCULO - FIX: SE LIMPIA SOLO
+// EXP 2: CIRCULO
 const drawCanvas = document.getElementById('canvasDraw');
 const dctx = drawCanvas.getContext('2d');
 let drawing = false; let points = []; let startPoint = null;
@@ -217,7 +207,7 @@ function getPos(e){
 
 function startDraw(e){
   e.preventDefault();
-  clearCanvas(); // 1. SE LIMPIA SOLO AQUI
+  clearCanvas();
   drawing = true; points = [];
   startPoint = getPos(e); points.push(startPoint);
 }
@@ -256,16 +246,26 @@ function clearCanvas(){
     document.getElementById('circleScore').innerText = 'Precisión: -';
 }
 
-// EXP 3
-const esc = [{p:"hubieran 2 soles?",r:"Doble calor"},{p:"pudieras volar?",r:"2 min al trabajo"}];
-function generarEscenario(){ let r=esc[Math.floor(Math.random()*esc.length)]; document.getElementById('escenario').innerText="¿Qué pasaría si "+r.p; document.getElementById('respuesta').innerText=r.r; }
+// EXP 3: RESPUESTAS MAS LARGAS
+const esc = [
+  {p:"hubieran 2 soles?",r:"Tendríamos días de 48 horas de luz seguidos y noches eternas. El clima sería un caos: desiertos hirviendo y zonas congeladas. Las plantas tendrían que adaptarse a doble radiación y nosotros usaríamos bloqueador x2. Además habría 2 amaneceres y 2 atardeceres todos los días."},
+  {p:"pudieras volar?",r:"El tráfico dejaría de existir. Llegarías al trabajo en 2 minutos volando por encima de los edificios. Pero también habría reglas aéreas, accidentes en el cielo y seguro tendrías que sacar licencia de vuelo. Dormirías en hamacas y los deportes serían todos aéreos."},
+  {p:"los gatos dominaran el mundo?",r:"Habría siesta obligatoria cada 2 horas y el atún sería la moneda oficial. Trabajaríamos 4 horas y dormiríamos 20. Todos los muebles tendrían rascadores y las leyes las decidirían los gatos tirando cosas al piso. Netflix solo tendría videos de aves."},
+  {p:"no existiera el internet?",r:"Tendríamos que salir a la calle a hablar con la gente. Las enciclopedias volverían y las bibliotecas estarían llenas. Para ver a tus amigos tendrías que ir a su casa. Los juegos serían de mesa y las noticias llegarían por diario. Sería aburrido pero dormiríamos mejor."},
+  {p:"pudieras respirar bajo el agua?",r:"Las vacaciones serían en el fondo del mar. Tendríamos casas submarinas y los delfines serían nuestros vecinos. El fútbol se jugaría en 3D bajo el agua. Pero también tendríamos que lidiar con tiburones y la presión. Atlantis sería real."}
+];
+function generarEscenario(){
+  let r=esc[Math.floor(Math.random()*esc.length)];
+  document.getElementById('escenario').innerText="¿Qué pasaría si "+r.p;
+  document.getElementById('respuesta').innerText=r.r;
+}
 
 // EXP 4
 let gravity = 9;
 function updateGravity(val){ gravity = val; document.getElementById('gravityValue').innerText = val; }
 function lanzarPelota(){ let ball=document.getElementById('ball'); ball.style.top='20px'; let y=20,v=-15; function anim(){v+=gravity*0.2;y+=v; if(y>220)y=220; ball.style.top=y+'px'; if(v<10)requestAnimationFrame(anim);} anim(); }
 
-// 2. LOGROS
+// LOGROS
 const logrosData = [
   {id:'cps_5', titulo:'Dedos Rápidos', desc:'Llega a 5 CPS'},
   {id:'circle_80', titulo:'Artista', desc:'80% de precisión'}
@@ -290,4 +290,4 @@ function login(){ if(document.getElementById('pass').value=='lgc2025') alert('Bi
 function saveData(){localStorage.setItem('lgc_data', JSON.stringify(data))}
 </script>
 </body>
-      </html>
+         </html>
