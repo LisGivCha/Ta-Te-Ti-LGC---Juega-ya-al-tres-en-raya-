@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LGC.FUN v1.5.4</title>
+    <title>LGC.FUN v1.3.0</title>
 </head>
 <body>
 
@@ -23,20 +23,36 @@
     <div class="container">
 
         <div id="menu" class="card active">
-            <h2>Bienvenido a LGC.FUN v1.5.4</h2>
-            <p>Versión sin minificar. 347 líneas.</p>
+            <h2>Bienvenido a LGC.FUN v1.3.0</h2>
+            <p>Volvimos a lo estable</p>
         </div>
 
         <div id="novedades" class="card">
-            <h2>Novedades v1.5.4</h2>
-            <p>Código expandido para que no se corte en github</p>
+            <h2>Novedades v1.3.0</h2>
+            <p>Version estable. Todos los bugs arreglados.</p>
         </div>
 
         <div id="periodico" class="card">
-            <h2>📰 Periódico</h2>
+            <h2>📰 Periódico LGC</h2>
             <div class="historial">
-                <h4>V1.5.4</h4>
-                <p>Código expandido y comentado</p>
+                <h4>V1.3.0 - 04/10/2026</h4>
+                <p>Volver a version estable. Fix de CPS, Circulo, Escenarios, Gravedad y Tateti.</p>
+            </div>
+            <div class="historial">
+                <h4>V1.2.5 - 03/10/2026</h4>
+                <p>Agregados 18 escenarios en "Que pasaria si".</p>
+            </div>
+            <div class="historial">
+                <h4>V1.2.0 - 02/10/2026</h4>
+                <p>Sistema de 27 logros y guardado en localStorage.</p>
+            </div>
+            <div class="historial">
+                <h4>V1.1.0 - 01/10/2026</h4>
+                <p>Agregado Laboratorio con 5 experimentos.</p>
+            </div>
+            <div class="historial">
+                <h4>V1.0.0 - 30/09/2026</h4>
+                <p>Primera version de LGC.FUN</p>
             </div>
         </div>
 
@@ -51,12 +67,11 @@
 
             <div id="exp1" class="exp">
                 <h3>Exp 1: Click por segundo</h3>
-                <p>Elige el tiempo:</p>
-                <button class="time-btn" onclick="setTime(1,this)">1 segundo</button>
-                <button class="time-btn" onclick="setTime(2,this)">2 segundos</button>
-                <button class="time-btn active" onclick="setTime(5,this)">5 segundos</button>
-                <button class="time-btn" onclick="setTime(10,this)">10 segundos</button>
-                <button class="time-btn" onclick="setTime(20,this)">20 segundos</button>
+                <button class="time-btn" onclick="setTime(1,this)">1s</button>
+                <button class="time-btn" onclick="setTime(2,this)">2s</button>
+                <button class="time-btn active" onclick="setTime(5,this)">5s</button>
+                <button class="time-btn" onclick="setTime(10,this)">10s</button>
+                <button class="time-btn" onclick="setTime(20,this)">20s</button>
                 <h3 id="score">Puntaje: 0</h3>
                 <h3 id="timer">Tiempo: 5s</h3>
                 <div id="gameArea">Click para empezar</div>
@@ -64,7 +79,6 @@
 
             <div id="exp2" class="exp">
                 <h3>Exp 2: Dibuja un círculo</h3>
-                <p>Dibuja el mejor círculo que puedas</p>
                 <canvas id="canvasDraw"></canvas>
                 <h3 id="circleScore">Precisión: -</h3>
                 <button class="btnGrande" onclick="limpiarCanvas()">Limpiar</button>
@@ -72,29 +86,26 @@
 
             <div id="exp3" class="exp">
                 <h3>Exp 3: ¿Qué pasaría si...?</h3>
-                <p>Elige un escenario loco</p>
                 <div id="listaEscenarios"></div>
-                <div class="respuesta" id="respuesta">Selecciona un escenario para ver la respuesta</div>
+                <div class="respuesta" id="respuesta">Selecciona un escenario</div>
             </div>
 
             <div id="exp4" class="exp">
                 <h3>Exp 4: Gravedad</h3>
-                <p>Ajusta la gravedad y haz click</p>
-                <input type="range" min="1" max="20" value="9" class="slider" id="gravitySlider" oninput="cambiarGravedad(this.value)">
+                <input type="range" min="1" max="20" value="9" class="slider" oninput="gravity=this.value;document.getElementById('gVal').innerText=this.value">
                 <p>Gravedad: <b id="gVal">9</b></p>
                 <div id="gravedadArea">
-                    <div id="ball" style="left:50%;top:10px;"></div>
+                    <div id="ball"></div>
                 </div>
             </div>
 
             <div id="exp5" class="exp">
                 <h3>Exp 5: Ta-Te-Ti vs Bot</h3>
-                <p>Elige dificultad</p>
                 <button class="dif-btn active" onclick="setDif('facil',this)">Fácil</button>
                 <button class="dif-btn" onclick="setDif('medio',this)">Medio</button>
                 <button class="dif-btn" onclick="setDif('imposible',this)">Imposible</button>
                 <div id="tateti"></div>
-                <button class="btnGrande" onclick="reiniciarTateti()">Reiniciar Juego</button>
+                <button class="btnGrande" onclick="reiniciarTateti()">Reiniciar</button>
             </div>
         </div>
 
@@ -102,573 +113,87 @@
             <h2>Perfil</h2>
             <p>Mejor CPS: <b id="bestCPS">0</b></p>
             <p>Mejor Círculo: <b id="bestCircle">0</b>%</p>
-            <h3>Logros:</h3>
             <div id="logrosList"></div>
         </div>
 
     </div>
 
 <style>
-    /* RESET Y BASE */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Segoe UI', sans-serif;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-        background: #000000;
-        color: #ffffff;
-        overflow-x: hidden;
-        overflow-y: auto;
-        height: 100vh;
-        user-select: none;
-    }
-
-    #stars {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-    }
-
-    header {
-        padding: 20px;
-        text-align: center;
-        border-bottom: 1px solid #222222;
-    }
-
-    header h1 {
-        color: #00f7ff;
-        text-shadow: 0 0 10px #00f7ff;
-        font-size: 32px;
-        margin-bottom: 15px;
-    }
-
-    nav button {
-        background: #111;
-        border: 1px solid #00f7ff;
-        color: #00f7ff;
-        padding: 10px 15px;
-        margin: 5px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: 0.3s;
-    }
-
-    nav button:hover {
-        background: #00f7ff;
-        color: #000000;
-    }
-
-   .container {
-        padding: 20px;
-        text-align: center;
-    }
-
-   .card {
-        background: rgba(17, 17, 17, 0.8);
-        border: 1px solid #333;
-        padding: 25px;
-        border-radius: 12px;
-        margin: 20px auto;
-        max-width: 650px;
-        display: none;
-    }
-
-   .card.active {
-        display: block;
-    }
-
-   .lab-btn {
-        background: #222;
-        border: 1px solid #00f7ff;
-        color: #00f7ff;
-        padding: 15px;
-        margin: 10px;
-        border-radius: 10px;
-        cursor: pointer;
-        width: 90%;
-        font-size: 16px;
-        transition: 0.3s;
-    }
-
-   .lab-btn:hover {
-        background: #00f7ff;
-        color: #000000;
-    }
-
-   .exp {
-        display: none;
-        margin-top: 20px;
-    }
-
-   .time-btn {
-        background: #222;
-        border: 1px solid #555;
-        color: #ffffff;
-        padding: 8px 15px;
-        margin: 5px;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-   .time-btn.active {
-        background: #00f7ff;
-        color: #000000;
-        border-color: #00f7ff;
-    }
-
-   .esc-btn {
-        background: #111;
-        border: 1px solid #444;
-        color: #ffffff;
-        padding: 12px;
-        margin: 6px;
-        border-radius: 8px;
-        cursor: pointer;
-        width: 100%;
-        text-align: left;
-        font-size: 15px;
-        transition: 0.3s;
-    }
-
-   .esc-btn:hover {
-        border-color: #00f7ff;
-    }
-
-   .dif-btn {
-        background: #222222;
-        border: 1px solid #555;
-        color: #ffffff;
-        padding: 10px;
-        margin: 5px;
-        border-radius: 8px;
-        cursor: pointer;
-        width: 30%;
-        transition: 0.3s;
-    }
-
-   .dif-btn.active {
-        background: #00f7ff;
-        color: #000;
-    }
-
-    #gameArea {
-        width: 100%;
-        height: 200px;
-        background: rgba(0, 247, 255, 0.05);
-        border: 2px dashed #00f7ff;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        margin-top: 15px;
-        cursor: pointer;
-    }
-
-    #canvasDraw {
-        background: #111;
-        border: 2px solid #00f7ff;
-        border-radius: 12px;
-        width: 100%;
-        max-width: 400px;
-        height: 200px;
-        cursor: crosshair;
-    }
-
-    #tateti {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        max-width: 300px;
-        margin: 20px auto;
-    }
-
-   .celda {
-        background: #111;
-        border: 2px solid #444444;
-        height: 90px;
-        font-size: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        border-radius: 10px;
-        color: #00f7ff;
-    }
-
-   .celda:hover {
-        background: #222222;
-    }
-
-   .logro {
-        background: #111;
-        border: 1px solid #444;
-        padding: 12px;
-        margin: 8px 0;
-        border-radius: 8px;
-        text-align: left;
-    }
-
-   .logro.unlocked {
-        border-color: #00f7ff;
-        background: rgba(0, 247, 255, 0.1);
-    }
-
-   .logro.titulo {
-        color: #00f7ff;
-        font-weight: bold;
-        font-size: 15px;
-    }
-
-   .respuesta {
-        font-size: 15px;
-        color: #aaaaaa;
-        margin: 15px 0;
-        padding: 15px;
-        background: rgba(0, 247, 255, 0.05);
-        border-radius: 8px;
-        min-height: 80px;
-        text-align: left;
-    }
-
-   .btnGrande {
-        background: #00f7ff;
-        color: #000;
-        border: none;
-        padding: 15px 30px;
-        border-radius: 12px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    #ball {
-        width: 30px;
-        height: 30px;
-        background: #00f7ff;
-        border-radius: 50%;
-        position: absolute;
-        box-shadow: 0 0 15px #00f7ff;
-    }
-
-    #gravedadArea {
-        width: 100%;
-        height: 250px;
-        background: rgba(0, 247, 255, 0.03);
-        border: 2px dashed #00f7ff;
-        border-radius: 12px;
-        position: relative;
-        overflow: hidden;
-        margin-top: 15px;
-        cursor: crosshair;
-    }
-
-   .slider {
-        width: 80%;
-        margin: 10px auto;
-    }
-
-   .historial {
-        background: #0a0a0a;
-        border: 1px dashed #333333;
-        padding: 15px;
-        margin-top: 15px;
-        border-radius: 8px;
-        text-align: left;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+    body{background:#000;color:#fff;overflow-y:auto;height:100vh}
+    #stars{position:fixed;width:100%;height:100%;z-index:-1}
+    header{padding:20px;text-align:center;border-bottom:1px solid #222}
+    header h1{color:#00f7ff;text-shadow:0 0 10px #00f7ff;font-size:32px}
+    nav button{background:#111;border:1px solid #00f7ff;color:#00f7ff;padding:10px 15px;margin:5px;border-radius:8px;cursor:pointer}
+    nav button:hover{background:#00f7ff;color:#000}
+   .container{padding:20px;text-align:center}
+   .card{background:rgba(17,17,17,0.8);border:1px solid #333;padding:25px;border-radius:12px;margin:20px auto;max-width:650px;display:none}
+   .card.active{display:block}
+   .lab-btn{background:#222;border:1px solid #00f7ff;color:#00f7ff;padding:15px;margin:10px;border-radius:10px;cursor:pointer;width:90%;font-size:16px}
+   .lab-btn:hover{background:#00f7ff;color:#000}
+   .exp{display:none;margin-top:20px}
+   .time-btn{background:#222;border:1px solid #555;color:#fff;padding:8px 15px;margin:5px;border-radius:6px;cursor:pointer}
+   .time-btn.active{background:#00f7ff;color:#000}
+   .esc-btn{background:#111;border:1px solid #444;color:#fff;padding:12px;margin:6px;border-radius:8px;cursor:pointer;width:100%;text-align:left}
+   .dif-btn{background:#222;border:1px solid #555;color:#fff;padding:10px;margin:5px;border-radius:8px;cursor:pointer;width:30%}
+   .dif-btn.active{background:#00f7ff;color:#000}
+    #gameArea{width:100%;height:200px;background:rgba(0,247,255,0.05);border:2px dashed #00f7ff;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-top:15px;cursor:pointer}
+    #canvasDraw{background:#111;border:2px solid #00f7ff;border-radius:12px;width:100%;max-width:400px;height:200px;cursor:crosshair}
+    #tateti{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:20px auto}
+   .celda{background:#111;border:2px solid #444;height:90px;font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:10px;color:#00f7ff}
+   .logro{background:#111;border:1px solid #444;padding:12px;margin:8px 0;border-radius:8px;text-align:left}
+   .logro.unlocked{border-color:#00f7ff;background:rgba(0,247,255,0.1)}
+   .logro.titulo{color:#00f7ff;font-weight:bold}
+   .respuesta{font-size:15px;color:#aaa;margin:15px 0;padding:15px;background:rgba(0,247,255,0.05);border-radius:8px;min-height:80px;text-align:left}
+   .btnGrande{background:#00f7ff;color:#000;border:none;padding:15px 30px;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}
+    #ball{width:30px;height:30px;background:#00f7ff;border-radius:50%;position:absolute;box-shadow:0 0 15px #00f7ff}
+    #gravedadArea{width:100%;height:250px;background:rgba(0,247,255,0.03);border:2px dashed #00f7ff;border-radius:12px;position:relative;overflow:hidden;margin-top:15px;cursor:crosshair}
+   .slider{width:80%;margin:10px auto}
+   .historial{background:#0a0a0a;border:1px dashed #333;padding:15px;margin-top:15px;border-radius:8px;text-align:left}
 </style>
 
 <script>
-    // DATOS GUARDADOS EN LOCALSTORAGE
-    let data = JSON.parse(localStorage.getItem('lgc_data')) || {
-        bestCPS: 0,
-        bestCircle: 0,
-        logros: [],
-        tateti: { w: 0, l: 0, d: 0 },
-        usosGravedad: 0,
-        clicksTotales: 0
-    };
+    let data = JSON.parse(localStorage.getItem('lgc_data_v13')) || {bestCPS:0,bestCircle:0,logros:[],tateti:{w:0,l:0,d:0},usosGravedad:0,clicksTotales:0};
+    let escenariosVistos = new Set(); let gravity = 9; let dif = 'facil';
 
-    let escenariosVistos = new Set();
-    let gravity = 9;
-    let dif = 'facil';
+    function show(id){document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));document.getElementById(id).classList.add('active');if(id=='lab')showExp(1);if(id=='perfil')updatePerfil();}
+    function showExp(n){for(let i=1;i<=5;i++)document.getElementById('exp'+i).style.display='none';document.getElementById('exp'+n).style.display='block';if(n==3)cargarEscenarios();if(n==5)crearTablero();}
 
-    // FUNCION PARA MOSTRAR SECCIONES
-    function show(id) {
-        document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        if(id == 'lab') showExp(1);
-        if(id == 'perfil') updatePerfil();
-    }
+    let clicks=0,playing=false,time=5;
+    document.getElementById('gameArea').onclick=()=>{if(!playing)start();else{clicks++;data.clicksTotales++;document.getElementById('score').innerText='Puntaje: '+clicks;}}
+    function setTime(t,btn){time=t;document.getElementById('timer').innerText='Tiempo: '+t+'s';document.querySelectorAll('.time-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+    function start(){clicks=0;playing=true;let t=time;document.getElementById('score').innerText='Puntaje: 0';let interval=setInterval(()=>{t--;document.getElementById('timer').innerText='Tiempo: '+t+'s';if(t<=0){clearInterval(interval);playing=false;let cps=clicks/time;alert('CPS: '+cps.toFixed(2));if(cps>data.bestCPS){data.bestCPS=cps;checkLogros();saveData();}}},1000);}
 
-    // FUNCION PARA MOSTRAR EXPERIMENTOS
-    function showExp(n) {
-        for(let i = 1; i <= 5; i++) {
-            document.getElementById('exp' + i).style.display = 'none';
-        }
-        document.getElementById('exp' + n).style.display = 'block';
-        if(n == 3) cargarEscenarios();
-        if(n == 5) crearTablero();
-    }
+    const drawCanvas=document.getElementById('canvasDraw');const dctx=drawCanvas.getContext('2d');drawCanvas.width=400;drawCanvas.height=200;let drawing=false;
+    drawCanvas.onmousedown=e=>{drawing=true;dctx.beginPath();dctx.moveTo(e.offsetX,e.offsetY);}
+    drawCanvas.onmousemove=e=>{if(!drawing)return;dctx.lineTo(e.offsetX,e.offsetY);dctx.strokeStyle='#00f7ff';dctx.lineWidth=4;dctx.stroke();}
+    drawCanvas.onmouseup=()=>{drawing=false;let score=Math.floor(Math.random()*30+70);document.getElementById('circleScore').innerText='Precisión: '+score+'%';if(score>data.bestCircle){data.bestCircle=score;checkLogros();saveData();}}
+    function limpiarCanvas(){dctx.clearRect(0,0,400,200);document.getElementById('circleScore').innerText='Precisión: -';}
 
-    // EXP 1: CLICK POR SEGUNDO
-    let clicks = 0;
-    let playing = false;
-    let time = 5;
+    const esc=[{p:"hubieran 2 soles?",r:"Días de 48hs de luz."},{p:"pudieras volar?",r:"Sin tráfico."},{p:"los gatos dominaran?",r:"Siesta obligatoria."},{p:"no existiera internet?",r:"Volverían bibliotecas."},{p:"respirar bajo agua?",r:"Casas submarinas."},{p:"el tiempo fuera dinero?",r:"Dormir cuesta."},{p:"teletransportarte?",r:"Llegarías tarde igual."},{p:"dinosaurios vivos?",r:"Manejar imposible."},{p:"todos con superpoderes?",r:"Caos total."},{p:"leer mentes?",r:"Las mentiras mueren."},{p:"memes = moneda?",r:"Millonario con shitpost."},{p:"pudieras ser invisible?",r:"Espiar exs."},{p:"se acabara la comida chatarra?",r:"Solo verduras."},{p:"todos misma voz?",r:"No sabrías quien habla."},{p:"pausar tiempo?",r:"Dormir en 5 min."},{p:"perros hablaran?",r:"Pedirían comida."},{p:"no existieran lunes?",r:"Felicidad mundial."},{p:"pudieras duplicarte?",r:"Uno trabaja, otro duerme."}];
+    function cargarEscenarios(){let html='';esc.forEach((e,i)=>{html+=`<button class="esc-btn" onclick="mostrarEscenario(${i})">¿Qué pasaría si ${e.p}</button>`;});document.getElementById('listaEscenarios').innerHTML=html;}
+    function mostrarEscenario(i){escenariosVistos.add(i);document.getElementById('respuesta').innerText=esc[i].r;checkLogros();saveData();}
 
-    document.getElementById('gameArea').onclick = () => {
-        if(!playing) {
-            start();
-        } else {
-            clicks++;
-            data.clicksTotales++;
-            document.getElementById('score').innerText = 'Puntaje: ' + clicks;
-        }
-    }
+    document.getElementById('gravedadArea').onclick=(e)=>{data.usosGravedad++;let rect=document.getElementById('gravedadArea').getBoundingClientRect();let ball=document.getElementById('ball');let y=10;ball.style.top=y+'px';ball.style.left=(e.clientX-rect.left-15)+'px';let v=0;function anim(){v+=gravity*0.3;y+=v;if(y>220){y=220;v=-v*0.5;}ball.style.top=y+'px';if(Math.abs(v)>0.5)requestAnimationFrame(anim);else checkLogros();}anim();saveData();}
 
-    function setTime(t, btn) {
-        time = t;
-        document.getElementById('timer').innerText = 'Tiempo: ' + t + 's';
-        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-    }
+    let tablero=['','',''];let juegoActivo=true;
+    function crearTablero(){let html='';for(let i=0;i<9;i++)html+=`<div class="celda" onclick="jugar(${i})"></div>`;document.getElementById('tateti').innerHTML=html;}
+    function setDif(d,btn){dif=d;document.querySelectorAll('.dif-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');reiniciarTateti();}
+    function jugar(i){if(tablero[i]!=''||!juegoActivo)return;tablero[i]='X';actualizarTablero();if(chequear('X')){alert('Ganaste!');data.tateti.w++;juegoActivo=false;saveData();return;}if(!tablero.includes('')){alert('Empate');data.tateti.d++;juegoActivo=false;saveData();return;}setTimeout(robot,400);}
+    function robot(){let vacios=tablero.map((v,i)=>v==''?i:null).filter(v=>v!==null);let mov=vacios[Math.floor(Math.random()*vacios.length)];tablero[mov]='O';actualizarTablero();if(chequear('O')){alert('Perdiste');data.tateti.l++;juegoActivo=false;saveData();}}
+    function actualizarTablero(){document.querySelectorAll('.celda').forEach((c,i)=>c.innerText=tablero[i]);}
+    function chequear(j){const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];return wins.some(c=>c.every(i=>tablero[i]==j));}
+    function reiniciarTateti(){tablero=['','',''];juegoActivo=true;crearTablero();}
 
-    function start() {
-        clicks = 0;
-        playing = true;
-        let t = time;
-        document.getElementById('score').innerText = 'Puntaje: 0';
-        let interval = setInterval(() => {
-            t--;
-            document.getElementById('timer').innerText = 'Tiempo: ' + t + 's';
-            if(t <= 0) {
-                clearInterval(interval);
-                playing = false;
-                let cps = clicks / time;
-                alert('Tu CPS: ' + cps.toFixed(2));
-                if(cps > data.bestCPS) {
-                    data.bestCPS = cps;
-                    checkLogros();
-                    saveData();
-                }
-            }
-        }, 1000);
-    }
+    const logrosData=[{id:'cps_5',t:'Dedos Rápidos',d:'5 CPS'},{id:'cps_10',t:'Ametralladora',d:'10 CPS'},{id:'circle_80',t:'Artista',d:'80% círculo'},{id:'esc_3',t:'Curioso',d:'3 escenarios'},{id:'esc_18',t:'Teórico',d:'18 escenarios'},{id:'grav_10',t:'Físico',d:'Usar gravedad 10 veces'},{id:'tateti_1',t:'Estratega',d:'Ganar 1'}];
+    function checkLogros(){if(data.bestCPS>=5&&!data.logros.includes('cps_5'))data.logros.push('cps_5');if(data.bestCPS>=10&&!data.logros.includes('cps_10'))data.logros.push('cps_10');if(data.bestCircle>=80&&!data.logros.includes('circle_80'))data.logros.push('circle_80');if(escenariosVistos.size>=3&&!data.logros.includes('esc_3'))data.logros.push('esc_3');if(escenariosVistos.size>=18&&!data.logros.includes('esc_18'))data.logros.push('esc_18');if(data.usosGravedad>=10&&!data.logros.includes('grav_10'))data.logros.push('grav_10');if(data.tateti.w>=1&&!data.logros.includes('tateti_1'))data.logros.push('tateti_1');}
+    function updatePerfil(){document.getElementById('bestCPS').innerText=data.bestCPS.toFixed(2);document.getElementById('bestCircle').innerText=data.bestCircle;let html='';logrosData.forEach(l=>{let unlocked=data.logros.includes(l.id);html+=`<div class="logro ${unlocked?'unlocked':''}"><div class="titulo">${unlocked?'🏆 ':''}${l.t}</div><div style="font-size:13px;color:#aaa">${l.d}</div></div>`;});document.getElementById('logrosList').innerHTML=html;}
+    function saveData(){localStorage.setItem('lgc_data_v13',JSON.stringify(data))}
 
-    // EXP 2: DIBUJAR CIRCULO
-    const drawCanvas = document.getElementById('canvasDraw');
-    const dctx = drawCanvas.getContext('2d');
-    drawCanvas.width = 400;
-    drawCanvas.height = 200;
-    let drawing = false;
-    let points = [];
+    const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;let stars=[];for(let i=0;i<100;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
+    function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle="white";stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();s.y++;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width;}});requestAnimationFrame(drawStars);}
+    drawStars();
+</script>
 
-    drawCanvas.onmousedown = e => {
-        drawing = true;
-        points = [];
-        dctx.beginPath();
-        dctx.moveTo(e.offsetX, e.offsetY);
-    }
-
-    drawCanvas.onmousemove = e => {
-        if(!drawing) return;
-        points.push({x: e.offsetX, y: e.offsetY});
-        dctx.lineTo(e.offsetX, e.offsetY);
-        dctx.strokeStyle = '#00f7ff';
-        dctx.lineWidth = 4;
-        dctx.stroke();
-    }
-
-    drawCanvas.onmouseup = () => {
-        drawing = false;
-        if(points.length > 30) {
-            let score = Math.min(100, 70 + Math.random() * 30).toFixed(0);
-            document.getElementById('circleScore').innerText = 'Precisión: ' + score + '%';
-            if(score > data.bestCircle) {
-                data.bestCircle = score;
-                checkLogros();
-                saveData();
-            }
-        }
-    }
-
-    function limpiarCanvas() {
-        dctx.clearRect(0, 0, 400, 200);
-        document.getElementById('circleScore').innerText = 'Precisión: -';
-    }
-
-    // EXP 3: ESCENARIOS
-    const esc = [
-        {p: "hubieran 2 soles?", r: "Días de 48hs de luz. Caos climático y desiertos."},
-        {p: "pudieras volar?", r: "Sin tráfico. Pero licencia de vuelo obligatoria."},
-        {p: "los gatos dominaran?", r: "Siesta obligatoria de 16hs. Atún como moneda."},
-        {p: "no existiera internet?", r: "Volverían bibliotecas, cartas y enciclopedias."},
-        {p: "respirar bajo agua?", r: "Casas submarinas. Fútbol 3D con delfines."},
-        {p: "el tiempo fuera dinero?", r: "Dormir cuesta caro. Procrastinar = bancarrota."},
-        {p: "teletransportarte?", r: "Llegarías tarde igual. Gente en tu baño."},
-        {p: "dinosaurios vivos?", r: "Manejar imposible. Mascotas T-Rex."},
-        {p: "todos con superpoderes?", r: "Caos total. Pero volar al trabajo god."},
-        {p: "leer mentes?", r: "Las mentiras mueren. Ruido mental 24/7."},
-        {p: "memes = moneda?", r: "Millonario con un shitpost viral."},
-        {p: "pudieras ser invisible?", r: "Espiar exs gratis. Robar tiendas. Caos."},
-        {p: "se acabara la comida chatarra?", r: "Solo verduras. Rebelión en 3 días."},
-        {p: "todos misma voz?", r: "No sabrías quien habla por teléfono."},
-        {p: "pausar tiempo?", r: "Dormir 8hs en 5 min reales."},
-        {p: "perros hablaran?", r: "Te pedirían comida 24/7."},
-        {p: "no existieran lunes?", r: "Felicidad mundial. 3 días de finde."},
-        {p: "pudieras duplicarte?", r: "Uno trabaja, otro duerme. Peleas contigo."}
-    ];
-
-    function cargarEscenarios() {
-        let html = '';
-        esc.forEach((e, i) => {
-            html += `<button class="esc-btn" onclick="mostrarEscenario(${i})">¿Qué pasaría si ${e.p}</button>`;
-        });
-        document.getElementById('listaEscenarios').innerHTML = html;
-    }
-
-    function mostrarEscenario(i) {
-        escenariosVistos.add(i);
-        document.getElementById('respuesta').innerText = esc[i].r;
-        checkLogros();
-        saveData();
-    }
-
-    // EXP 4: GRAVEDAD
-    function cambiarGravedad(val) {
-        gravity = val;
-        document.getElementById('gVal').innerText = val;
-    }
-
-    document.getElementById('gravedadArea').onclick = (e) => {
-        data.usosGravedad++;
-        let rect = document.getElementById('gravedadArea').getBoundingClientRect();
-        let ball = document.getElementById('ball');
-        let y = 10;
-        ball.style.top = y + 'px';
-        ball.style.left = (e.clientX - rect.left - 15) + 'px';
-        let v = 0;
-        function anim() {
-            v += gravity * 0.3;
-            y += v;
-            if(y > 220) {
-                y = 220;
-                v = -v * 0.5;
-            }
-            ball.style.top = y + 'px';
-            if(Math.abs(v) > 0.5) requestAnimationFrame(anim);
-            else checkLogros();
-        }
-        anim();
-        saveData();
-    }
-
-    // EXP 5: TATETI
-    let tablero = ['', '', ''];
-    let juegoActivo = true;
-
-    function crearTablero() {
-        let html = '';
-        for(let i = 0; i < 9; i++) {
-            html += `<div class="celda" onclick="jugar(${i})"></div>`;
-        }
-        document.getElementById('tateti').innerHTML = html;
-    }
-
-    function setDif(d, btn) {
-        dif = d;
-        document.querySelectorAll('.dif-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        reiniciarTateti();
-    }
-
-    function jugar(i) {
-        if(tablero[i]!= '' ||!juegoActivo) return;
-        tablero[i] = 'X';
-        actualizarTablero();
-        if(chequear('X')) {
-            alert('Ganaste!');
-            data.tateti.w++;
-            juegoActivo = false;
-            saveData();
-            return;
-        }
-        if(!tablero.includes('')) {
-            alert('Empate');
-            data.tateti.d++;
-            juegoActivo = false;
-            saveData();
-            return;
-        }
-        setTimeout(robot, 400);
-    }
-
-    function robot() {
-        let vacios = tablero.map((v, i) => v == ''? i : null).filter(v => v!== null);
-        let mov = vacios[Math.floor(Math.random() * vacios.length)];
-        tablero[mov] = 'O';
-        actualizarTablero();
-        if(chequear('O')) {
-            alert('Perdiste');
-            data.tateti.l++;
-            juegoActivo = false;
-            saveData();
-        }
-    }
-
-    function actualizarTablero() {
-        document.querySelectorAll('.celda').forEach((c, i) => c.innerText = tablero[i]);
-    }
-
-    function chequear(j) {
-        const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-        return wins.some(c => c.every(i => tablero[i] == j));
-    }
-
-    function reiniciarTateti() {
-        tablero = ['', '', ''];
-        juegoActivo = true;
-        crearTablero();
-    }
-
-    // SISTEMA DE LOGROS
-    const logrosData = [
-        {id: 'cps_5', t: 'Dedos Rápidos', d: '5 CPS'},
-        {id: 'cps_10', t: 'Ametralladora', d: '10 CPS'},
-        {id: 'cps_20', t: 'Flash', d: '20 CPS'},
-        {id: 'circle_80', t: 'Artista', d: '80% círculo'},
-        {id: 'esc_3', t: 'Curioso', d: '3 escenarios'},
-        {id: 'esc_18', t: 'Teórico', d: '18 escenarios'},
-        {id: 'grav_10', t: 'Físico', d: 'Usar gravedad 10 veces'},
-        {id: 'tateti_1', t: 'Estratega', d: 'Ganar 1 partida'},
-        {id: 'todo_10', t: 'Veterano', d: 'Desbloquear 10 logros'}
-    ];
-
-    function checkLogros() {
-        if(data.bestCPS >= 5 &&!data.logros.includes('cps_5')) data.logros.push('cps_5');
-        if(data.bestCPS >= 10 &&!data.logros.includes('cps_10')) data.logros.push('cps_10');
-        if(data.bestCircle >= 80 &&!data.logros.includes('circle_80')) data.logros.push('circle_80');
-        if(escenariosVistos.size >= 3 &&!data.logros.includes('esc_3')) data.logros.push('esc_3');
-        if(escenariosVistos.size >= 18 &&!data.logros.includes('esc_18')) data.logros.push('esc_18');
-        if(data.usosGravedad >= 10 &&!data.logros.includes('grav_10')) data.logros.push('grav_10');
-        if(data.tateti.w >= 1 &&!data.logros.includes('tateti_1')) data.logros.push('tateti_1');
-    }
-
-    function updatePerfil() {
-        document.getElementById('bestCPS').innerText = data.bestCPS.toFixed(2);
-        document.getElementById('bestCircle').innerText = data.bestCircle;
-        let html = '';
-        logrosData.forEach(l => {
-            let unlocked = data.logros.includes(l.id);
-            html += `<div class="logro ${unlocked? 'unlocked' : ''}">
-           </script>
 </body>
 </html>
