@@ -3,40 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGC.FUN v1.3.1</title>
+<title>LGC.FUN v1.3.5</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#000;color:#fff;overflow-x:hidden;overflow-y:auto}
-#stars{position:fixed;width:100%;height:100%;z-index:-1}
-header{padding:20px;text-align:center;border-bottom:1px solid #222}
-header h1{color:#00f7ff;text-shadow:0 0 10px #00f7ff;font-size:32px}
-nav button{background:#111;border:1px solid #00f7ff;color:#00f7ff;padding:10px 15px;margin:5px;border-radius:8px;cursor:pointer}
-nav button:hover{background:#00f7ff;color:#000}
-.container{padding:20px;text-align:center}
-.card{background:rgba(17,17,17,.8);border:1px solid #333;padding:25px;border-radius:12px;margin:20px auto;max-width:600px;display:none}
-.card.active{display:block}
-.lab-btn{background:#222;border:1px solid #00f7ff;color:#00f7ff;padding:15px;margin:10px;border-radius:10px;cursor:pointer;width:90%;font-size:16px}
-.time-btn{background:#222;border:1px solid #555;color:#fff;padding:8px 15px;margin:5px;border-radius:6px;cursor:pointer}
-.time-btn.active{background:#00f7ff;color:#000}
-#gameArea{width:100%;height:200px;background:rgba(0,247,255,.05);border:2px dashed #00f7ff;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-top:15px;cursor:pointer;touch-action:none}
-#canvasDraw{background:#111;border:2px solid #00f7ff;border-radius:12px;width:100%;max-width:400px;height:200px;touch-action:none}
-input{padding:10px;border-radius:6px;border:1px solid #555;background:#222;color:#fff;margin:5px;width:80%}
-.logro{background:#111;border:1px solid #444;padding:12px;margin:8px 0;border-radius:8px;text-align:left}
-.logro.unlocked{border-color:#00f7ff;background:rgba(0,247,255,.1)}
-.logro.titulo{color:#00f7ff;font-weight:bold}
-.novedad{background:#111;border-left:3px solid #00f7ff;padding:12px;margin:10px 0;text-align:left;border-radius:6px}
-.version{color:#00f7ff;font-size:22px;margin-bottom:10px}
-.quePasaria{font-size:20px;color:#00f7ff;margin:20px 0 10px 0;min-height:60px;display:flex;align-items:center;justify-content:center}
-.respuesta{font-size:15px;color:#aaa;margin-bottom:15px;padding:10px;background:rgba(0,247,255,.05);border-radius:8px;min-height:40px}
-.btnGrande{background:#00f7ff;color:#000;border:none;padding:15px 30px;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}
-#ball{width:30px;height:30px;background:#00f7ff;border-radius:50%;position:absolute;box-shadow:0 0 15px #00f7ff}
-#gravedadArea{width:100%;height:250px;background:rgba(0,247,255,.03);border:2px dashed #00f7ff;border-radius:12px;position:relative;overflow:hidden;margin-top:15px}
-.slider{width:80%;margin:10px auto}
-.historial{background:#0a0a0a;border:1px dashed #333;padding:15px;margin-top:15px;border-radius:8px;text-align:left}
-.historial h4{color:#00f7ff;margin-bottom:8px}
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: #000; color: #fff; overflow-x: hidden; overflow-y: auto; height: 100vh; }
+  #stars { position: fixed; width: 100%; height: 100%; z-index: -1; }
+  header { padding: 20px; text-align: center; border-bottom: 1px solid #222; }
+  header h1 { color: #00f7ff; text-shadow: 0 0 10px #00f7ff; font-size: 32px; }
+  nav button { background: #111; border: 1px solid #00f7ff; color: #00f7ff; padding: 10px 15px; margin: 5px; border-radius: 8px; cursor: pointer; }
+  nav button:hover { background: #00f7ff; color: #000; }
+.container { padding: 20px; text-align: center; }
+.card { background: rgba(17,17,17,0.8); border: 1px solid #333; padding: 25px; border-radius: 12px; margin: 20px auto; max-width: 600px; display:none; }
+.card.active { display:block; }
+.divider { border-top: 1px solid #333; margin: 15px 0; }
+.lab-btn { background: #222; border: 1px solid #00f7ff; color: #00f7ff; padding: 15px; margin: 10px; border-radius: 10px; cursor: pointer; width: 90%; font-size: 16px; }
+.lab-btn:hover { background: #00f7ff; color: #000; }
+.time-btn { background: #222; border: 1px solid #555; color: #fff; padding: 8px 15px; margin: 5px; border-radius: 6px; cursor: pointer; }
+.time-btn.active { background: #00f7ff; color: #000; }
+  #gameArea { width: 100%; height: 200px; background: rgba(0,247,255,0.05); border: 2px dashed #00f7ff; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-top: 15px; cursor: pointer; touch-action: none; }
+  #canvasDraw { background: #111; border: 2px solid #00f7ff; border-radius: 12px; width: 100%; max-width: 400px; height: 200px; touch-action: none; }
+  input { padding: 10px; border-radius: 6px; border: 1px solid #555; background: #222; color: #fff; margin: 5px; width: 80%; }
+.logro { background: #111; border: 1px solid #444; padding: 12px; margin: 8px 0; border-radius: 8px; text-align: left; }
+.logro.unlocked { border-color: #00f7ff; background: rgba(0,247,255,0.1); }
+.logro.titulo { color: #00f7ff; font-weight: bold; font-size: 15px; }
+.novedad { background: #111; border-left: 3px solid #00f7ff; padding: 12px; margin: 10px 0; text-align: left; border-radius: 6px; }
+.version { color: #00f7ff; font-size: 22px; margin-bottom: 10px; }
+.quePasaria { font-size: 20px; color: #00f7ff; margin: 20px 0 10px 0; min-height: 60px; display: flex; align-items: center; justify-content: center; padding: 10px; }
+.respuesta { font-size: 15px; color: #aaa; margin-bottom: 15px; padding: 10px; background: rgba(0,247,255,0.05); border-radius: 8px; min-height: 40px; }
+.btnGrande { background: #00f7ff; color: #000; border: none; padding: 15px 30px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+#ball { width: 30px; height: 30px; background: #00f7ff; border-radius: 50%; position: absolute; box-shadow: 0 0 15px #00f7ff; }
+#gravedadArea { width: 100%; height: 250px; background: rgba(0,247,255,0.03); border: 2px dashed #00f7ff; border-radius: 12px; position: relative; overflow: hidden; margin-top: 15px; }
+.slider { width: 80%; margin: 10px auto; }
+.historial { background: #0a0a0a; border: 1px dashed #333; padding: 15px; margin-top: 15px; border-radius: 8px; text-align: left; }
+.historial h4 { color: #00f7ff; margin-bottom: 8px; }
 </style>
 </head>
 <body>
+
 <canvas id="stars"></canvas>
 
 <header>
@@ -44,7 +47,7 @@ input{padding:10px;border-radius:6px;border:1px solid #555;background:#222;color
   <nav>
     <button onclick="show('menu')">Menu</button>
     <button onclick="show('novedades')">Novedades</button>
-    <button onclick="show('periodico')">Periódico</button>
+    <button onclick="show('periodico')">📰 Periódico</button>
     <button onclick="show('lab')">Laboratorio</button>
     <button onclick="show('perfil')">Perfil</button>
     <button onclick="show('login')">Login</button>
@@ -52,22 +55,48 @@ input{padding:10px;border-radius:6px;border:1px solid #555;background:#222;color
 </header>
 
 <div class="container">
-  <div id="menu" class="card active"><h2>Bienvenido a LGC.FUN</h2><p>Versión 1.3.1</p></div>
+  <div id="menu" class="card active">
+    <h2>Bienvenido a LGC.FUN</h2>
+    <p>Versión 1.3.5</p>
+  </div>
 
   <div id="novedades" class="card">
     <h2>📢 Novedades</h2>
-    <div class="version">V1.3.1</div>
-    <div class="novedad">El circulo se limpia solo al dibujar uno nuevo</div>
-    <div class="novedad">Logros ahora aparecen en Perfil</div>
+    <div class="version">Novedades V1.3.5</div>
+    <div class="novedad">🧹 El circulo se limpia solo al empezar a dibujar</div>
+    <div class="novedad">🏆 Logros ahora se muestran en Perfil</div>
+    <div class="novedad">📰 Historial completo en Periódico</div>
   </div>
 
   <div id="periodico" class="card">
     <h2>📰 Periódico LGC</h2>
-    <div class="historial"><h4>V1.3.1</h4><p>- Auto limpiar circulo</p><p>- Fix Logros</p></div>
-    <div class="historial"><h4>V1.3</h4><p>- Exp Gravedad</p><p>- 15 escenarios</p><p>- 12 logros</p></div>
-    <div class="historial"><h4>V1.2</h4><p>- Sistema de Login</p><p>- Sistema de Logros</p></div>
-    <div class="historial"><h4>V1.1</h4><p>- Exp 2 y 3</p></div>
-    <div class="historial"><h4>V1.0</h4><p>- Exp 1 Click</p></div>
+    <div class="historial">
+      <h4>V1.3.5 - "Quality of Life"</h4>
+      <p>- Fix: Auto limpiar canvas al dibujar</p>
+      <p>- Fix: Sistema de Logros visible</p>
+      <p>- Fix: Historial completo</p>
+    </div>
+    <div class="historial">
+      <h4>V1.3.4 - Patch</h4>
+      <p>- Fix: Ya no dibuja "fideos". Círculos normales ahora</p>
+    </div>
+    <div class="historial">
+      <h4>V1.3 - "Expansión Cósmica"</h4>
+      <p>- Exp 4: Gravedad agregado</p>
+      <p>- Exp 3: 15 escenarios</p>
+    </div>
+    <div class="historial">
+      <h4>V1.2</h4>
+      <p>- Sistema de Login y guardado</p>
+    </div>
+    <div class="historial">
+      <h4>V1.1</h4>
+      <p>- Exp 2 y 3</p>
+    </div>
+    <div class="historial">
+      <h4>V1.0</h4>
+      <p>- Exp 1 Click por segundo</p>
+    </div>
   </div>
 
   <div id="lab" class="card">
@@ -77,7 +106,7 @@ input{padding:10px;border-radius:6px;border:1px solid #555;background:#222;color
     <button class="lab-btn" onclick="showExp(3)">¿Qué pasaría si...?</button>
     <button class="lab-btn" onclick="showExp(4)">Gravedad</button>
 
-    <div id="exp1" style="display:none;margin-top:20px">
+    <div id="exp1" style="display:none; margin-top:20px;">
       <h3>Exp 1: Click por segundo</h3>
       <button class="time-btn" onclick="setTime(5)">5s</button>
       <button class="time-btn" onclick="setTime(10)">10s</button>
@@ -86,20 +115,21 @@ input{padding:10px;border-radius:6px;border:1px solid #555;background:#222;color
       <div id="gameArea">Click para empezar</div>
     </div>
 
-    <div id="exp2" style="display:none;margin-top:20px">
+    <div id="exp2" style="display:none; margin-top:20px;">
       <h3>Exp 2: Dibuja un circulo perfecto</h3>
+      <p>Empezá y terminá cerca. Se limpia solo</p>
       <canvas id="canvasDraw"></canvas>
       <h3 id="circleScore">Precisión: -</h3>
     </div>
 
-    <div id="exp3" style="display:none;margin-top:20px">
+    <div id="exp3" style="display:none; margin-top:20px;">
       <h3>Exp 3: ¿Qué pasaría si...?</h3>
       <div class="quePasaria" id="escenario">¿Qué pasaría si...?</div>
       <div class="respuesta" id="respuesta"></div>
       <button class="btnGrande" onclick="generarEscenario()">Generar</button>
     </div>
 
-    <div id="exp4" style="display:none;margin-top:20px">
+    <div id="exp4" style="display:none; margin-top:20px;">
       <h3>Exp 4: Gravedad</h3>
       <input type="range" min="1" max="20" value="9" class="slider" id="gravitySlider" oninput="updateGravity(this.value)">
       <p>Gravedad: <b id="gravityValue">9</b></p>
@@ -112,72 +142,152 @@ input{padding:10px;border-radius:6px;border:1px solid #555;background:#222;color
     <h2>Perfil</h2>
     <p>Mejor CPS: <b id="bestCPS">0</b></p>
     <p>Mejor Círculo: <b id="bestCircle">0</b>%</p>
-    <p>Escenarios: <b id="escenariosVistos">0</b></p>
-    <div id="logrosList"></div>
+    <div class="divider"></div>
+    <h3>Logros</h3>
+    <div id="logrosList">Cargando...</div>
   </div>
 
   <div id="login" class="card">
     <h2>Login</h2>
-    <input id="user" placeholder="Usuario">
-    <input id="pass" type="password" placeholder="lgc2025">
+    <input type="text" id="user" placeholder="Usuario">
+    <input type="password" id="pass" placeholder="lgc2025">
     <button class="btnGrande" onclick="login()">Entrar</button>
   </div>
 </div>
 
 <script>
-// 1. ESTRELLAS
-const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');
-canvas.width=innerWidth;canvas.height=innerHeight;
-let stars=Array.from({length:100},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2}));
-(function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#fff";stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,7);ctx.fill();s.y++;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width}});requestAnimationFrame(draw)})();
+// ESTRELLAS
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+let stars = [];
+for(let i=0; i<100; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*2});
+function drawStars(){ ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="white"; stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();s.y++;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width;}}); requestAnimationFrame(drawStars); }
+drawStars();
 
-// 2. NAV
-function show(id){document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));document.getElementById(id).classList.add('active');if(id=='perfil')updatePerfil()}
-function showExp(n){['exp1','exp2','exp3','exp4'].forEach((e,i)=>document.getElementById(e).style.display=n==i+1?'block':'none')}
+// DATOS
+let data = JSON.parse(localStorage.getItem('lgc_data')) || {bestCPS:0, bestCircle:0, logros:[]};
 
-// 3. DATOS
-let data=JSON.parse(localStorage.getItem('lgc'))||{cps:0,circle:0,esc:0};
-
-// 4. EXP1 CLICK
-let clicks=0,playing=0,time=5,timer;
-gameArea.onclick=()=>{if(!playing){playing=1;clicks=0;let t=time;timer=setInterval(()=>{t--;timer.innerText='Tiempo: '+t+'s';if(t<=0){clearInterval(timer);playing=0;let c=clicks/time;alert('CPS: '+c.toFixed(2));if(c>data.cps){data.cps=c;localStorage.setItem('lgc',JSON.stringify(data))}}},1000)}else clicks++;score.innerText='Puntaje: '+clicks}
-function setTime(t){time=t;timer.innerText='Tiempo: '+t+'s'}
-
-// 5. EXP2 CIRCULO - SE LIMPIA SOLO
-const dcan=document.getElementById('canvasDraw'),dctx=dcan.getContext('2d');
-dcan.width=400;dcan.height=200;
-let drawing=0,pts=[];
-function resetDraw(){dctx.clearRect(0,0,400,200);circleScore.innerText='Precisión: -'}
-dcan.onmousedown=dcan.ontouchstart=e=>{e.preventDefault();resetDraw();drawing=1;pts=[]}; // SE LIMPIA AQUI
-dcan.onmousemove=dcan.ontouchmove=e=>{if(!drawing)return;e.preventDefault();let x=(e.touches?e.touches[0].clientX:e.clientX)-dcan.offsetLeft,y=(e.touches?e.touches[0].clientY:e.clientY)-dcan.offsetTop;pts.push({x,y});dctx.strokeStyle='#00f7ff';dctx.lineWidth=3;dctx.lineTo(x,y);dctx.stroke()}
-dcan.onmouseup=dcan.ontouchend=()=>{drawing=0;if(pts.length>10){let dist=Math.hypot(pts[0].x-pts[pts.length-1].x,pts[0].y-pts[pts.length-1].y);let score=Math.max(0,100-dist);circleScore.innerText='Precisión: '+score.toFixed(0)+'%';if(score>data.circle){data.circle=score;localStorage.setItem('lgc',JSON.stringify(data))}}}
-
-// 6. EXP3
-const esc=[{p:"hubieran 2 soles?",r:"Doble calor"},{p:"pudieras volar?",r:"Llegas en 2 min"}];
-function generarEscenario(){let r=esc[Math.floor(Math.random()*esc.length)];escenario.innerText="¿Qué pasaría si "+r.p;respuesta.innerText=r.r;data.esc++;localStorage.setItem('lgc',JSON.stringify(data))}
-
-// 7. EXP4
-let g=9;
-function updateGravity(v){g=v;gravityValue.innerText=v}
-function lanzarPelota(){let y=20,v=-15;ball.style.top=y+'px';(function anim(){v+=g*0.2;y+=v;if(y>220)y=220;ball.style.top=y+'px';if(v<10)requestAnimationFrame(anim)})()}
-
-// 8. PERFIL Y LOGROS
-function updatePerfil(){
-  bestCPS.innerText=data.cps.toFixed(2);
-  bestCircle.innerText=data.circle.toFixed(0);
-  escenariosVistos.innerText=data.esc;
-  let html='';
-  if(data.cps>0)html+='<div class="logro unlocked"><div class="titulo">🏆 Primer Click</div></div>';
-  if(data.cps>=5)html+='<div class="logro unlocked"><div class="titulo">🏆 Dedos Rápidos</div></div>';
-  if(data.circle>=80)html+='<div class="logro unlocked"><div class="titulo">🏆 Artista</div></div>';
-  if(html=='')html='<div class="logro"><div class="titulo">No tienes logros aún</div></div>';
-  logrosList.innerHTML=html;
+// NAVEGACION
+function show(id){
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id=='perfil') updatePerfil(); // ACTUALIZA LOGROS AL ENTRAR
+}
+function showExp(n){
+  document.getElementById('exp1').style.display = n==1?'block':'none';
+  document.getElementById('exp2').style.display = n==2?'block':'none';
+  document.getElementById('exp3').style.display = n==3?'block':'none';
+  document.getElementById('exp4').style.display = n==4?'block':'none';
 }
 
-// 9. LOGIN
-function login(){if(pass.value=='lgc2025')alert('Bienvenido')}
+// EXP 1: CLICK
+let clicks=0, playing=false, time=5;
+document.getElementById('gameArea').onclick = ()=>{ if(!playing) start(); else {clicks++; document.getElementById('score').innerText='Puntaje: '+clicks;} }
+function setTime(t){ time=t; document.getElementById('timer').innerText='Tiempo: '+t+'s'; }
+function start(){
+  clicks=0; playing=true; let t=time;
+  document.getElementById('score').innerText='Puntaje: 0';
+  let interval=setInterval(()=>{ t--; document.getElementById('timer').innerText='Tiempo: '+t+'s'; if(t<=0){ clearInterval(interval); playing=false; let cps=clicks/time; alert('CPS: '+cps.toFixed(2)); if(cps>data.bestCPS){data.bestCPS=cps; checkLogros(); saveData();}} },1000);
+}
 
-window.onresize=()=>{canvas.width=innerWidth;canvas.height=innerHeight}
+// EXP 2: CIRCULO - FIX: SE LIMPIA SOLO
+const drawCanvas = document.getElementById('canvasDraw');
+const dctx = drawCanvas.getContext('2d');
+let drawing = false; let points = []; let startPoint = null;
+
+function resizeCanvas() {
+    const rect = drawCanvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    drawCanvas.width = rect.width * dpr;
+    drawCanvas.height = rect.height * dpr;
+    dctx.scale(dpr, dpr);
+    dctx.lineCap = 'round';
+    dctx.lineJoin = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e){
+  const rect = drawCanvas.getBoundingClientRect();
+  let x = e.clientX || (e.touches && e.touches[0].clientX);
+  let y = e.clientY || (e.touches && e.touches[0].clientY);
+  return {x: x - rect.left, y: y - rect.top};
+}
+
+function startDraw(e){
+  e.preventDefault();
+  clearCanvas(); // 1. SE LIMPIA SOLO AQUI
+  drawing = true; points = [];
+  startPoint = getPos(e); points.push(startPoint);
+}
+
+function moveDraw(e){
+  if(!drawing) return; e.preventDefault();
+  const pos = getPos(e); points.push(pos);
+  dctx.strokeStyle = '#00f7ff'; dctx.lineWidth = 4;
+  dctx.beginPath();
+  dctx.moveTo(points[points.length-2].x, points[points.length-2].y);
+  dctx.lineTo(pos.x, pos.y);
+  dctx.stroke();
+}
+
+function endDraw(){
+  if(!drawing) return; drawing = false;
+  if(points.length < 20){ document.getElementById('circleScore').innerText = 'DIBUJA MAS'; return; }
+  let endPoint = points[points.length-1];
+  let dist = Math.hypot(endPoint.x - startPoint.x, endPoint.y - startPoint.y);
+  let score = Math.max(0, 100 - dist);
+  if(score > 100) score = 100;
+  document.getElementById('circleScore').innerText = 'Precisión: ' + score.toFixed(0) + '%';
+  if(score > data.bestCircle){data.bestCircle = score; checkLogros(); saveData();}
+}
+
+drawCanvas.onmousedown = startDraw;
+drawCanvas.onmousemove = moveDraw;
+drawCanvas.onmouseup = endDraw;
+drawCanvas.ontouchstart = startDraw;
+drawCanvas.ontouchmove = moveDraw;
+drawCanvas.ontouchend = endDraw;
+
+function clearCanvas(){
+    resizeCanvas();
+    dctx.clearRect(0,0,drawCanvas.width,drawCanvas.height);
+    document.getElementById('circleScore').innerText = 'Precisión: -';
+}
+
+// EXP 3
+const esc = [{p:"hubieran 2 soles?",r:"Doble calor"},{p:"pudieras volar?",r:"2 min al trabajo"}];
+function generarEscenario(){ let r=esc[Math.floor(Math.random()*esc.length)]; document.getElementById('escenario').innerText="¿Qué pasaría si "+r.p; document.getElementById('respuesta').innerText=r.r; }
+
+// EXP 4
+let gravity = 9;
+function updateGravity(val){ gravity = val; document.getElementById('gravityValue').innerText = val; }
+function lanzarPelota(){ let ball=document.getElementById('ball'); ball.style.top='20px'; let y=20,v=-15; function anim(){v+=gravity*0.2;y+=v; if(y>220)y=220; ball.style.top=y+'px'; if(v<10)requestAnimationFrame(anim);} anim(); }
+
+// 2. LOGROS
+const logrosData = [
+  {id:'cps_5', titulo:'Dedos Rápidos', desc:'Llega a 5 CPS'},
+  {id:'circle_80', titulo:'Artista', desc:'80% de precisión'}
+];
+function checkLogros(){
+  if(data.bestCPS>=5 &&!data.logros.includes('cps_5')){data.logros.push('cps_5'); alert('🏆 Logro: Dedos Rápidos')}
+  if(data.bestCircle>=80 &&!data.logros.includes('circle_80')){data.logros.push('circle_80'); alert('🏆 Logro: Artista')}
+}
+function updatePerfil(){
+  document.getElementById('bestCPS').innerText = data.bestCPS.toFixed(2);
+  document.getElementById('bestCircle').innerText = data.bestCircle.toFixed(0);
+  let html = '';
+  logrosData.forEach(l=>{
+    let unlocked = data.logros.includes(l.id);
+    html += `<div class="logro ${unlocked?'unlocked':''}"><div class="titulo">${unlocked?'🏆 ':''}${l.titulo}</div><div style="font-size:13px;color:#aaa">${l.desc}</div></div>`;
+  });
+  document.getElementById('logrosList').innerHTML = html;
+}
+
+// LOGIN
+function login(){ if(document.getElementById('pass').value=='lgc2025') alert('Bienvenido'); else alert('Pass: lgc2025'); }
+function saveData(){localStorage.setItem('lgc_data', JSON.stringify(data))}
 </script>
 </body>
-       </html>
+      </html>
