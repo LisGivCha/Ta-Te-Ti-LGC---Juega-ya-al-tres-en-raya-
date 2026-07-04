@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LGC.FUN v1.3.0</title>
+    <title>LGC.FUN v1.3.1</title>
 </head>
 <body>
 
@@ -23,17 +23,21 @@
     <div class="container">
 
         <div id="menu" class="card active">
-            <h2>Bienvenido a LGC.FUN v1.3.0</h2>
-            <p>Volvimos a lo estable</p>
+            <h2>Bienvenido a LGC.FUN v1.3.1</h2>
+            <p>Update: Fix Tateti 9 casillas, Auto-borrado Circulo, +3 Escenarios, +6 Logros</p>
         </div>
 
         <div id="novedades" class="card">
-            <h2>Novedades v1.3.0</h2>
-            <p>Version estable. Todos los bugs arreglados.</p>
+            <h2>Novedades v1.3.1</h2>
+            <p>Se arregló tateti, gravedad y circulo. Se añadieron cosas.</p>
         </div>
 
         <div id="periodico" class="card">
             <h2>📰 Periódico LGC</h2>
+            <div class="historial">
+                <h4>V1.3.1 - 04/10/2026</h4>
+                <p>UPDATE: Tateti 9 casillas. Circulo auto-borrado. Boton Lanzar en Gravedad. +3 Escenarios. +6 Logros.</p>
+            </div>
             <div class="historial">
                 <h4>V1.3.0 - 04/10/2026</h4>
                 <p>Volver a version estable. Fix de CPS, Circulo, Escenarios, Gravedad y Tateti.</p>
@@ -94,6 +98,7 @@
                 <h3>Exp 4: Gravedad</h3>
                 <input type="range" min="1" max="20" value="9" class="slider" oninput="gravity=this.value;document.getElementById('gVal').innerText=this.value">
                 <p>Gravedad: <b id="gVal">9</b></p>
+                <button class="btnGrande" onclick="lanzarPelota()">LANZAR</button>
                 <div id="gravedadArea">
                     <div id="ball"></div>
                 </div>
@@ -126,35 +131,35 @@
     header h1{color:#00f7ff;text-shadow:0 0 10px #00f7ff;font-size:32px}
     nav button{background:#111;border:1px solid #00f7ff;color:#00f7ff;padding:10px 15px;margin:5px;border-radius:8px;cursor:pointer}
     nav button:hover{background:#00f7ff;color:#000}
-   .container{padding:20px;text-align:center}
-   .card{background:rgba(17,17,17,0.8);border:1px solid #333;padding:25px;border-radius:12px;margin:20px auto;max-width:650px;display:none}
-   .card.active{display:block}
-   .lab-btn{background:#222;border:1px solid #00f7ff;color:#00f7ff;padding:15px;margin:10px;border-radius:10px;cursor:pointer;width:90%;font-size:16px}
-   .lab-btn:hover{background:#00f7ff;color:#000}
-   .exp{display:none;margin-top:20px}
-   .time-btn{background:#222;border:1px solid #555;color:#fff;padding:8px 15px;margin:5px;border-radius:6px;cursor:pointer}
-   .time-btn.active{background:#00f7ff;color:#000}
-   .esc-btn{background:#111;border:1px solid #444;color:#fff;padding:12px;margin:6px;border-radius:8px;cursor:pointer;width:100%;text-align:left}
-   .dif-btn{background:#222;border:1px solid #555;color:#fff;padding:10px;margin:5px;border-radius:8px;cursor:pointer;width:30%}
-   .dif-btn.active{background:#00f7ff;color:#000}
+  .container{padding:20px;text-align:center}
+  .card{background:rgba(17,17,17,0.8);border:1px solid #333;padding:25px;border-radius:12px;margin:20px auto;max-width:650px;display:none}
+  .card.active{display:block}
+  .lab-btn{background:#222;border:1px solid #00f7ff;color:#00f7ff;padding:15px;margin:10px;border-radius:10px;cursor:pointer;width:90%;font-size:16px}
+  .lab-btn:hover{background:#00f7ff;color:#000}
+  .exp{display:none;margin-top:20px}
+  .time-btn{background:#222;border:1px solid #555;color:#fff;padding:8px 15px;margin:5px;border-radius:6px;cursor:pointer}
+  .time-btn.active{background:#00f7ff;color:#000}
+  .esc-btn{background:#111;border:1px solid #444;color:#fff;padding:12px;margin:6px;border-radius:8px;cursor:pointer;width:100%;text-align:left}
+  .dif-btn{background:#222;border:1px solid #555;color:#fff;padding:10px;margin:5px;border-radius:8px;cursor:pointer;width:30%}
+  .dif-btn.active{background:#00f7ff;color:#000}
     #gameArea{width:100%;height:200px;background:rgba(0,247,255,0.05);border:2px dashed #00f7ff;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-top:15px;cursor:pointer}
     #canvasDraw{background:#111;border:2px solid #00f7ff;border-radius:12px;width:100%;max-width:400px;height:200px;cursor:crosshair}
     #tateti{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:20px auto}
-   .celda{background:#111;border:2px solid #444;height:90px;font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:10px;color:#00f7ff}
-   .logro{background:#111;border:1px solid #444;padding:12px;margin:8px 0;border-radius:8px;text-align:left}
-   .logro.unlocked{border-color:#00f7ff;background:rgba(0,247,255,0.1)}
-   .logro.titulo{color:#00f7ff;font-weight:bold}
-   .respuesta{font-size:15px;color:#aaa;margin:15px 0;padding:15px;background:rgba(0,247,255,0.05);border-radius:8px;min-height:80px;text-align:left}
-   .btnGrande{background:#00f7ff;color:#000;border:none;padding:15px 30px;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}
+  .celda{background:#111;border:2px solid #444;height:90px;font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:10px;color:#00f7ff}
+  .logro{background:#111;border:1px solid #444;padding:12px;margin:8px 0;border-radius:8px;text-align:left}
+  .logro.unlocked{border-color:#00f7ff;background:rgba(0,247,255,0.1)}
+  .logro.titulo{color:#00f7ff;font-weight:bold}
+  .respuesta{font-size:15px;color:#aaa;margin:15px 0;padding:15px;background:rgba(0,247,255,0.05);border-radius:8px;min-height:80px;text-align:left}
+  .btnGrande{background:#00f7ff;color:#000;border:none;padding:15px 30px;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}
     #ball{width:30px;height:30px;background:#00f7ff;border-radius:50%;position:absolute;box-shadow:0 0 15px #00f7ff}
     #gravedadArea{width:100%;height:250px;background:rgba(0,247,255,0.03);border:2px dashed #00f7ff;border-radius:12px;position:relative;overflow:hidden;margin-top:15px;cursor:crosshair}
-   .slider{width:80%;margin:10px auto}
-   .historial{background:#0a0a0a;border:1px dashed #333;padding:15px;margin-top:15px;border-radius:8px;text-align:left}
+  .slider{width:80%;margin:10px auto}
+  .historial{background:#0a0a0a;border:1px dashed #333;padding:15px;margin-top:15px;border-radius:8px;text-align:left}
 </style>
 
 <script>
     let data = JSON.parse(localStorage.getItem('lgc_data_v13')) || {bestCPS:0,bestCircle:0,logros:[],tateti:{w:0,l:0,d:0},usosGravedad:0,clicksTotales:0};
-    let escenariosVistos = new Set(); let gravity = 9; let dif = 'facil';
+    let escenariosVistos = new Set(); let gravity = 9; let dif = 'facil'; let pelotaPos = {x: 50, y: 10};
 
     function show(id){document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));document.getElementById(id).classList.add('active');if(id=='lab')showExp(1);if(id=='perfil')updatePerfil();}
     function showExp(n){for(let i=1;i<=5;i++)document.getElementById('exp'+i).style.display='none';document.getElementById('exp'+n).style.display='block';if(n==3)cargarEscenarios();if(n==5)crearTablero();}
@@ -165,18 +170,41 @@
     function start(){clicks=0;playing=true;let t=time;document.getElementById('score').innerText='Puntaje: 0';let interval=setInterval(()=>{t--;document.getElementById('timer').innerText='Tiempo: '+t+'s';if(t<=0){clearInterval(interval);playing=false;let cps=clicks/time;alert('CPS: '+cps.toFixed(2));if(cps>data.bestCPS){data.bestCPS=cps;checkLogros();saveData();}}},1000);}
 
     const drawCanvas=document.getElementById('canvasDraw');const dctx=drawCanvas.getContext('2d');drawCanvas.width=400;drawCanvas.height=200;let drawing=false;
-    drawCanvas.onmousedown=e=>{drawing=true;dctx.beginPath();dctx.moveTo(e.offsetX,e.offsetY);}
+    drawCanvas.onmousedown=e=>{dctx.clearRect(0,0,400,200);drawing=true;dctx.beginPath();dctx.moveTo(e.offsetX,e.offsetY);}
     drawCanvas.onmousemove=e=>{if(!drawing)return;dctx.lineTo(e.offsetX,e.offsetY);dctx.strokeStyle='#00f7ff';dctx.lineWidth=4;dctx.stroke();}
     drawCanvas.onmouseup=()=>{drawing=false;let score=Math.floor(Math.random()*30+70);document.getElementById('circleScore').innerText='Precisión: '+score+'%';if(score>data.bestCircle){data.bestCircle=score;checkLogros();saveData();}}
     function limpiarCanvas(){dctx.clearRect(0,0,400,200);document.getElementById('circleScore').innerText='Precisión: -';}
 
-    const esc=[{p:"hubieran 2 soles?",r:"Días de 48hs de luz."},{p:"pudieras volar?",r:"Sin tráfico."},{p:"los gatos dominaran?",r:"Siesta obligatoria."},{p:"no existiera internet?",r:"Volverían bibliotecas."},{p:"respirar bajo agua?",r:"Casas submarinas."},{p:"el tiempo fuera dinero?",r:"Dormir cuesta."},{p:"teletransportarte?",r:"Llegarías tarde igual."},{p:"dinosaurios vivos?",r:"Manejar imposible."},{p:"todos con superpoderes?",r:"Caos total."},{p:"leer mentes?",r:"Las mentiras mueren."},{p:"memes = moneda?",r:"Millonario con shitpost."},{p:"pudieras ser invisible?",r:"Espiar exs."},{p:"se acabara la comida chatarra?",r:"Solo verduras."},{p:"todos misma voz?",r:"No sabrías quien habla."},{p:"pausar tiempo?",r:"Dormir en 5 min."},{p:"perros hablaran?",r:"Pedirían comida."},{p:"no existieran lunes?",r:"Felicidad mundial."},{p:"pudieras duplicarte?",r:"Uno trabaja, otro duerme."}];
+    const esc=[
+        {p:"hubieran 2 soles?",r:"Si hubieran 2 soles tendríamos días de 48 horas de luz seguidas. El clima sería un caos total. Habría desiertos gigantes y zonas congeladas. La fotosíntesis se volvería loca y las plantas crecerían el doble. Pero también tendríamos el doble de energía solar gratis."},
+        {p:"pudieras volar?",r:"Si pudieras volar se acabaría el tráfico para siempre. Pero habría que sacar licencia de vuelo y respetar semáforos aéreos. Los edificios tendrían entradas por el techo. Dormirías flotando y ahorrarías en colectivo. El único problema: palomas chocándote."},
+        {p:"los gatos dominaran?",r:"Si los gatos dominaran el mundo sería obligatorio dormir siesta de 16 horas diarias. El atún sería la moneda oficial. Todo el mundo tendría que hacer reverencia al pasar. Internet sería 100% videos de gatos. Y las cajas serían propiedad del estado."},
+        {p:"no existiera internet?",r:"Sin internet volverían las bibliotecas llenas, las cartas escritas a mano y las enciclopedias de tomo. La gente hablaría más en persona. No habría memes pero sí chistes en persona. Buscarías datos en libros y tardarías 3 días. El aburrimiento inventaría juegos nuevos."},
+        {p:"respirar bajo agua?",r:"Si pudiéramos respirar bajo agua tendríamos casas submarinas con ventanales a tiburones. El fútbol sería en 3D flotando. Irías al trabajo nadando. Habría autopistas submarinas. Y las vacaciones serían en la fosa de las Marianas."},
+        {p:"el tiempo fuera dinero?",r:"Si el tiempo fuera dinero dormir 8 horas te costaría una fortuna. Procrastinar te dejaría en bancarrota. La gente rica viviría 200 años. Los apurados serían millonarios. Y todos pagarían para que otros hagan la fila por ellos."},
+        {p:"teletransportarte?",r:"Con teletransportación llegarías tarde igual porque te distraerías. La gente aparecería en tu baño sin avisar. No existirían aeropuertos. Podrías ir a Japón a almorzar y volver. Pero también habría teletransportadores truchos."},
+        {p:"dinosaurios vivos?",r:"Con dinosaurios vivos manejar sería imposible. Tendrías un T-Rex de mascota pero te comería el sillón. Los zoológicos serían ciudades. Las vallas eléctricas serían de 50 metros. Y Jurassic Park sería un documental."},
+        {p:"todos con superpoderes?",r:"Si todos tuvieran superpoderes sería un caos total. Nadie respetaría nada. Volar al trabajo sería normal. Habría peleas de rayos láser en la calle. Pero también se acabarían los problemas: alguien movería la luna si molesta."},
+        {p:"leer mentes?",r:"Leer mentes mataría las mentiras para siempre. Sabrías si tu jefe te odia de verdad. Pero habría ruido mental 24/7. No podrías tener pensamientos privados. Los publicistas leerían lo que quieres antes de que lo pienses."},
+        {p:"memes = moneda?",r:"Si los memes fueran moneda el que haga un shitpost viral sería millonario. Trabajarías creando plantillas. El banco central regularía los formatos. Y la inflación dependería de lo gracioso que sea el país."},
+        {p:"pudieras ser invisible?",r:"Siendo invisible podrías espiar a tu ex gratis. Robarías en tiendas. Entrarías a conciertos. Pero también sería peligroso porque nadie te vería cruzar la calle. Y tendrías que explicar por qué la comida desaparece."},
+        {p:"se acabara la comida chatarra?",r:"Si se acabara la comida chatarra solo habría verduras. Habría rebelión mundial en 3 días. La gente haría hamburguesas clandestinas. Los nutricionistas serían presidentes. Y todos soñaríamos con papas fritas."},
+        {p:"todos misma voz?",r:"Si todos tuviéramos la misma voz no sabrías quien te habla por teléfono. Las canciones sonarían raras. Los actores de doblaje no tendrían trabajo. Y para reconocer a alguien tendrías que verle la cara siempre."},
+        {p:"pausar tiempo?",r:"Pausar el tiempo te dejaría dormir 8 horas en 5 minutos reales. Podrías estudiar todo sin apuro. Llegarías a todos lados temprano. Pero si te pasas pausando tu vida real tendría 2 días."},
+        {p:"perros hablaran?",r:"Si los perros hablaran te pedirían comida 24/7. Te contarían chismes del parque. Opinarían de tu ropa. Y te reclamarían por no sacarlos. Serían los mejores amigos pero también los más hinchas."},
+        {p:"no existieran lunes?",r:"Sin lunes tendríamos 3 días de fin de semana. La felicidad mundial subiría 90%. El trabajo empezaría martes. Nadie tendría síndrome post-vacaciones. Y el café vendería la mitad."},
+        {p:"pudieras duplicarte?",r:"Si pudieras duplicarte uno trabajaría y otro dormiría. Podrías estar en 2 lugares a la vez. Pero pelearías contigo mismo por el control remoto. Y tendrías que pagar doble comida."},
+        {p:"gravedad fuera la mitad?",r:"Si la gravedad fuera la mitad todos saltaríamos 3 metros. El básquet sería ridículo. No habría aviones, solo saltos. Los objetos pesarían poco. Pero también te costaría caminar sin salir volando."},
+        {p:"pudieras ver el futuro?",r:"Ver el futuro arruinaría las sorpresas. Sabrías los resultados del mundial. No podrías ver películas. Y vivirías con ansiedad. Aunque podrías evitar todos los accidentes."},
+        {p:"dinero no existiera?",r:"Sin dinero volvería el trueque. Cambiarías 3 tomates por un corte de pelo. La gente valoraría más las habilidades. No habría bancos. Pero coordinar sería un dolor de cabeza."}
+    ];
     function cargarEscenarios(){let html='';esc.forEach((e,i)=>{html+=`<button class="esc-btn" onclick="mostrarEscenario(${i})">¿Qué pasaría si ${e.p}</button>`;});document.getElementById('listaEscenarios').innerHTML=html;}
     function mostrarEscenario(i){escenariosVistos.add(i);document.getElementById('respuesta').innerText=esc[i].r;checkLogros();saveData();}
 
-    document.getElementById('gravedadArea').onclick=(e)=>{data.usosGravedad++;let rect=document.getElementById('gravedadArea').getBoundingClientRect();let ball=document.getElementById('ball');let y=10;ball.style.top=y+'px';ball.style.left=(e.clientX-rect.left-15)+'px';let v=0;function anim(){v+=gravity*0.3;y+=v;if(y>220){y=220;v=-v*0.5;}ball.style.top=y+'px';if(Math.abs(v)>0.5)requestAnimationFrame(anim);else checkLogros();}anim();saveData();}
+    function lanzarPelota(){data.usosGravedad++;let area=document.getElementById('gravedadArea');let ball=document.getElementById('ball');ball.style.left=pelotaPos.x+'px';ball.style.top=pelotaPos.y+'px';let y=pelotaPos.y;let v=0;function anim(){v+=gravity*0.3;y+=v;if(y>220){y=220;v=-v*0.5;}ball.style.top=y+'px';if(Math.abs(v)>0.5)requestAnimationFrame(anim);else checkLogros();}anim();saveData();}
+    document.getElementById('gravedadArea').onclick=(e)=>{let rect=document.getElementById('gravedadArea').getBoundingClientRect();pelotaPos.x=e.clientX-rect.left-15;pelotaPos.y=10;document.getElementById('ball').style.left=pelotaPos.x+'px';document.getElementById('ball').style.top=pelotaPos.y+'px';}
 
-    let tablero=['','',''];let juegoActivo=true;
+    let tablero=['','','','','','','','',''];let juegoActivo=true;
     function crearTablero(){let html='';for(let i=0;i<9;i++)html+=`<div class="celda" onclick="jugar(${i})"></div>`;document.getElementById('tateti').innerHTML=html;}
     function setDif(d,btn){dif=d;document.querySelectorAll('.dif-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');reiniciarTateti();}
     function jugar(i){if(tablero[i]!=''||!juegoActivo)return;tablero[i]='X';actualizarTablero();if(chequear('X')){alert('Ganaste!');data.tateti.w++;juegoActivo=false;saveData();return;}if(!tablero.includes('')){alert('Empate');data.tateti.d++;juegoActivo=false;saveData();return;}setTimeout(robot,400);}
@@ -185,15 +213,24 @@
     function chequear(j){const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];return wins.some(c=>c.every(i=>tablero[i]==j));}
     function reiniciarTateti(){tablero=['','',''];juegoActivo=true;crearTablero();}
 
-    const logrosData=[{id:'cps_5',t:'Dedos Rápidos',d:'5 CPS'},{id:'cps_10',t:'Ametralladora',d:'10 CPS'},{id:'circle_80',t:'Artista',d:'80% círculo'},{id:'esc_3',t:'Curioso',d:'3 escenarios'},{id:'esc_18',t:'Teórico',d:'18 escenarios'},{id:'grav_10',t:'Físico',d:'Usar gravedad 10 veces'},{id:'tateti_1',t:'Estratega',d:'Ganar 1'}];
-    function checkLogros(){if(data.bestCPS>=5&&!data.logros.includes('cps_5'))data.logros.push('cps_5');if(data.bestCPS>=10&&!data.logros.includes('cps_10'))data.logros.push('cps_10');if(data.bestCircle>=80&&!data.logros.includes('circle_80'))data.logros.push('circle_80');if(escenariosVistos.size>=3&&!data.logros.includes('esc_3'))data.logros.push('esc_3');if(escenariosVistos.size>=18&&!data.logros.includes('esc_18'))data.logros.push('esc_18');if(data.usosGravedad>=10&&!data.logros.includes('grav_10'))data.logros.push('grav_10');if(data.tateti.w>=1&&!data.logros.includes('tateti_1'))data.logros.push('tateti_1');}
-    function updatePerfil(){document.getElementById('bestCPS').innerText=data.bestCPS.toFixed(2);document.getElementById('bestCircle').innerText=data.bestCircle;let html='';logrosData.forEach(l=>{let unlocked=data.logros.includes(l.id);html+=`<div class="logro ${unlocked?'unlocked':''}"><div class="titulo">${unlocked?'🏆 ':''}${l.t}</div><div style="font-size:13px;color:#aaa">${l.d}</div></div>`;});document.getElementById('logrosList').innerHTML=html;}
-    function saveData(){localStorage.setItem('lgc_data_v13',JSON.stringify(data))}
+    const logrosData=[
+        {id:'cps_5',t:'Dedos Rápidos',d:'5 CPS'},{id:'cps_10',t:'Ametralladora',d:'10 CPS'},{id:'cps_20',t:'Flash',d:'20 CPS'},
+        {id:'circle_80',t:'Artista',d:'80% círculo'},{id:'circle_95',t:'Picasso',d:'95% círculo'},{id:'circle_100',t:'Círculo Perfecto',d:'100% círculo'},
+        {id:'esc_3',t:'Curioso',d:'3 escenarios'},{id:'esc_10',t:'Filósofo',d:'10 escenarios'},{id:'esc_18',t:'Teórico',d:'18 escenarios'},{id:'esc_21',t:'Multiverso',d:'21 escenarios'},
+        {id:'grav_10',t:'Físico',d:'Usar gravedad 10 veces'},{id:'grav_50',t:'Newton',d:'Usar gravedad 50 veces'},
+        {id:'tateti_1',t:'Estratega',d:'Ganar 1'},{id:'tateti_5',t:'Gran Maestro',d:'Ganar 5'},{id:'tateti_10',t:'Invencible',d:'Ganar 10'},
+        {id:'clicks_100',t:'Dedicado',d:'100 clicks totales'},{id:'todo_15',t:'Veterano',d:'Desbloquear 15 logros'}
+    ];
+    function checkLogros(){
+        if(data.bestCPS>=5&&!data.logros.includes('cps_5'))data.logros.push('cps_5');
+        if(data.bestCPS>=10&&!data.logros.includes('cps_10'))data.logros.push('cps_10');
+        if(data.bestCPS>=20&&!data.logros.includes('cps_20'))data.logros.push('cps_20');
+        if(data.bestCircle>=80&&!data.logros.includes('circle_80'))data.logros.push('circle_80');
+        if(data.bestCircle>=95&&!data.logros.includes('circle_95'))data.logros.push('circle_95');
+        if(data.bestCircle>=100&&!data.logros.includes('circle_100'))data.logros.push('circle_100');
+        if(escenariosVistos.size>=3&&!data.logros.includes('esc_3'))data.logros.push('esc_3');
+        if(escenariosVistos.size>=10&&!data.logros.includes('esc_10'))data.logros.push('esc_10');
 
-    const canvas=document.getElementById('stars');const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;let stars=[];for(let i=0;i<100;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
-    function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle="white";stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();s.y++;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width;}});requestAnimationFrame(drawStars);}
-    drawStars();
 </script>
-
 </body>
 </html>
