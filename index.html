@@ -2,76 +2,85 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGC.FUN v1.4.0</title>
+<title>LGC.FUN v1.4.2</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
-body{background:#020211;color:#fff;overflow-x:hidden;text-align:center}
+body{background:#020211;color:#fff;overflow-x:hidden}
 #stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
-header{padding:15px;background:linear-gradient(180deg,rgba(0,247,255,0.1),transparent);border-bottom:1px solid #00f7ff;position:sticky;top:0;z-index:10}
-h1{color:#00f7ff;text-shadow:0 0 15px #00f7ff;font-size:1.8em}
+header{padding:15px;background:rgba(0,0,0,0.8);border-bottom:2px solid #00f7ff;position:sticky;top:0;z-index:10}
+h1{color:#00f7ff;text-shadow:0 0 15px #00f7ff;text-align:center}
 nav{display:flex;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
-nav button{background:#0a0a1a;border:2px solid #00f7ff;color:#00f7ff;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:bold;transition:0.3s;font-size:14px}
+nav button{background:#0a0a1a;border:2px solid #00f7ff;color:#00f7ff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:bold;transition:0.3s;font-size:13px}
 nav button:hover,nav button.active{background:#00f7ff;color:#000;box-shadow:0 0 15px #00f7ff}
-.card{display:none;padding:20px;max-width:600px;margin:10px auto}
+.card{display:none;padding:20px;max-width:700px;margin:10px auto}
 .card.active{display:block;animation:fade 0.4s}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+.btn{background:linear-gradient(90deg,#00f7ff,#0088ff);color:#000;border:none;padding:12px 24px;border-radius:10px;margin:8px;cursor:pointer;font-weight:bold}
+.card-item{background:#0a0a1a;border:1px solid #00f7ff;padding:15px;border-radius:10px;margin:10px 0;text-align:left}
 #tateti{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:90%;max-width:300px;margin:20px auto;aspect-ratio:1}
 .celda{aspect-ratio:1;background:#0a0a1a;border:3px solid #00f7ff;display:flex;align-items:center;justify-content:center;font-size:clamp(30px,10vw,60px);color:#00f7ff;cursor:pointer;border-radius:15px;font-weight:bold}
 .celda.X{color:#00ff88}.celda.O{color:#ff0066}
-.btn{background:linear-gradient(90deg,#00f7ff,#0088ff);color:#000;border:none;padding:12px 24px;border-radius:10px;margin:8px;cursor:pointer;font-weight:bold}
-#clickBox{width:200px;height:200px;background:radial-gradient(#00f7ff,#0088ff);border-radius:50%;margin:20px auto;cursor:pointer;transition:0.1s;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:bold}
+#clickBox{width:180px;height:180px;background:radial-gradient(#00f7ff,#0088ff);border-radius:50%;margin:20px auto;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:bold}
 #clickBox:active{transform:scale(0.9)}
 #draw{border:2px solid #00f7ff;border-radius:10px;background:#000;touch-action:none}
-.logro{background:#0a0a1a;border:1px solid #444;padding:10px;margin:8px;border-radius:8px;text-align:left}
+.logro{background:#0a0a1a;border:1px solid #444;padding:12px;margin:8px;border-radius:8px;text-align:left}
 .logro.done{border-color:#00ff88;background:rgba(0,255,136,0.1)}
-.exp-box{background:#0a0a1a;border:1px solid #00f7ff;padding:15px;border-radius:10px;margin:15px 0}
+input{padding:10px;border-radius:8px;border:1px solid #00f7ff;background:#0a0a1a;color:#fff;margin:5px;width:80%;max-width:300px}
 </style>
 </head>
 <body>
 <canvas id="stars"></canvas>
 <header>
-<h1>⚡ LGC.FUN v1.4.0</h1>
+<h1>⚡ LGC.FUN</h1>
 <nav>
-<button id="b-menu" class="active" onclick="show('menu')">Menu</button>
-<button id="b-tateti" onclick="show('tateti')">Ta-Te-Ti</button>
-<button id="b-click" onclick="show('click')">Click</button>
-<button id="b-dibujo" onclick="show('dibujo')">Dibujo</button>
-<button id="b-gravedad" onclick="show('gravedad')">Gravedad</button>
+<button id="b-inicio" class="active" onclick="show('inicio')">Inicio</button>
+<button id="b-novedades" onclick="show('novedades')">Novedades</button>
+<button id="b-periodicos" onclick="show('periodicos')">Periódicos</button>
+<button id="b-laboratorio" onclick="show('laboratorio')">Laboratorio</button>
 <button id="b-logros" onclick="show('logros')">Logros</button>
+<button id="b-login" onclick="show('login')">Login</button>
 </nav>
 </header>
 
-<div id="menu" class="card active"><h2>Bienvenido 🚀</h2><p>Todos los experimentos funcionando</p></div>
-
-<div id="tateti" class="card">
-<h2>Ta-Te-Ti vs Bot</h2>
-<div class="stats"><span>🏆 <b id="w">0</b></span><span>🤝 <b id="e">0</b></span><span>💀 <b id="l">0</b></span></div>
-<div id="tablero"></div><button class="btn" onclick="resetT()">Reiniciar</button><p id="msgT"></p>
+<div id="inicio" class="card active">
+<h2>Bienvenido a LGC.FUN 🚀</h2>
+<p>La web de experimentos más piola</p>
+<div class="card-item"><h3>Último: Ta-Te-Ti mejorado</h3><p>Ya podes jugar vs el bot y guardar stats</p></div>
 </div>
 
-<div id="click" class="card">
-<h2>Click por Segundo</h2>
-<div id="clickBox" onclick="clickear()">0</div>
-<button class="btn" onclick="resetC()">Reset</button><p id="msgC">Clickea lo más rápido!</p>
+<div id="novedades" class="card">
+<h2>Novedades 📰</h2>
+<div class="card-item"><h3>v1.4.2 - Menú Completo</h3><p>Volvió el menú original + todos los exps funcionando</p></div>
+<div class="card-item"><h3>v1.4.0 - Logros</h3><p>Sistema de logros agregado</p></div>
 </div>
 
-<div id="dibujo" class="card">
-<h2>Dibujá un Círculo</h2>
-<canvas id="draw" width="300" height="300"></canvas><br>
-<button class="btn" onclick="limpiar()">Limpiar</button><p id="msgD">Dibuja con el dedo/mouse</p>
+<div id="periodicos" class="card">
+<h2>Periódicos 📄</h2>
+<div class="card-item"><h3>El LGC Diario</h3><p>"Programador rompe todo y lo arregla" - Noticia de hoy</p></div>
+<div class="card-item"><h3>Tech Hoy</h3><p>"Nueva web con 400 líneas hace de todo"</p></div>
 </div>
 
-<div id="gravedad" class="card">
-<h2>¿Qué pasaría si... hay Gravedad?</h2>
-<div class="exp-box">
-<button class="btn" onclick="crearPelota()">Lanzar Pelota</button>
-<canvas id="grav" width="300" height="400" style="border:2px solid #00f7ff;border-radius:10px;background:#000"></canvas>
-</div>
+<div id="laboratorio" class="card">
+<h2>Laboratorio 🧪</h2>
+<button class="btn" onclick="showExp('tateti')">1. Ta-Te-Ti</button>
+<button class="btn" onclick="showExp('click')">2. Click por Segundo</button>
+<button class="btn" onclick="showExp('dibujo')">3. Dibujar</button>
+<button class="btn" onclick="showExp('gravedad')">4. Gravedad</button>
+<div id="exp-area"></div>
 </div>
 
 <div id="logros" class="card">
-<h2>Logros 🏅</h2>
+<h2>Perfil + Logros 🏅</h2>
+<div class="card-item"><h3>Usuario: Invitado</h3><p>Nivel: 1 | XP: 0</p></div>
 <div id="listaLogros"></div>
+</div>
+
+<div id="login" class="card">
+<h2>Login 🔐</h2>
+<input type="text" id="user" placeholder="Usuario"><br>
+<input type="password" id="pass" placeholder="Contraseña"><br>
+<button class="btn" onclick="alert('Login fake por ahora 😅')">Entrar</button>
+<p>Esto es solo visual por ahora</p>
 </div>
 
 <script>
@@ -83,37 +92,47 @@ function show(id){
   if(id=='logros')renderLogros();
 }
 
+// LABORATORIO
+function showExp(t){
+  let html='';
+  if(t=='tateti')html=`<h3>Ta-Te-Ti</h3><div id="tateti"></div><button class="btn" onclick="resetT()">Reiniciar</button><p id="msgT"></p>`;
+  if(t=='click')html=`<h3>Click por Segundo</h3><div id="clickBox" onclick="clickear()">0</div><button class="btn" onclick="resetC()">Reset</button>`;
+  if(t=='dibujo')html=`<h3>Dibujar</h3><canvas id="draw" width="300" height="300"></canvas><br><button class="btn" onclick="limpiar()">Limpiar</button>`;
+  if(t=='gravedad')html=`<h3>Gravedad</h3><button class="btn" onclick="crearPelota()">Lanzar Pelota</button><canvas id="grav" width="300" height="350" style="border:2px solid #00f7ff;border-radius:10px;background:#000"></canvas>`;
+  document.getElementById('exp-area').innerHTML=html;
+  if(t=='tateti')crearT();if(t=='dibujo')initDraw();if(t=='gravedad')loopG();
+}
+
 // TATETI
-let tab=Array(9).fill('');function crearT(){let h='';for(let i=0;i<9;i++)h+=`<div class="celda" onclick="jugar(${i})"></div>`;document.getElementById('tablero').innerHTML=h;document.getElementById('msgT').innerText='Tu turno: X'}
+let tab=Array(9).fill('');function crearT(){let h='';for(let i=0;i<9;i++)h+=`<div class="celda" onclick="jugar(${i})"></div>`;document.getElementById('tateti').innerHTML=h;document.getElementById('msgT').innerText='Tu turno: X'}
 function jugar(i){if(tab[i]!=''||ganar('X')||ganar('O'))return;tab[i]='X';actT();if(ganar('X')){score.w++;logros.primerGanada=true;return finT('Ganaste! 🎉')}
 let libres=tab.map((v,k)=>v==''?k:null).filter(v=>v!=null);if(libres.length==0){score.e++;return finT('Empate! 🤝')}
 tab[libres[Math.floor(Math.random()*libres.length)]]='O';actT();if(ganar('O')){score.l++;finT('Perdiste! 💀')}}
-function actT(){document.querySelectorAll('#tablero .celda').forEach((c,i)=>{c.innerText=tab[i];c.className='celda '+tab[i]});document.getElementById('w').innerText=score.w;document.getElementById('e').innerText=score.e;document.getElementById('l').innerText=score.l}
+function actT(){document.querySelectorAll('#tateti .celda').forEach((c,i)=>{c.innerText=tab[i];c.className='celda '+tab[i]})}
 function ganar(j){return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(c=>c.every(i=>tab[i]==j))}
-function finT(txt){document.getElementById('msgT').innerText=txt}function resetT(){tab=Array(9).fill('');crearT()}crearT();
+function finT(txt){document.getElementById('msgT').innerText=txt}function resetT(){tab=Array(9).fill('');crearT()}
 
 // CLICK
 function clickear(){clicks++;document.getElementById('clickBox').innerText=clicks;if(clicks>=100)logros.cienClicks=true}
 function resetC(){clicks=0;document.getElementById('clickBox').innerText=0}
 
 // DIBUJO
-const draw=document.getElementById('draw'),dctx=draw.getContext('2d');let dibujando=false;
-draw.onmousedown=e=>{dibujando=true;dctx.beginPath();dctx.moveTo(e.offsetX,e.offsetY);logros.primerDibujo=true}
-draw.onmousemove=e=>{if(dibujando){dctx.lineTo(e.offsetX,e.offsetY);dctx.strokeStyle='#00f7ff';dctx.lineWidth=3;dctx.stroke()}}
-draw.onmouseup=()=>dibujando=false;function limpiar(){dctx.clearRect(0,0,300,300)}
+function initDraw(){const draw=document.getElementById('draw'),dctx=draw.getContext('2d');let dib=false;
+draw.onmousedown=e=>{dib=true;dctx.beginPath();dctx.moveTo(e.offsetX,e.offsetY);logros.primerDibujo=true}
+draw.onmousemove=e=>{if(dib){dctx.lineTo(e.offsetX,e.offsetY);dctx.strokeStyle='#00f7ff';dctx.lineWidth=3;dctx.stroke()}}
+draw.onmouseup=()=>dib=false;window.limpiar=()=>dctx.clearRect(0,0,300,300)}
 
 // GRAVEDAD
-const gcan=document.getElementById('grav'),gctx=gcan.getContext('2d');let pelotas=[];
-function crearPelota(){pelotas.push({x:150,y:20,r:15,vy:0})}
-function loopG(){gctx.clearRect(0,0,300,400);pelotas.forEach(p=>{p.vy+=0.3;p.y+=p.vy;if(p.y+p.r>400){p.y=400-p.r;p.vy*=-0.7}
-gctx.beginPath();gctx.arc(p.x,p.y,p.r,0,6.28);gctx.fillStyle='#00f7ff';gctx.fill()});requestAnimationFrame(loopG)}loopG();
+let pelotas=[];function crearPelota(){pelotas.push({x:150,y:20,r:15,vy:0})}
+function loopG(){const gcan=document.getElementById('grav');if(!gcan)return;const gctx=gcan.getContext('2d');gctx.clearRect(0,0,300,350);pelotas.forEach(p=>{p.vy+=0.3;p.y+=p.vy;if(p.y+p.r>350){p.y=350-p.r;p.vy*=-0.7}
+gctx.beginPath();gctx.arc(p.x,p.y,p.r,0,6.28);gctx.fillStyle='#00f7ff';gctx.fill()});requestAnimationFrame(loopG)}
 
 // LOGROS
 function renderLogros(){
   document.getElementById('listaLogros').innerHTML=`
-  <div class="logro ${logros.primerGanada?'done':''}">🏆 Primera Victoria - Gana 1 partida</div>
-  <div class="logro ${logros.cienClicks?'done':''}">⚡ 100 Clicks - Haz 100 clicks</div>
-  <div class="logro ${logros.primerDibujo?'done':''}">🎨 Artista - Dibuja algo</div>`;
+  <div class="logro ${logros.primerGanada?'done':''}">🏆 Primera Victoria</div>
+  <div class="logro ${logros.cienClicks?'done':''}">⚡ 100 Clicks</div>
+  <div class="logro ${logros.primerDibujo?'done':''}">🎨 Artista</div>`;
 }
 
 // ESTRELLAS
