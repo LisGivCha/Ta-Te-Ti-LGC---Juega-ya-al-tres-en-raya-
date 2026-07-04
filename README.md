@@ -1,2 +1,2 @@
-# Ta-Te-Ti-LGC---Juega-ya-al-tres-en-raya-
-Ta Te Ti LGC es una pagina web en donde puedes jugar al tres en raya, gato, ta te ti, o como se le diga en tu pais. Diviertete jugando con tus amigos o con un robot. Compite para llegar al primer puesto en la tabla de clasificación
+LGC.FUN ¿Cual es el proximo experimento?
+LGC.FUN es una pagina web de experimentos divertidos. prueba exps. como "dibuja um circulo perfecto", o "Que pasaria si...".
