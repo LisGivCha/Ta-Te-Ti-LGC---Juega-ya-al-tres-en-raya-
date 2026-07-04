@@ -31,6 +31,11 @@
 .respuesta { font-size: 15px; color: #aaa; margin-bottom: 15px; padding: 10px; background: rgba(0,247,255,0.05); border-radius: 8px; min-height: 40px; }
 .btnGrande { background: #00f7ff; color: #000; border: none; padding: 15px 30px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 .btnGrande:hover { box-shadow: 0 0 20px #00f7ff; }
+#ball { width: 30px; height: 30px; background: #00f7ff; border-radius: 50%; position: absolute; box-shadow: 0 0 15px #00f7ff; }
+#gravedadArea { width: 100%; height: 250px; background: rgba(0,247,255,0.03); border: 2px dashed #00f7ff; border-radius: 12px; position: relative; overflow: hidden; margin-top: 15px; }
+.slider { width: 80%; margin: 10px auto; }
+.historial { background: #0a0a0a; border: 1px dashed #333; padding: 15px; margin-top: 15px; border-radius: 8px; text-align: left; }
+.historial h4 { color: #00f7ff; margin-bottom: 8px; }
 </style>
 </head>
 <body>
@@ -42,6 +47,7 @@
   <nav>
     <button onclick="show('menu')">Menu</button>
     <button onclick="show('novedades')">Novedades</button>
+    <button onclick="show('periodico')">📰 Periódico</button>
     <button onclick="show('lab')">Laboratorio</button>
     <button onclick="show('perfil')">Perfil</button>
     <button onclick="show('login')">Login</button>
@@ -51,15 +57,49 @@
 <div class="container">
   <div id="menu" class="card">
     <h2>Bienvenido a LGC.FUN</h2>
-    <p>Versión 1.2.1</p>
+    <p>Versión 1.3</p>
   </div>
 
   <div id="novedades" class="card" style="display:none">
     <h2>📢 Novedades</h2>
-    <div class="version">Novedades V1.2</div>
-    <div class="novedad">🌀 Exp 3: ¿Qué pasaría si...? con escenarios nuevos</div>
-    <div class="novedad">⭕ Exp 2: Ahora tenés que cerrar el círculo</div>
-    <div class="novedad">🧹 Auto-borrar al empezar un nuevo dibujo</div>
+    <div class="version">Novedades V1.3</div>
+    <div class="novedad">🌍 Exp 4: Gravedad - Controla la gravedad y mide tu salto</div>
+    <div class="novedad">🌀 Exp 3: +7 escenarios nuevos con respuestas</div>
+    <div class="novedad">🏆 +5 Logros nuevos: Teórico, Canguro, Cohete, Físico, Leyenda</div>
+    <div class="novedad">📰 Nuevo: Periódico para ver historial de versiones</div>
+  </div>
+
+  <div id="periodico" class="card" style="display:none">
+    <h2>📰 Periódico LGC</h2>
+    <p>Historial de versiones</p>
+
+    <div class="historial">
+      <h4>V1.3 - "Expansión Cósmica"</h4>
+      <p>- Exp 4: Gravedad agregado</p>
+      <p>- 15 escenarios en ¿Qué pasaría si...?</p>
+      <p>- 12 logros totales</p>
+    </div>
+
+    <div class="historial">
+      <h4>V1.2 - "El Círculo y el Caos"</h4>
+      <p>- Exp 3: ¿Qué pasaría si...?</p>
+      <p>- Exp 2: Ahora tenés que cerrar el círculo</p>
+      <p>- Auto-borrar al dibujar</p>
+    </div>
+
+    <div class="historial">
+      <h4>V1.1 - "Primeros Pasos"</h4>
+      <p>- Perfil + Logros</p>
+      <p>- Exp 2 compatible con celular</p>
+      <p>- Guardado automático</p>
+    </div>
+
+    <div class="historial">
+      <h4>V1.0 - "Lanzamiento"</h4>
+      <p>- Exp 1: Click por segundo</p>
+      <p>- Exp 2: Dibuja un círculo</p>
+      <p>- Login básico</p>
+    </div>
   </div>
 
   <div id="lab" class="card" style="display:none">
@@ -67,6 +107,7 @@
     <button class="lab-btn" onclick="showExp(1)">Click por segundo</button>
     <button class="lab-btn" onclick="showExp(2)">Dibuja un circulo perfecto</button>
     <button class="lab-btn" onclick="showExp(3)">¿Qué pasaría si...?</button>
+    <button class="lab-btn" onclick="showExp(4)">Gravedad</button>
 
     <div id="exp1" style="display:none; margin-top:20px;">
       <h3>Exp 1: Click por segundo</h3>
@@ -95,6 +136,17 @@
       <div class="respuesta" id="respuesta"></div>
       <button class="btnGrande" onclick="generarEscenario()">Generar</button>
     </div>
+
+    <div id="exp4" style="display:none; margin-top:20px;">
+      <h3>Exp 4: Gravedad</h3>
+      <p>Controla la gravedad y tira la pelota</p>
+      <input type="range" min="1" max="20" value="9" class="slider" id="gravitySlider" oninput="updateGravity(this.value)">
+      <p>Gravedad: <b id="gravityValue">9</b></p>
+      <div id="gravedadArea">
+        <div id="ball"></div>
+      </div>
+      <button class="btnGrande" onclick="lanzarPelota()">Lanzar</button>
+    </div>
   </div>
 
   <div id="perfil" class="card" style="display:none">
@@ -103,6 +155,7 @@
     <p>Mejor CPS: <b id="bestCPS">0</b></p>
     <p>Mejor Círculo: <b id="bestCircle">0</b>%</p>
     <p>Escenarios vistos: <b id="escenariosVistos">0</b></p>
+    <p>Mejor Salto: <b id="mejorSalto">0</b>m</p>
     <div class="divider"></div>
     <h3>Logros</h3>
     <div id="logrosList">Cargando...</div>
@@ -137,7 +190,7 @@ drawStars();
 
 // DATOS
 let currentUser = localStorage.getItem('lgc_user') || 'anonimo';
-let data = JSON.parse(localStorage.getItem('lgc_data_' + currentUser)) || {bestCPS:0, bestCircle:0, escenarios:0, logros:[]};
+let data = JSON.parse(localStorage.getItem('lgc_data_' + currentUser)) || {bestCPS:0, bestCircle:0, escenarios:0, mejorSalto:0, logros:[]};
 
 // Navegación
 function show(id){
@@ -151,6 +204,7 @@ function showExp(n){
   document.getElementById('exp1').style.display = n==1? 'block' : 'none';
   document.getElementById('exp2').style.display = n==2? 'block' : 'none';
   document.getElementById('exp3').style.display = n==3? 'block' : 'none';
+  document.getElementById('exp4').style.display = n==4? 'block' : 'none';
 }
 
 // EXP 1: Click
@@ -185,67 +239,38 @@ function count(){ if(playing){ clicks++; document.getElementById('score').innerT
 const drawCanvas = document.getElementById('canvasDraw');
 const dctx = drawCanvas.getContext('2d');
 let drawing = false; let points = []; let startPoint = null;
-
 function getPos(e){
   const rect = drawCanvas.getBoundingClientRect();
   let x = e.clientX || e.touches[0].clientX;
   let y = e.clientY || e.touches[0].clientY;
   return {x: x - rect.left, y: y - rect.top};
 }
-
 function startDraw(e){
-  e.preventDefault();
-  clearCanvas();
-  drawing = true;
-  points = [];
-  startPoint = getPos(e);
-  points.push(startPoint);
+  e.preventDefault(); clearCanvas(); drawing = true; points = [];
+  startPoint = getPos(e); points.push(startPoint);
 }
-
 function moveDraw(e){
-  if(!drawing) return;
-  e.preventDefault();
-  const pos = getPos(e);
-  points.push(pos);
-  dctx.strokeStyle = '#00f7ff';
-  dctx.lineWidth = 3;
-  dctx.beginPath();
-  dctx.moveTo(points[points.length-2].x, points[points.length-2].y);
-  dctx.lineTo(pos.x, pos.y);
-  dctx.stroke();
+  if(!drawing) return; e.preventDefault(); const pos = getPos(e); points.push(pos);
+  dctx.strokeStyle = '#00f7ff'; dctx.lineWidth = 3; dctx.beginPath();
+  dctx.moveTo(points[points.length-2].x, points[points.length-2].y); dctx.lineTo(pos.x, pos.y); dctx.stroke();
 }
-
 function endDraw(){
-  if(!drawing) return;
-  drawing = false;
-  if(points.length < 20){
-    document.getElementById('circleScore').innerText = '¡TE FALTO COMPLETAR EL CIRCULO!';
-    return;
-  }
-  let endPoint = points[points.length-1];
-  let dist = Math.hypot(endPoint.x - startPoint.x, endPoint.y - startPoint.y);
-  if(dist > 40){
-    document.getElementById('circleScore').innerText = '¡TE FALTO COMPLETAR EL CIRCULO!';
-    return;
-  }
-  let cx = points.reduce((a,p)=>a+p.x,0)/points.length;
-  let cy = points.reduce((a,p)=>a+p.y,0)/points.length;
+  if(!drawing) return; drawing = false;
+  if(points.length < 20){ document.getElementById('circleScore').innerText = '¡TE FALTO COMPLETAR EL CIRCULO!'; return; }
+  let endPoint = points[points.length-1]; let dist = Math.hypot(endPoint.x - startPoint.x, endPoint.y - startPoint.y);
+  if(dist > 40){ document.getElementById('circleScore').innerText = '¡TE FALTO COMPLETAR EL CIRCULO!'; return; }
+  let cx = points.reduce((a,p)=>a+p.x,0)/points.length; let cy = points.reduce((a,p)=>a+p.y,0)/points.length;
   let avgR = points.reduce((a,p)=>a+Math.hypot(p.x-cx,p.y-cy),0)/points.length;
   let variance = points.reduce((a,p)=>a+Math.abs(Math.hypot(p.x-cx,p.y-cy)-avgR),0)/points.length;
   let score = Math.max(0, 100 - (variance/avgR)*100);
   document.getElementById('circleScore').innerText = 'Precisión: ' + score.toFixed(0) + '%';
   if(score > data.bestCircle){ data.bestCircle = score; checkLogros(); saveData(); }
 }
-
 drawCanvas.onmousedown = startDraw; drawCanvas.onmousemove = moveDraw; drawCanvas.onmouseup = endDraw;
 drawCanvas.ontouchstart = startDraw; drawCanvas.ontouchmove = moveDraw; drawCanvas.ontouchend = endDraw;
+function clearCanvas(){ dctx.clearRect(0,0,drawCanvas.width,drawCanvas.height); document.getElementById('circleScore').innerText = 'Precisión: -'; }
 
-function clearCanvas(){
-  dctx.clearRect(0,0,drawCanvas.width,drawCanvas.height);
-  document.getElementById('circleScore').innerText = 'Precisión: -';
-}
-
-// EXP 3: ¿Qué pasaría si...? CON RESPUESTAS
+// EXP 3: ¿Qué pasaría si...? 15 ESCENARIOS
 const escenarios = [
   {p: "los gatos dominaran el mundo?", r: "Habría siestas obligatorias cada 2 horas y el atún sería moneda oficial."},
   {p: "en el sistema solar hubieran 2 soles?", r: "Tendríamos el doble de calor y 2 amaneceres. Bronceado x2."},
@@ -254,7 +279,14 @@ const escenarios = [
   {p: "el tiempo fuera dinero?", r: "Dormir sería carísimo y procrastinar te dejaría en bancarrota."},
   {p: "los dinosaurios nunca se extinguieron?", r: "Manejar sería un caos. Un T-Rex no entra en el garage."},
   {p: "pudieras teletransportarte?", r: "Llegarías tarde igual porque dirías 'ya voy' 5 minutos antes."},
-  {p: "la gravedad fuera la mitad?", r: "Podrías saltar edificios de un brinco. El básquet sería muy tramposo."}
+  {p: "la gravedad fuera la mitad?", r: "Podrías saltar edificios de un brinco. El básquet sería muy tramposo."},
+  {p: "no existiera el internet?", r: "Tendríamos que salir a la calle. Qué miedo."},
+  {p: "pudieras hablar con los animales?", r: "Tu perro te diría que le des más comida y tu gato te ignoraría igual."},
+  {p: "todos tuvieran superpoderes?", r: "El caos. Pero volar al trabajo estaría buenísimo."},
+  {p: "duraras despierto 1 semana entera?", r: "Verías cosas raras al día 3. Al día 7 serías un zombie."},
+  {p: "la escuela fuera opcional?", r: "La mitad iría y la otra mitad estaría jugando todo el día."},
+  {p: "pudieras clonar a tus amigos?", r: "Fiestas épicas. Pero también 5 veces más problemas."},
+  {p: "los emojis cobraran vida?", r: "El de caca te perseguiría. El de risa no pararía de molestar."}
 ];
 function generarEscenario(){
   const random = escenarios[Math.floor(Math.random()*escenarios.length)];
@@ -265,7 +297,29 @@ function generarEscenario(){
   saveData();
 }
 
-// LOGROS
+// EXP 4: GRAVEDAD
+let gravity = 9; let ball = document.getElementById('ball'); let gravArea = document.getElementById('gravedadArea');
+let ballY = 20; let velocity = 0; let animId;
+function updateGravity(val){ gravity = val; document.getElementById('gravityValue').innerText = val; }
+function lanzarPelota(){
+  cancelAnimationFrame(animId);
+  ballY = 20; velocity = -15;
+  ball.style.top = ballY + 'px'; ball.style.left = '50%';
+  let maxHeight = ballY;
+  function animate(){
+    velocity += gravity * 0.2;
+    ballY += velocity;
+    if(ballY < maxHeight) maxHeight = ballY;
+    if(ballY > gravArea.offsetHeight - 30){ ballY = gravArea.offsetHeight - 30; velocity = 0; }
+    ball.style.top = ballY + 'px';
+    let altura = ((gravArea.offsetHeight - ballY)/10).toFixed(1);
+    if(altura > data.mejorSalto){ data.mejorSalto = altura; checkLogros(); saveData(); }
+    if(velocity!= 0) animId = requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+// LOGROS - 12 TOTALES
 const logrosData = [
   {id:'first_click', titulo:'Primer Click', desc:'Hace tu primer click'},
   {id:'cps_5', titulo:'Dedos Rápidos', desc:'Llega a 5 CPS'},
@@ -274,6 +328,11 @@ const logrosData = [
   {id:'circle_95', titulo:'Compás Humano', desc:'95% de precisión en círculo'},
   {id:'esc_1', titulo:'Curioso', desc:'Genera tu primer escenario'},
   {id:'esc_10', titulo:'Multiverso', desc:'Genera 10 escenarios diferentes'},
+  {id:'esc_15', titulo:'Teórico', desc:'Genera 15 escenarios diferentes'},
+  {id:'salto_5', titulo:'Canguro', desc:'Alcanza 5m de altura'},
+  {id:'salto_15', titulo:'Cohete', desc:'Alcanza 15m de altura'},
+  {id:'gravedad_1', titulo:'Físico', desc:'Juega con la gravedad'},
+  {id:'todo_80', titulo:'Leyenda', desc:'80% círculo + 9 CPS'}
 ];
 function checkLogros(){
   logrosData.forEach(l=>{
@@ -285,6 +344,11 @@ function checkLogros(){
     if(l.id=='circle_95' && data.bestCircle>=95) unlocked=true;
     if(l.id=='esc_1' && data.escenarios>=1) unlocked=true;
     if(l.id=='esc_10' && data.escenarios>=10) unlocked=true;
+    if(l.id=='esc_15' && data.escenarios>=15) unlocked=true;
+    if(l.id=='salto_5' && data.mejorSalto>=5) unlocked=true;
+    if(l.id=='salto_15' && data.mejorSalto>=15) unlocked=true;
+    if(l.id=='gravedad_1' && data.mejorSalto>0) unlocked=true;
+    if(l.id=='todo_80' && data.bestCircle>=80 && data.bestCPS>=9) unlocked=true;
     if(unlocked &&!data.logros.includes(l.id)){
       data.logros.push(l.id);
       alert('🏆 Logro desbloqueado: ' + l.titulo);
@@ -296,6 +360,7 @@ function updatePerfil(){
   document.getElementById('bestCPS').innerText = data.bestCPS.toFixed(2);
   document.getElementById('bestCircle').innerText = data.bestCircle.toFixed(0);
   document.getElementById('escenariosVistos').innerText = data.escenarios;
+  document.getElementById('mejorSalto').innerText = data.mejorSalto;
   let html = '';
   logrosData.forEach(l=>{
     let unlocked = data.logros.includes(l.id);
@@ -307,14 +372,14 @@ function updatePerfil(){
   document.getElementById('logrosList').innerHTML = html;
 }
 
-// LOGIN ARREGLADO
+// LOGIN
 function login(){
   const u = document.getElementById('user').value;
   const p = document.getElementById('pass').value;
-  if(u && p === 'lgc2025'){ // Contraseña fija
+  if(u && p === 'lgc2025'){
     currentUser = u;
     localStorage.setItem('lgc_user', u);
-    data = JSON.parse(localStorage.getItem('lgc_data_' + u)) || {bestCPS:0, bestCircle:0, escenarios:0, logros:[]};
+    data = JSON.parse(localStorage.getItem('lgc_data_' + u)) || {bestCPS:0, bestCircle:0, escenarios:0, mejorSalto:0, logros:[]};
     document.getElementById('msg').innerText = 'Bienvenido ' + u;
     updatePerfil();
   } else {
@@ -324,7 +389,7 @@ function login(){
 function logout(){
   currentUser = 'anonimo';
   localStorage.removeItem('lgc_user');
-  data = JSON.parse(localStorage.getItem('lgc_data_anonimo')) || {bestCPS:0, bestCircle:0, escenarios:0, logros:[]};
+  data = JSON.parse(localStorage.getItem('lgc_data_anonimo')) || {bestCPS:0, bestCircle:0, escenarios:0, mejorSalto:0, logros:[]};
   document.getElementById('msg').innerText = 'Modo Anónimo';
 }
 function saveData(){
@@ -335,4 +400,4 @@ updatePerfil();
 </script>
 
 </body>
-     </html>
+   </html>
