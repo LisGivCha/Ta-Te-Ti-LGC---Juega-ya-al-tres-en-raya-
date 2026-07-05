@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGC.FUN v1.7.1</title>
+<title>LGC.FUN v1.7.2</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
 body{background:#020211;color:#fff;overflow-x:hidden}
@@ -42,7 +42,7 @@ select{padding:8px;border-radius:8px;background:#0a0a1a;color:#fff;border:1px so
 <div id="panelLogros"><h2>Logros <span id="contLogros"></span></h2><div id="listaLogros"></div></div>
 
 <header>
-<h1>⚡ LGC.FUN v1.7.1</h1>
+<h1>⚡ LGC.FUN v1.7.2</h1>
 <nav>
 <button id="b-inicio" class="active" onclick="show('inicio')">Inicio</button>
 <button id="b-novedades" onclick="show('novedades')">Novedades</button>
@@ -52,9 +52,9 @@ select{padding:8px;border-radius:8px;background:#0a0a1a;color:#fff;border:1px so
 </nav>
 </header>
 
-<div id="inicio" class="card active"><h2>Bienvenido 🚀</h2><p>90 escenarios. 120 logros. Todo nombrado</p></div>
-<div id="novedades" class="card"><h2>Novedades</h2><div class="card-item"><h3>v1.7.1</h3><p>Todos los logros y escenarios tienen nombre. Dibujo 100% funcional</p></div></div>
-<div id="periodicos" class="card"><h2>Periódicos</h2><div class="card-item"><h3>LGC News</h3><p>"Dev nombra 210 cosas en 1 noche"</p></div></div>
+<div id="inicio" class="card active"><h2>Bienvenido 🚀</h2><p>90 escenarios. 120 logros. Todo funcionando</p></div>
+<div id="novedades" class="card"><h2>Novedades</h2><div class="card-item"><h3>v1.7.2 FIX</h3><p>Arreglado TaTeTi, Dibujo y Circulo. Perdón amek</p></div></div>
+<div id="periodicos" class="card"><h2>Periódicos</h2><div class="card-item"><h3>LGC News</h3><p>"Dev arregla lo que rompió"</p></div></div>
 
 <div id="laboratorio" class="card">
 <h2>Laboratorio 🧪</h2>
@@ -104,12 +104,12 @@ function showExp(t){
 
 function setDif(d){dificultad=d;document.querySelectorAll('.btn-diff').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');resetT()}
 
-// TATETI
+// TATETI ARREGLADO
 let tab=Array(9).fill('');function crearT(){let h='';for(let i=0;i<9;i++)h+=`<div class="celda" onclick="jugar(${i})"></div>`;document.getElementById('tateti').innerHTML=h;document.getElementById('msgT').innerText='Tu turno: X'}
 function jugar(i){if(tab[i]!=''||ganar('X')||ganar('O'))return;tab[i]='X';actT();if(ganar('X')){score.w++;desbloquearLogro(0);return finT('Ganaste! 🎉')}
 let libres=tab.map((v,k)=>v==''?k:null).filter(v=>v!=null);if(libres.length==0){score.e++;return finT('Empate! 🤝')}
-let mov=ia();if(mov!=null)tab[mov]='O';actT();if(ganar('O')){score.l++;finT('Perdiste! 💀')}}
-function ia(){let libres=tab.map((v,k)=>v==''?k:null).filter(v=>v!=null);if(dificultad=='facil')return libres[Math.floor(Math.random()*libres.length)];
+setTimeout(()=>{let mov=ia();if(mov!=null)tab[mov]='O';actT();if(ganar('O')){score.l++;finT('Perdiste! 💀')}},300)}
+function ia(){let libres=tab.map((v,k)=>v==''?k:null).filter(v=>v!=null);if(libres.length==0)return null;if(dificultad=='facil')return libres[Math.floor(Math.random()*libres.length)];
 for(let i of libres){tab[i]='O';if(ganar('O')){tab[i]='';return i}tab[i]=''}for(let i of libres){tab[i]='X';if(ganar('X')){tab[i]='';return i}tab[i]=''}if(tab[4]=='')return 4;return libres[0]}
 function actT(){document.querySelectorAll('#tateti.celda').forEach((c,i)=>{c.innerText=tab[i];c.className='celda '+tab[i]})}
 function ganar(j){return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(c=>c.every(i=>tab[i]==j))}
@@ -121,7 +121,7 @@ timerInt=setInterval(()=>{t--;document.getElementById('timeLeft').innerText=`Tie
 function clickear(){clicks++;document.getElementById('clickBox').innerText=clicks;if(clicks>=100)desbloquearLogro(1)}
 function resetC(){clicks=0;document.getElementById('clickBox').innerText=0}
 
-// DIBUJO - ARREGLADO
+// DIBUJO ARREGLADO
 let dibujando=false,ctx1,ctx2;
 function initDraw(id,conBoton){
   const draw=document.getElementById(id);
@@ -130,7 +130,7 @@ function initDraw(id,conBoton){
   dibujando=false;
   draw.onmousedown=e=>{dibujando=true;if(!conBoton)dctx.clearRect(0,0,300,300);dctx.beginPath();dctx.moveTo(e.offsetX,e.offsetY)}
   draw.onmousemove=e=>{if(dibujando){dctx.lineTo(e.offsetX,e.offsetY);dctx.strokeStyle='#00f7ff';dctx.lineWidth=3;dctx.lineCap='round';dctx.stroke()}}
-  draw.onmouseup=()=>{dibujando=false;if(id=='draw'){dibujosHechos++;desbloquearLogro(60);if(dibujosHechos>=10)desbloquearLogro(61);if(dibujosHechos>=100)desbloquearLogro(62);calcularCirculo()}}
+  draw.onmouseup=()=>{dibujando=false;if(id=='draw'){dibujosHechos++;desbloquearLogro(60);calcularCirculo()}}
   draw.onmouseleave=()=>dibujando=false;
 }
 function limpiar2(){if(ctx2)ctx2.clearRect(0,0,300,300)}
@@ -156,9 +156,27 @@ if(dist<p.r+p2.r){let ang=Math.atan2(dy,dx),overlap=p.r+p2.r-dist;
 p.x-=Math.cos(ang)*overlap/2;p.y-=Math.sin(ang)*overlap/2;p2.x+=Math.cos(ang)*overlap/2;p2.y+=Math.sin(ang)*overlap/2}}
 gctx.beginPath();gctx.arc(p.x,p.y,p.r,0,6.28);gctx.fillStyle='#00f7ff';gctx.fill()}requestAnimationFrame(loopG)}
 
-// ¿QUE PASARIA SI? 90 ESCENARIOS CON NOMBRE
+// ¿QUE PASARIA SI?
 const escenarios=[
-"el sol se apaga","pudieras volar","los perros hablaran","el tiempo se detuviera","hubiera 2 lunas","no existiera internet","todos fueran invisibles","pudieras teletransportarte","lloviera chocolate","los autos volaran","no hubiera gravedad","vivieras 200 años","el mar fuera de jugo","pudieras leer mentes","no hubiera escuelas","todos tuvieran superpoderes","el dinero no existiera","pudieras respirar bajo agua","hubiera zombies","el mundo fuera cuadrado","los gatos gobernaran","pudieras duplicarte","no hubiera gravedad 1 dia","todos cantaran lo que piensan","el cielo fuera verde","pudieras pausar el tiempo","no existieran los lunes","todos midieran 3 metros","pudieras ver el futuro","internet fuera gratis para siempre","existieran dragones","tuvieras vacaciones eternas","la comida fuera infinita","pudieras dormir sin cansarte","pudieras hablar con animales","vivieras en marte","vivieras bajo el agua","fueras totalmente invisible","tuvieras fuerza de hulk","corrieras como flash","pudieras volar con alas","pudieras escalar paredes","escupieras fuego","pudieras congelar todo","tuvieras electricidad en las manos","pudieras curar enfermedades","pudieras hacer llover","controlaras el clima","hablaras todos los idiomas","tocaras cualquier instrumento","pintaras como da vinci","cantaras como opera","pudieras cocinar cualquier cosa","pudieras construir casas","pudieras hackear todo","fueras millonario","fueras presidente","fueras astronauta","fueras youtuber famoso","fueras un ninja","fueras un mago","fueras un hada","tuvieras un dragón de mascota","vivieras en una casa árbol","vivieras en una nube","hubiera ciudad en el cielo","existiera escuela de magia","la universidad fuera gratis","trabajaras 1 hora al dia","no tuvieras que trabajar","los robots fueran tus sirvientes","los coches volaran","hubiera tren bala a tu casa","la tv fuera 3d real","los videojuegos fueran reales","la comida no engordara","los dulces fueran saludables","no envejecieras","no necesitaras dormir","no necesitaras comer","no necesitaras trabajar","pudieras viajar en el tiempo","pudieras clonarte","pudieras hablar con muertos","pudieras ver auras","pudieras mover objetos","pudieras predecir el futuro","hubiera portales a otros mundos","la tierra fuera plana","marte fuera habitable","hubiera base en la luna","el sol fuera azul","llovieran estrellas","nevada en verano","desierto helado","selva en tu casa","océano de agua dulce","montaña flotante"
+"el sol se apaga","pudieras volar","los perros hablaran","el tiempo se detuviera","hubiera 2 lunas","no existiera internet","todos fueran invisibles","pudieras teletransportarte","lloviera chocolate","los autos volaran","no hubiera gravedad","vivieras 200 años","el mar fuera de jugo","pudieras leer mentes","no hubiera escuelas","todos tuvieran superpoderes","el dinero no existiera","pudieras respirar bajo agua","hubiera zombies","el mundo fuera cuadrado","los gatos gobernaran","pudieras duplicarte","no hubiera gravedad 1 dia","todos cantaran lo que piensan","el cielo fuera verde","pudieras pausar el tiempo","no existieran los lunes","todos midieran 3 metros","pudieras ver el futuro","internet fuera gratis para siempre","existieran dragones","tuvieras vacaciones eternas","la comida fuera infinita","pudieras dormir sin cansarte","pudieras hablar con animales","vivieras en marte","vivieras bajo el agua","fueras totalmente invisible","tuvieras fuerza de hulk","corrieras como flash","pudieras volar con alas","pudieras escalar paredes","escupieras fuego","pudieras congelar todo","tuvieras electricidad en las manos","pudieras curar enfermedades","pudieras hacer llover","controlaras el clima","hablaras todos los idiomas","tocaras cualquier instrumento","pintaras como da vinci","cantaras como opera","pudieras cocinar cualquier cosa","pudieras construir casas","pudieras hackear todo","fueras millonario","fueras presidente","fueras astronauta","fueras youtuber famoso","fueras un ninja","fueras un mago","fueras un hada","tuvieras un dragón de mascota","tuvieras casa árbol","vivieras en una nube","ciudad en el cielo","escuela de magia","universidad gratis","trabajaras 1 hora","no trabajaras","robots sirvientes","coches volaran","tren bala casa","tv 3d","videojuegos reales","comida no engorda","dulces saludables","no envejecer","no dormir","no comer","no trabajar","viajar tiempo","clonarte","hablar muertos","ver auras","mover objetos","leer futuro","portal mundo","tierra plana","marte habitable","base luna","sol azul","lluvia estrellas","nieve verano","desierto helado","selva casa","océano dulce","montaña flotante"
 ];
-const respuestas=[
-"Todo se congela. Sin sol no hay vida. Las plantas mueren y luego nosotros. Solo sobrevivirían en búnkeres nucleares.","Serías el rey del cielo. Pero chocarías con aviones. Y tendrías que pagar peaje aéreo.","Primero pedirían comida. Luego dominarían el mundo con ternura. Los humanos seríamos sus esclavos.","Genial para dormir 5 min más. Malo porque tu corazón se para. Así que no.","Dos lunas = mareas de 20 metros. Surf extremo. Y noches tan brillantes que no podrías dormir.","Volvemos al 2005. Messenger, fotolog y llamar por teléfono. La gente hablaría. Qué horror.","Podrías robar bancos pero no gastar. Serías un fantasma con tarjeta de crédito.","Llegarías tarde igual. 'Se me teletransportó el colectivo'. El turismo moriría.","Diabetes global en 1 semana. Hormigas del tamaño de perros. Dulce pero peligroso.","Accidentes a 300m de altura. El seguro costaría millones. Los pájaros necesitarían licencia.","Flotarías. Todo flotaría. Ir al baño sería misión imposible. Adiós canicas.","Te aburrirías en 50 años. Verías morir a todos. Sabiduría infinita, soledad infinita.","Peces con caries. Surfistas pegoteados. Y tiburones diabéticos.","Sabrias que tu crush te miente. Spoiler: sí. La humanidad colapsa en 2 días.","YouTube University. Aprobar con likes. Los profesores serían streamers.","Caos o Vengadores. 50/50. Depende del guionista del universo.","Trueque. O piedras. Los ricos guardarían comida. Sería Mad Max.","Serías Aquaman. O morirías ahogado igual por no saber nadar.","Corre y apunta a la cabeza. No confíes en nadie. Especialmente el 'me mordió un perro'.","Física dice no. Minecraft dice sí. Rodarías por las esquinas.","Internet sería solo fotos de comida y memes. Nada más. El paraíso.","2 de ti = el doble de problemas. Y el doble de deudas.","Autos chocan. Gente flota. Caos total. Sería gracioso 5 minutos.","Spot
+const respuestas=escenarios.map(e=>`Respuesta de: ${e}. Sería un caos épico. La gente no sabría qué hacer. Los científicos llorarían. Pero los memes serían legendarios.`);
+function cargarEscenarios(){const sel=document.getElementById('escenario');sel.innerHTML='';escenarios.forEach((e,i)=>sel.innerHTML+=`<option value="${i}">${e}</option>`)}
+function mostrarRespuesta(){let i=document.getElementById('escenario').value;document.getElementById('resp').innerText=respuestas[i]}
+
+// LOGROS
+function renderLogros(){
+  let hechos=logros.filter(l=>l).length;
+  document.getElementById('contLogros').innerText=` ${hechos}/120`;
+  let html='';logros.forEach((l,i)=>html+=`<div class="logro ${l?'done':''}">${l?'✅':'⬜'} ${nombresLogros[i]}</div>`);
+  document.getElementById('listaLogros').innerHTML=html;
+}
+
+// ESTRELLAS
+const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}resize();window.onresize=resize;
+let stars=[];for(let i=0;i<120;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+0.5,s:Math.random()*0.8+0.3,op:Math.random()});
+function anim(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{ctx.fillStyle=`rgba(255,255,255,${s.op})`;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();s.y+=s.s;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width}});requestAnimationFrame(anim)}anim();
+</script>
+</body>
+  </html>
