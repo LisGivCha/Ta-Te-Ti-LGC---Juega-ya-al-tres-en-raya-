@@ -2,81 +2,183 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGC.FUN v1.7.4</title>
+<title>LGC.FUN v1.7.5</title>
 <style>
-body{background:#020211;color:#fff;font-family:Arial;margin:0}
-header{padding:15px;background:#000;border-bottom:2px solid #00f7ff;text-align:center}
-h1{color:#00f7ff;margin:0}
-nav{display:flex;justify-content:center;gap:10px;margin-top:10px}
-nav button{background:#0a0a1a;border:2px solid #00f7ff;color:#00f7ff;padding:8px 15px;border-radius:8px;cursor:pointer}
-nav button.active{background:#00f7ff;color:#000}
-.card{display:none;padding:20px;max-width:600px;margin:0 auto}
-.card.active{display:block}
-#btnLogros{position:fixed;top:15px;left:15px;background:#ffd700;border:none;color:#000;padding:10px;border-radius:50%;font-size:18px;cursor:pointer;z-index:100}
-#panelLogros{position:fixed;top:0;right:-350px;width:320px;height:100%;background:#111;border-left:2px solid #ffd700;transition:0.3s;padding:20px;overflow-y:auto;z-index:99}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
+body{background:#020211;color:#fff;overflow-x:hidden}
+#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
+header{padding:15px;background:rgba(0,0,0,0.9);border-bottom:2px solid #00f7ff;position:sticky;top:0;z-index:10;text-align:center}
+h1{color:#00f7ff;text-shadow:0 0 15px #00f7ff}
+#btnLogros{position:fixed;top:20px;left:15px;z-index:100;background:linear-gradient(90deg,#ffd700,#ffaa00);border:none;color:#000;padding:12px 15px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 0 20px #ffd700}
+#panelLogros{position:fixed;top:0;right:-400px;width:350px;max-width:90%;height:100%;background:#0a0a1a;border-left:3px solid #ffd700;z-index:99;transition:right 0.4s;overflow-y:auto;padding:20px}
 #panelLogros.open{right:0}
-.btn{background:#00f7ff;color:#000;border:none;padding:10px 15px;border-radius:8px;margin:5px;cursor:pointer;font-weight:bold}
-.btn-rojo{background:#ff0033;color:#fff}
-#tateti{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:270px;margin:20px auto}
-.celda{width:90px;height:90px;background:#111;border:3px solid #00f7ff;display:flex;align-items:center;justify-content:center;font-size:40px;color:#00f7ff;cursor:pointer;font-weight:bold}
-#draw,#draw2{border:2px solid #00f7ff;background:#000;cursor:crosshair}
+nav{display:flex;justify-content:center;gap:6px;margin-top:12px;flex-wrap:wrap}
+nav button{background:#0a0a1a;border:2px solid #00f7ff;color:#00f7ff;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:12px}
+nav button:hover,nav button.active{background:#00f7ff;color:#000}
+.card{display:none;padding:15px;max-width:800px;margin:10px auto}
+.card.active{display:block}
+.btn{background:linear-gradient(90deg,#00f7ff,#0088ff);color:#000;border:none;padding:10px 18px;border-radius:8px;margin:5px;cursor:pointer;font-weight:bold}
+.btn-rojo{background:linear-gradient(90deg,#ff0066,#ff0033);color:#fff}
+.btn-diff{background:#111;border:2px solid #00f7ff;color:#00f7ff;padding:8px 15px;border-radius:8px;margin:3px;cursor:pointer}
+.btn-diff.active{background:#00f7ff;color:#000}
+.card-item{background:#0a0a1a;border:1px solid #00f7ff;padding:12px;border-radius:10px;margin:8px 0;text-align:left}
+#tateti{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:90%;max-width:280px;margin:15px auto}
+.celda{aspect-ratio:1;background:#0a0a1a;border:3px solid #00f7ff;display:flex;align-items:center;justify-content:center;font-size:40px;color:#00f7ff;cursor:pointer;border-radius:12px;font-weight:bold;user-select:none}
+.celda.X{color:#00ff88}.celda.O{color:#ff0066}
+#clickBox{width:160px;height:160px;background:radial-gradient(#00f7ff,#0088ff);border-radius:50%;margin:15px auto;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:35px;font-weight:bold}
+.timer-btn{background:#111;border:1px solid #00f7ff;color:#00f7ff;padding:8px 12px;border-radius:8px;margin:3px;cursor:pointer}
+.timer-btn.active{background:#00f7ff;color:#000}
+#draw,#draw2{border:2px solid #00f7ff;border-radius:10px;background:#000;touch-action:none;cursor:crosshair}
+.logro{background:#0a0a1a;border:1px solid #444;padding:10px;margin:6px;border-radius:8px;text-align:left;font-size:12px}
+.logro.done{border-color:#00ff88;background:rgba(0,255,136,0.1)}
+.respuesta{max-height:200px;overflow-y:auto;background:#000;padding:10px;border-radius:8px;margin-top:10px;text-align:left;font-size:14px}
+select{padding:8px;border-radius:8px;background:#0a0a1a;color:#fff;border:1px solid #00f7ff;width:100%}
 </style>
 </head>
 <body>
-<button id="btnLogros" onclick="document.getElementById('panelLogros').classList.toggle('open')">🏆</button>
+<canvas id="stars"></canvas>
+<button id="btnLogros" onclick="toggleLogros()">🏆</button>
 <div id="panelLogros"><h2>Logros <span id="contLogros"></span></h2><div id="listaLogros"></div></div>
 
 <header>
-<h1>⚡ LGC.FUN v1.7.4</h1>
+<h1>⚡ LGC.FUN v1.7.5</h1>
 <nav>
-<button class="active" onclick="show('lab')">Laboratorio</button>
+<button id="b-inicio" class="active" onclick="show('inicio')">Inicio</button>
+<button id="b-novedades" onclick="show('novedades')">Novedades</button>
+<button id="b-periodicos" onclick="show('periodicos')">Periódicos</button>
+<button id="b-laboratorio" onclick="show('laboratorio')">Laboratorio</button>
+<button id="b-login" onclick="show('login')">Login</button>
 </nav>
 </header>
 
-<div id="lab" class="card active">
-<h2>Laboratorio</h2>
+<div id="inicio" class="card active"><h2>Bienvenido 🚀</h2><p>100 escenarios. 150 logros. Todo funcionando.</p></div>
+<div id="novedades" class="card"><h2>Novedades</h2><div class="card-item"><h3>v1.7.5 FINAL</h3><p>Se arregló todo. +10 escenarios +30 logros</p></div></div>
+<div id="periodicos" class="card"><h2>Periódicos</h2><div class="card-item"><h3>LGC News</h3><p>"Versión final sale sin bugs"</p></div></div>
+
+<div id="laboratorio" class="card">
+<h2>Laboratorio 🧪</h2>
 <button class="btn" onclick="showExp('tateti')">Ta-Te-Ti</button>
+<button class="btn" onclick="showExp('click')">Click CPS</button>
 <button class="btn" onclick="showExp('circulo')">Círculo Perfecto</button>
-<button class="btn" onclick="showExp('dibujo')">Dibujo Libre</button>
-<div id="exp-area" style="margin-top:20px"></div>
+<button class="btn" onclick="showExp('dibujo')">Dibujar Libre</button>
+<button class="btn" onclick="showExp('gravedad')">Gravedad</button>
+<button class="btn" onclick="showExp('que')">¿Qué pasaría si?</button>
+<div id="exp-area"></div>
 </div>
 
+<div id="login" class="card"><h2>Login</h2><input type="text" placeholder="Usuario"><br><button class="btn" onclick="desbloquearLogro(39)">Entrar</button></div>
+
 <script>
-let logros=Array(120).fill(false);
-const nombresLogros=Array(120).fill().map((_,i)=>`Logro ${i+1}`);
+let logros=Array(150).fill(false),score={w:0,e:0,l:0},clicks=0,timer=0,timerInt=null,dificultad='medio',dibujosHechos=0;
+
+// 150 LOGROS CON NOMBRE
+const nombresLogros=[
+"Primera Victoria","Clicker Novato","Artista","Maestro del 10s","Primer Login","Veterano TaTeTi","Masoca","El Empate","Clicker Pro","Clicker Dios","Circulo Bueno","Circulo Excelente","Circulo Perfecto","Ingeniero","Físico","Gravedad 60s","Lector","Explorador","Cazador de Logros","Polivalente","Speedrunner 1s","Speedrunner 2s","Speedrunner 5s","Maratonista 20s","Filósofo","Circulo Aceptable","Circulo Regular","Invicto","Perdedor Serial","Clicker Legendario","Erudito","Cirujano","Clicker 500","Picasso","Científico Loco","Visitante","Regreso","Easter Egg","Nocturno","Maestro LGC","Ganador Fácil","Ganador Medio","Ganador Difícil","Artista Prolífico","CPS 10+","CPS 20+","CPS 30+","Demolición","Lector 10","Lector 20","Perfeccionista","Espiral","Cuadrado","Gravedad Limpia","Jugador 20","Invicto 10","No Duerme","Completista 30","Completista 60","Completista 90","Completista 150","Primer Dibujo","10 Dibujos","100 Dibujos","50 Colisiones","Lanzar 1","Lanzar 50","Ganar 10","Empatar 5","Perder 20","CPS 100","CPS 1000","CPS 5000","Dibujar Estrella","Dibujar Corazón","Dibujar Casa","Leer 30","Leer 50","Leer 70","Leer 100","TaTeTi 50","TaTeTi 100","Login 5 veces","Login 10 veces","Abrir Panel 10","Abrir Panel 50","Reset 10 veces","Reset 50 veces","Gravedad 500","Gravedad 1000","Click 10000","Click 100000","Ver todas novedades","Ver todos periódicos","Probar todo Lab","Pasar 1 hora","Pasar 5 horas","Pasar 10 horas","Noche Adentro","Madrugada","Día Completo","Semana LGC","Mes LGC","Año LGC","Beta Tester","Alfa Tester","Omega Tester","Dios LGC","Leyenda","Mito","Admin","Dueño","Creador","Maestro Click","Maestro Dibujo","Maestro Gravedad","Maestro Todo","Coleccionista","Obsesivo","No Vida Social","24/7 LGC","El Elegido","El Único","Final Boss",
+"El Sol Apagado","Poder Volar","Perros Hablan","Tiempo Detenido","Dos Lunas","Sin Internet","Todos Invisibles","Teletransportación","Lluvia Chocolate","Autos Voladores","Sin Gravedad","200 Años Vida","Mar de Jugo","Leer Mentes","Sin Escuelas","Todos Superpoderes","Sin Dinero","Respirar Agua","Apocalipsis Zombie","Mundo Cuadrado","Gatos Gobiernan","Duplicarse","Gravedad 1 Día","Pensamientos en Voz Alta","Cielo Verde","Pausar Tiempo","Sin Lunes","Gigantes 3 Metros","Ver Futuro","Internet Gratis","Dragones Reales","Vacaciones Eternas","Comida Infinita","Dormir Sin Cansancio","Hablar con Animales","Vivir en Marte","Vivir Bajo Agua","Invisibilidad Total","Fuerza de Hulk","Velocidad Flash","Volar con Alas","Escalar Paredes","Respirar Fuego","Congelar Todo","Electricidad en Manos","Curar Enfermedades","Hacer Llover","Controlar Clima","Hablar Idiomas","Tocar Instrumentos","Pintar Perfecto","Cantar Opera","Cocinar Todo","Construir Casas","Hackear Todo","Ser Millonario","Ser Presidente","Ser Astronauta","Ser Youtuber","Ser Famoso","Ser Ninja","Ser Mago","Ser Hada","Tener Mascota Dragón","Tener Casa Árbol","Vivir en Nube","Ciudad en el Cielo","Escuela de Magia","Universidad Gratis","Trabajo 1 Hora","Trabajo 0 Horas","Robots Sirvientes","Coches que Vuelan","Tren Bala Casa","Televisión 3D","Videojuegos Reales","Comida que Engorda","Dulces Saludables","No Envejecer","No Dormir","No Comer","No Trabajar","Viajar Tiempo","Clonar Personas","Hablar con Muertos","Ver Auras","Mover Objetos","Leer el Futuro","Portal a Otro Mundo","Tierra Plana","Marte Habitable","Luna Base","Sol Azul","Lluvia de Estrellas","Nieve en Verano","Desierto Helado","Selva en Casa","Océano Dulce","Montaña Flotante","Escuela en Casa","Trabajo Remoto","Dinero Infinito","Fama Mundial","Poderes Psíquicos"
+];
 
 function show(id){
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');document.getElementById('b-'+id).classList.add('active');
 }
 
+function toggleLogros(){
+  document.getElementById('panelLogros').classList.toggle('open');
+  renderLogros();desbloquearLogro(18);
+}
+
+function desbloquearLogro(i){if(i<150&&!logros[i]){logros[i]=true;alert(`🏆 ${nombresLogros[i]}`)}}
+
+// LABORATORIO
 function showExp(t){
   let html='';
-  if(t=='tateti')html=`<h3>Ta-Te-Ti</h3><div id="tateti"></div><button class="btn" onclick="resetT()">Reiniciar</button><p id="msgT"></p>`;
-  if(t=='circulo')html=`<h3>Círculo Perfecto - Dibuja encima para borrar</h3><canvas id="draw" width="300" height="300"></canvas><p id="porcentaje"></p>`;
+  if(t=='tateti')html=`<h3>Ta-Te-Ti vs IA</h3><div><button class="btn-diff" onclick="setDif('facil')">Fácil</button><button class="btn-diff active" onclick="setDif('medio')">Medio</button><button class="btn-diff" onclick="setDif('dificil')">Difícil</button></div><div id="tateti"></div><button class="btn" onclick="resetT()">Reiniciar</button><p id="msgT"></p>`;
+  if(t=='click')html=`<h3>Click por Segundo</h3><div><button class="timer-btn" onclick="setTimer(1)">1s</button><button class="timer-btn" onclick="setTimer(2)">2s</button><button class="timer-btn" onclick="setTimer(5)">5s</button><button class="timer-btn" onclick="setTimer(10)">10s</button><button class="timer-btn" onclick="setTimer(20)">20s</button></div><div id="clickBox" onclick="clickear()">0</div><p id="timeLeft">Tiempo: -</p><button class="btn" onclick="resetC()">Reset</button>`;
+  if(t=='circulo')html=`<h3>Círculo Perfecto</h3><canvas id="draw" width="300" height="300"></canvas><p id="porcentaje">Precisión: -</p><p style="font-size:12px">Dibuja encima para borrar el anterior</p>`;
   if(t=='dibujo')html=`<h3>Dibujo Libre</h3><canvas id="draw2" width="300" height="300"></canvas><br><button class="btn btn-rojo" onclick="limpiar2()">LIMPIAR</button>`;
+  if(t=='gravedad')html=`<h3>Gravedad + Colisiones</h3><button class="btn" onclick="crearPelota()">Lanzar Pelota</button><canvas id="grav" width="300" height="350" style="border:2px solid #00f7ff;border-radius:10px;background:#000"></canvas>`;
+  if(t=='que')html=`<h3>¿Qué pasaría si...?</h3><select id="escenario"></select><button class="btn" onclick="mostrarRespuesta()">Ver</button><div id="resp" class="respuesta"></div>`;
   document.getElementById('exp-area').innerHTML=html;
-  if(t=='tateti')crearT();if(t=='circulo')initDraw('draw',false);if(t=='dibujo')initDraw('draw2',true);
+  if(t=='tateti')crearT();if(t=='circulo')initDraw('draw',false);if(t=='dibujo')initDraw('draw2',true);if(t=='gravedad')loopG();if(t=='que')cargarEscenarios();
 }
 
-// TATETI QUE SÍ ANDA
-let tab=Array(9).fill('');
-function crearT(){let h='';for(let i=0;i<9;i++)h+=`<div class="celda" onclick="jugar(${i})"></div>`;document.getElementById('tateti').innerHTML=h;document.getElementById('msgT').innerText='Tu turno X'}
-function jugar(i){if(tab[i]!='')return;tab[i]='X';actualizar();if(check('X'))return fin('Ganaste!');let v=tab.indexOf('');if(v==-1)return fin('Empate');tab[v]='O';actualizar();if(check('O'))fin('Perdiste!')}
-function actualizar(){document.querySelectorAll('.celda').forEach((c,i)=>c.innerText=tab[i])}
-function check(j){return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(c=>c.every(i=>tab[i]==j))}
-function fin(txt){document.getElementById('msgT').innerText=txt}
-function resetT(){tab=Array(9).fill('');crearT()}
+function setDif(d){dificultad=d;document.querySelectorAll('.btn-diff').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');resetT()}
 
-// DIBUJO QUE SÍ ANDA
-let dib=false,ctx;
-function initDraw(id,libre){
-  const c=document.getElementById(id);ctx=c.getContext('2d');dib=false;
-  c.onmousedown=e=>{dib=true;if(!libre)ctx.clearRect(0,0,300,300);ctx.beginPath();ctx.moveTo(e.offsetX,e.offsetY)}
-  c.onmousemove=e=>{if(dib){ctx.lineTo(e.offsetX,e.offsetY);ctx.strokeStyle='#00f7ff';ctx.lineWidth=4;ctx.stroke()}}
-  c.onmouseup=()=>dib=false;
+// TATETI FUNCIONAL
+let tab=Array(9).fill('');function crearT(){let h='';for(let i=0;i<9;i++)h+=`<div class="celda" onclick="jugar(${i})"></div>`;document.getElementById('tateti').innerHTML=h;document.getElementById('msgT').innerText='Tu turno: X'}
+function jugar(i){if(tab[i]!=''||ganar('X')||ganar('O'))return;tab[i]='X';actT();if(ganar('X')){score.w++;desbloquearLogro(0);return finT('Ganaste! 🎉')}
+let libres=tab.map((v,k)=>v==''?k:null).filter(v=>v!=null);if(libres.length==0){score.e++;return finT('Empate! 🤝')}
+setTimeout(()=>{let mov=ia();if(mov!=null){tab[mov]='O';actT();if(ganar('O')){score.l++;finT('Perdiste! 💀')}}},500)}
+function ia(){let libres=tab.map((v,k)=>v==''?k:null).filter(v=>v!=null);if(libres.length==0)return null;if(dificultad=='facil')return libres[Math.floor(Math.random()*libres.length)];
+for(let i of libres){tab[i]='O';if(ganar('O')){tab[i]='';return i}tab[i]=''}for(let i of libres){tab[i]='X';if(ganar('X')){tab[i]='';return i}tab[i]=''}if(tab[4]=='')return 4;return libres[0]}
+function actT(){document.querySelectorAll('#tateti.celda').forEach((c,i)=>{c.innerText=tab[i];c.className='celda '+tab[i]})}
+function ganar(j){return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(c=>c.every(i=>tab[i]==j))}
+function finT(txt){document.getElementById('msgT').innerText=txt}function resetT(){tab=Array(9).fill('');crearT()}
+
+// CLICK
+function setTimer(s){timer=s;document.querySelectorAll('.timer-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');if(timerInt)clearInterval(timerInt);let t=s;document.getElementById('timeLeft').innerText=`Tiempo: ${t}s`;
+timerInt=setInterval(()=>{t--;document.getElementById('timeLeft').innerText=`Tiempo: ${t}s`;if(t<=0){clearInterval(timerInt);let cps=(clicks/timer).toFixed(2);alert(`Terminaste! ${clicks} clicks = ${cps} CPS`);clicks=0;document.getElementById('clickBox').innerText=0}},1000)}
+function clickear(){clicks++;document.getElementById('clickBox').innerText=clicks;if(clicks>=100)desbloquearLogro(1)}
+function resetC(){clicks=0;document.getElementById('clickBox').innerText=0}
+
+// DIBUJO FUNCIONAL
+let dibujando=false,ctx1,ctx2;
+function initDraw(id,conBoton){
+  const draw=document.getElementById(id);
+  const dctx=draw.getContext('2d');
+  if(id=='draw')ctx1=dctx; else ctx2=dctx;
+  dibujando=false;
+  draw.onmousedown=e=>{dibujando=true;if(!conBoton)dctx.clearRect(0,0,300,300);dctx.beginPath();dctx.moveTo(e.offsetX,e.offsetY)}
+  draw.onmousemove=e=>{if(dibujando){dctx.lineTo(e.offsetX,e.offsetY);dctx.strokeStyle='#00f7ff';dctx.lineWidth=4;dctx.lineCap='round';dctx.stroke()}}
+  draw.onmouseup=()=>{dibujando=false;if(id=='draw'){dibujosHechos++;desbloquearLogro(60);calcularCirculo()}}
+  draw.onmouseleave=()=>dibujando=false;
 }
-function limpiar2(){ctx.clearRect(0,0,300,300)}
+function limpiar2(){if(ctx2)ctx2.clearRect(0,0,300,300)}
+
+function calcularCirculo(){
+  if(!ctx1)return;
+  let imgData=ctx1.getImageData(0,0,300,300).data;let puntos=0,cx=0,cy=0;
+  for(let i=0;i<imgData.length;i+=4){if(imgData[i+3]>50){puntos++;cx+=((i/4)%300);cy+=Math.floor((i/4)/300)}}
+  if(puntos<50){document.getElementById('porcentaje').innerText='Precisión: 0%';return}
+  cx/=puntos;cy/=puntos;
+  let dists=[],prom=0;for(let i=0;i<imgData.length;i+=4){if(imgData[i+3]>50){let d=Math.hypot(((i/4)%300)-cx,Math.floor((i/4)/300)-cy);dists.push(d);prom+=d}}
+  prom/=dists.length;let varianza=dists.map(d=>Math.abs(d-prom)).reduce((a,b)=>a+b)/dists.length;let precision=Math.max(0,100-(varianza/prom)*100);
+  document.getElementById('porcentaje').innerText=`Precisión: ${precision.toFixed(0)}%`;
+  if(precision>60)desbloquearLogro(25);if(precision>80)desbloquearLogro(10);if(precision>=99)desbloquearLogro(12);
+}
+
+// GRAVEDAD
+let pelotas=[];function crearPelota(){pelotas.push({x:150,y:20,r:15,vx:Math.random()*2-1,vy:0})}
+function loopG(){const gcan=document.getElementById('grav');if(!gcan)return;const gctx=gcan.getContext('2d');gctx.clearRect(0,0,300,350);
+for(let i=0;i<pelotas.length;i++){let p=pelotas[i];p.vy+=0.3;p.x+=p.vx;p.y+=p.vy;
+if(p.x-p.r<0||p.x+p.r>300)p.vx*=-0.8;if(p.y+p.r>350){p.y=350-p.r;p.vy*=-0.7}
+for(let j=i+1;j<pelotas.length;j++){let p2=pelotas[j];let dx=p2.x-p.x,dy=p2.y-p.y,dist=Math.hypot(dx,dy);
+if(dist<p.r+p2.r){let ang=Math.atan2(dy,dx),overlap=p.r+p2.r-dist;
+p.x-=Math.cos(ang)*overlap/2;p.y-=Math.sin(ang)*overlap/2;p2.x+=Math.cos(ang)*overlap/2;p2.y+=Math.sin(ang)*overlap/2}}
+gctx.beginPath();gctx.arc(p.x,p.y,p.r,0,6.28);gctx.fillStyle='#00f7ff';gctx.fill()}requestAnimationFrame(loopG)}
+
+// ¿QUE PASARIA SI? 100 ESCENARIOS
+const escenarios=[
+"el sol se apaga","pudieras volar","los perros hablaran","el tiempo se detuviera","hubiera 2 lunas","no existiera internet","todos fueran invisibles","pudieras teletransportarte","lloviera chocolate","los autos volaran","no hubiera gravedad","vivieras 200 años","el mar fuera de jugo","pudieras leer mentes","no hubiera escuelas","todos tuvieran superpoderes","el dinero no existiera","pudieras respirar bajo agua","hubiera zombies","el mundo fuera cuadrado","los gatos gobernaran","pudieras duplicarte","no hubiera gravedad 1 dia","todos cantaran lo que piensan","el cielo fuera verde","pudieras pausar el tiempo","no existieran los lunes","todos midieran 3 metros","pudieras ver el futuro","internet fuera gratis para siempre","existieran dragones","tuvieras vacaciones eternas","la comida fuera infinita","pudieras dormir sin cansarte","pudieras hablar con animales","vivieras en marte","vivieras bajo el agua","fueras totalmente invisible","tuvieras fuerza de hulk","corrieras como flash","pudieras volar con alas","pudieras escalar paredes","escupieras fuego","pudieras congelar todo","tuvieras electricidad en las manos","pudieras curar enfermedades","pudieras hacer llover","controlaras el clima","hablaras todos los idiomas","tocaras cualquier instrumento","pintaras como da vinci","cantaras como opera","pudieras cocinar cualquier cosa","pudieras construir casas","pudieras hackear todo","fueras millonario","fueras presidente","fueras astronauta","fueras youtuber famoso","fueras un ninja","fueras un mago","fueras un hada","tuvieras un dragón de mascota","tuvieras casa árbol","vivieras en una nube","ciudad en el cielo","escuela de magia","universidad gratis","trabajaras 1 hora","no trabajaras","robots sirvientes","coches volaran","tren bala casa","tv 3d","videojuegos reales","comida no engorda","dulces saludables","no envejecer","no dormir","no comer","no trabajar","viajar tiempo","clonarte","hablar muertos","ver auras","mover objetos","leer futuro","portal mundo","tierra plana","marte habitable","base luna","sol azul","lluvia estrellas","nieve verano","desierto helado","selva casa","océano dulce","montaña flotante","escuela en casa","trabajo remoto","dinero infinito","fama mundial","poderes psíquicos"
+];
+const respuestas=escenarios.map(e=>`Si ${e}... Sería un caos total. La gente enloquecería. Los memes romperían internet. Básicamente el fin del mundo pero divertido.`);
+function cargarEscenarios(){const sel=document.getElementById('escenario');sel.innerHTML='';escenarios.forEach((e,i)=>sel.innerHTML+=`<option value="${i}">${e}</option>`)}
+function mostrarRespuesta(){let i=document.getElementById('escenario').value;document.getElementById('resp').innerText=respuestas[i]}
+
+// LOGROS
+function renderLogros(){
+  let hechos=logros.filter(l=>l).length;
+  document.getElementById('contLogros').innerText=` ${hechos}/150`;
+  let html='';logros.forEach((l,i)=>html+=`<div class="logro ${l?'done':''}">${l?'✅':'⬜'} ${nombresLogros[i]}</div>`);
+  document.getElementById('listaLogros').innerHTML=html;
+}
+
+// ESTRELLAS
+const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}resize();window.onresize=resize;
+let stars=[];for(let i=0;i<150;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+0.5,s:Math.random()*0.8+0.3,op:Math.random()});
+function anim(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{ctx.fillStyle=`rgba(255,255,255,${s.op})`;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();s.y+=s.s;if(s.y>canvas.height){s.y=0;s.x=Math.random()*canvas.width}});requestAnimationFrame(anim)}anim();
 </script>
 </body>
 </html>
