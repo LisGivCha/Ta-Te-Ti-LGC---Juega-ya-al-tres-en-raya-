@@ -3,200 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGC.FUN v3.2.0 CINEMA</title>
+<title>LGC.FUN v3.2.3</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Roboto',Arial}
-html,body{height:100%;overflow-y:auto;background:#000;color:#fff}
-#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1}
-
-header{padding:30px;background:linear-gradient(90deg,rgba(0,0,0,0.98),rgba(0,247,255,0.15),rgba(0,0,0,0.98));border-bottom:5px solid #00f7ff;text-align:center;position:sticky;top:0;z-index:100}
-h1{color:#00f7ff;text-shadow:0 0 40px #00f7ff;font-size:36px;font-weight:900;font-family:'Orbitron'}
-
-#btnLogros{position:fixed;top:35px;left:30px;z-index:200;background:linear-gradient(135deg,#ffd700,#ffaa00);border:none;color:#000;padding:20px;border-radius:50%;font-size:30px;cursor:pointer}
-
-#panelLogros{position:fixed;top:0;right:-420px;width:400px;height:100%;background:linear-gradient(180deg,#0a0a1a,#000);border-left:5px solid #ffd700;z-index:199;transition:right 0.7s;overflow-y:auto;padding:35px;box-shadow:-10px 0 50px rgba(255,215,0,0.3)}
-#panelLogros.open{right:0}
-
-nav{display:flex;justify-content:center;gap:15px;margin-top:25px;flex-wrap:wrap}
-nav button{background:linear-gradient(135deg,rgba(10,10,26,0.95),rgba(0,247,255,0.1));border:4px solid #00f7ff;color:#00f7ff;padding:16px 24px;border-radius:18px;cursor:pointer;font-weight:bold;font-size:15px;font-family:'Orbitron'}
-nav button.active{background:linear-gradient(135deg,#00f7ff,#0088ff);color:#000}
-
-.card{display:none;max-width:1100px;margin:30px auto;padding:40px;background:rgba(0,0,0,0.9);border-radius:30px;border:3px solid #00f7ff;min-height:600px}
-.card.active{display:block}
-
-.btn{background:linear-gradient(135deg,#00f7ff,#0088ff);color:#000;border:none;padding:18px 28px;border-radius:18px;margin:10px;cursor:pointer;font-weight:bold;font-size:16px;font-family:'Orbitron'}
-.btn:hover{transform:scale(1.1)}
-.btn-rojo{background:linear-gradient(135deg,#ff0033,#cc0029)}
-.btn-diff{background:rgba(17,17,17,0.8);border:3px solid #00f7ff;color:#00f7ff}
-.btn-diff.active{background:#00f7ff;color:#000}
-
-.logro{background:rgba(10,10,26,0.95);border:4px solid #444;padding:18px;margin:12px;border-radius:18px;text-align:left;font-size:15px}
-.logro.done{border-color:#00ff88;background:rgba(0,255,136,0.2)}
-
-#tateti{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;width:360px;margin:30px auto}
-.celda{width:120px;height:120px;background:rgba(10,10,26,0.95);border:5px solid #00f7ff;display:flex;align-items:center;justify-content:center;font-size:55px;color:#00f7ff;cursor:pointer;font-weight:bold;border-radius:20px;font-family:'Orbitron'}
-
-#clickBox{width:220px;height:220px;background:radial-gradient(circle,#00f7ff,#0088ff);border-radius:50%;margin:30px auto;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:50px;font-weight:bold;color:#000;font-family:'Orbitron'}
-
-canvas{border:4px solid #00f7ff;border-radius:20px;background:#000;margin:10px auto;display:block;cursor:crosshair;touch-action:none}
-.respuesta{max-height:400px;overflow-y:auto;background:rgba(0,0,0,0.9);padding:25px;border-radius:15px;margin-top:20px;text-align:left;font-size:16px;border:2px solid #00f7ff;line-height:1.8}
-select{padding:12px;border-radius:15px;background:rgba(10,10,26,0.9);color:#fff;border:3px solid #00f7ff;width:100%;font-size:15px}
-#stats{position:fixed;top:35px;right:30px;background:rgba(0,0,0,0.8);padding:10px 20px;border-radius:15px;border:2px solid #00f7ff;font-family:'Orbitron'}
-
-/* MODAL */
-#modalReset{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:300;display:none;justify-content:center;align-items:center}
-#modalBox{background:linear-gradient(135deg,#1a0000,#000);border:5px solid #ff0033;padding:40px;border-radius:25px;text-align:center;max-width:500px}
-#modalBox h2{color:#ff0033;font-size:28px;margin-bottom:20px;font-family:'Orbitron'}
-#modalBtns{display:flex;gap:20px;justify-content:center;margin-top:25px}
-#modalBtns button{padding:15px 40px;font-size:20px;border-radius:15px;border:none;cursor:pointer;font-family:'Orbitron';font-weight:bold}
-.btn-no{background:#444;color:#fff}
-.btn-si{background:linear-gradient(135deg,#ff0033,#cc0029);color:#fff}
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; min-height: 100vh; padding: 10px; }
+  .container { max-width: 800px; margin: 0 auto; }
+  h1 { text-align: center; margin: 20px 0; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+  .stats { display: flex; justify-content: space-around; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; margin-bottom: 20px; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 1.8em; font-weight: bold; color: #ffd700; }
+  .click-btn { width: 200px; height: 200px; margin: 20px auto; background: radial-gradient(circle, #ff6b6b, #c0392b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2em; font-weight: bold; cursor: pointer; user-select: none; box-shadow: 0 10px 30px rgba(0,0,0,0.4); transition: transform 0.1s; }
+  .click-btn:active { transform: scale(0.9); }
+  .achievements { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; max-height: 400px; overflow-y: auto; }
+  .achievement { background: rgba(255,255,255,0.1); padding: 10px; margin: 8px 0; border-radius: 10px; border-left: 4px solid #ffd700; }
+  .achievement.locked { opacity: 0.4; border-left-color: #666; }
 </style>
 </head>
 <body>
-<canvas id="stars"></canvas>
-<button id="btnLogros" onclick="toggleLogros()">🏆</button>
-<div id="stats">Logros: <span id="statLogros">0/300</span></div>
-<div id="panelLogros"><h2 style="color:#ffd700;text-align:center;font-family:'Orbitron'">Logros <span id="contLogros"></span></h2><button class="btn btn-rojo" onclick="mostrarAdvertenciaReset()" style="width:100%;margin-bottom:20px">RESETEAR PROGRESO</button><div id="listaLogros"></div></div>
-
-<div id="modalReset">
-  <div id="modalBox">
-    <h2>⚠️ ¡¿SEGURO QUE QUIERES RESETEAR TU PROGRESO?! ⚠️</h2>
-    <p>Se perderán TODOS tus logros y estadísticas. Esta acción NO se puede deshacer.</p>
-    <div id="modalBtns">
-      <button class="btn-no" onclick="cerrarModal()">NO</button>
-      <button class="btn-si" onclick="confirmarReset()">SI</button>
+<div class="container">
+  <h1>🔥 LGC.FUN v3.2.3 🔥</h1>
+  
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" id="clicks">0</div>
+      <div>Clicks</div>
     </div>
+    <div class="stat">
+      <div class="stat-num" id="achieved">0/300</div>
+      <div>Logros</div>
+    </div>
+  </div>
+
+  <div class="click-btn" id="clickBtn">CLICK!</div>
+
+  <div class="achievements" id="achievementsList">
+    <!-- Los 300 logros se generan con JS -->
   </div>
 </div>
 
-<header>
-<h1>⚡ LGC.FUN v3.2.0 CINEMA ⚡</h1>
-<nav>
-<button class="active" onclick="show('lab')">Laboratorio</button>
-<button onclick="show('periodico')">Periódico</button>
-<button onclick="show('novedades')">Novedades</button>
-</nav>
-</header>
-
-<div id="lab" class="card active">
-<h2 style="text-align:center;margin-bottom:25px;font-family:'Orbitron'">🧪 LABORATORIO ULTRA 🧪</h2>
-<div style="text-align:center">
-<button class="btn" onclick="showExp('tateti')">Ta-Te-Ti IA Pro</button>
-<button class="btn" onclick="showExp('click')">Click CPS Turbo</button>
-<button class="btn" onclick="showExp('circulo')">Círculo Perfecto</button>
-<button class="btn" onclick="showExp('dibujo')">Dibujar Libre HD</button>
-<button class="btn" onclick="showExp('gravedad')">Gravedad Real</button>
-<button class="btn" onclick="showExp('que')">¿Qué pasaría si?</button>
-</div>
-<div id="exp-area" style="margin-top:30px"></div>
-</div>
-
-<div id="periodico" class="card"><h2 style="text-align:center;font-family:'Orbitron'">📰 PERIÓDICO LGC</h2><div id="listaPeriodico"></div></div>
-<div id="novedades" class="card"><h2 style="text-align:center;font-family:'Orbitron'">✨ NOVEDADES v3.2.0 ✨</h2><div id="listaNovedades"></div></div>
-
 <script>
-let logros=[],clicks=0,mejorCPS=0,tab=Array(9).fill(''),dificultad='medio';
+let clicks = parseInt(localStorage.getItem('lgc_clicks')) || 0;
+let unlocked = JSON.parse(localStorage.getItem('lgc_unlocked')) || [];
 
-// 300 LOGROS - 100 NUEVOS AÑADIDOS
-const nombresLogros=Array(300).fill().map((_,i)=>`Logro ${i+1}: ${[
-"Primer Paso","Click Maestro","Círculo Perfecto","Artista","Físico","Curioso","Estratega","Velocista","Perfeccionista","Creador",
-"Rey TaTeTi","CPS Pro","Geometría","Picasso","Newton","Filósofo","General","Flash","Cirujano","Da Vinci",
-"Campeón","10K Clicks","Arte","Einstein","Sócrates","Maestro","Superman","Leonardo","Tesla","Platón",
-"Invencible","100K","Obras","Gravedad 0","Aristóteles","Leyenda","Quicksilver","Miguel Ángel","Curie","Confucio",
-"Imparable","1M","Galería","Big Bang","Nietzsche","Mito","Sonic","Van Gogh","Bohr","Buda",
-"Eterno","10M","Museo","Agujero Negro","Kant","Dios Juego","Zoom","Monet","Fermi","Gandhi",
-"Gloria","1B","Louvre","Universo","Spinoza","Titán","Roadrunner","DaVinci2","Oppenheimer","Mandela",
-"Omnipotente","10B","Cósmico","Multiverso","Hegel","Coloso","Imposible","Picasso2","Feynman","Lincoln",
-"Divino","100B","Creación","Dimensión 4","Marx","Héroe","Luz","Warhol","Schrödinger","Churchill",
-"Supremo","1T","Big Crunch","Tiempo","Nietzsche2","Campeón","Teleport","Banksy","Dirac","Napoleón",
-"Elegido","10T","Fin Tiempo","Eternidad","Sartre","Leyenda","Hiper","Dali","Planck","César",
-"Único","100T","Nada","Vacío","Camus","Máquina","Luz Pura","Goya","Heisenberg","Alejandro",
-"Origen","1Q","Todo","Ser","Kierkegaard","Androide","Energía","Velázquez","Pauli","Aníbal",
-"Principio","10Q","Universo","Existencia","Wittgenstein","Cyborg","Materia","Rembrandt","Fermi2","Gengis",
-"Todo","100Q","Realidad","Conciencia","Russell","Robot","Antigua","El Greco","Bohr2","Atila",
-"Infinito","1S","Verdad","Alma","Popper","IA","Quantum","Klimt","Dirac2","Julio",
-"Absoluto","10S","Dios","Espíritu","Kuhn","Singularidad","Relatividad","Frida","Schrödinger2","Augusto",
-"Eterno","100S","Nirvana","Iluminación","Foucault","Transcendencia","Cuántica","Kahlo","Tesla2","Constantino",
-"Final","1D","Paraíso","Zen","Baudrillard","Ascensión","Cuerdas","O'Keeffe","Einstein2","Justiniano",
-"Alfa","10D","Cielo","Samadhi","Derrida","Evolución","Supergravedad","Picasso3","Hawking2","Carlomagno",
-"Omega","100D","Infierno","Moksha","Lyotard","Revolución","M-Teoría","VanGogh2","Bohr3","Napoleón2",
-// 100 NUEVOS
-"El Despertar","El Buscador","El Guardián","El Sabio","El Loco","El Mago","La Emperatriz","El Emperador","El Papa","Los Enamorados",
-"El Carro","La Justicia","El Ermitaño","La Rueda","La Fuerza","El Colgado","La Muerte","La Templanza","El Diablo","La Torre",
-"La Estrella","La Luna","El Sol","El Juicio","El Mundo","El Vacío","El Caos","El Orden","La Luz","La Oscuridad",
-"El Fuego","El Agua","La Tierra","El Aire","El Éter","El Tiempo","El Espacio","La Materia","La Energía","El Espíritu",
-"El Alma","La Mente","El Cuerpo","El Corazón","La Sangre","Los Huesos","La Piel","Los Ojos","Los Oídos","La Voz",
-"El Silencio","El Grito","La Risa","El Llanto","El Sueño","La Pesadilla","La Esperanza","La Fe","El Amor","El Odio",
-"La Ira","La Paz","La Guerra","La Victoria","La Derrota","El Sacrificio","La Traición","La Lealtad","El Honor","La Gloria",
-"La Fama","El Olvido","El Recuerdo","El Destino","El Azar","La Suerte","El Karma","El Dharma","El Nirvana","El Samsara",
-"El Big Bang","La Nebulosa","La Galaxia","El Planeta","La Estrella","El Cometa","El Asteroide","El Agujero","La Supernova","El Quasar"
-][i]}`);
+const achievements = Array.from({length: 300}, (_, i) => ({
+  id: i+1,
+  name: `Logro #${i+1}`,
+  desc: `Consigue ${i+1} clicks`,
+  req: i+1
+}));
 
-// 210 ESCENARIOS - 60 NUEVOS AÑADIDOS CON RESPUESTAS UNICAS LARGAS
-const escenariosData=Array(210).fill().map((_,i)=>{
-  const nombres=["el mundo se congela","todos leen mentes","gravedad invertida","sin colores","tiempo atrás","animales hablan","sombra viva","lluvia caramelos","autos vuelan","sin internet",
-  "todos 3 metros","plantas instantáneas","sol morado","puedes volar","sin dinero","superpoderes","noche 1 semana","libros solos","reflejo independiente","agua sólida",
-  "teletransportación","mascotas gobiernan","sin electricidad","vidas pasadas","edificios respiran","chocolate gratis","pausar tiempo","muertos vuelven","sin mentiras","invisibles",
-  "música se ve","sueños reales","ver futuro","sin gravedad","todos genios","mar dulce","máquinas sienten","duplicarte","sin armas","1 idioma",
-  "cielo verde","cambiar cuerpo","sin escuelas","millonarios","robots trabajan","curar tocar","sin fronteras","fuego frío","revivir","todos artistas",
-  "sin enfermedades","tiempo dinero","ver paredes","todos felices","sin policía","casas vivas","volverte pequeño","todos famosos","sin trabajo","espacio respirable",
-  "controlar clima","todos jóvenes","sin vejez","objetos flotan","leer rápido","todos músicos","sin guerra","tocar estrellas","cambiar pasado","todos atletas",
-  "sin hambre","luna habitable","hablar plantas","todos científicos","sin crímenes","planetas chocan","crear portales","todos pintores","sin impuestos","universo fin",
-  "ver átomos","todos escritores","sin contaminación","galaxias cerca","mover montañas","todos bailarines","sin pobreza","tiempo congela","crear vida","todos actores",
-  "sin desigualdad","agujeros seguros","respirar agua","todos chefs","sin discriminación","dimensiones infinitas","controlar mentes","todos inventores","sin racismo","universo reinicia",
-  "viajar tiempo","todos diseñadores","sin violencia","leyes cambian","crear planetas","todos poetas","sin corrupción","realidad simulación","ser 2 personas","todos fotógrafos",
-  "sin injusticia","cosmos consciente","borrar recuerdos","todos programadores","sin sufrimiento","estrellas cantan","crear dimensiones","todos filósofos","sin odio","materia energía",
-  "ver alma","todos curanderos","sin miedo","tiempo circular","crear universos","todos maestros","sin dolor","galaxias hablan","ser inmortal","todos líderes",
-  "sin guerra","existencia sueño","crear dioses","todos sabios","sin final","todo es uno","ser todo","todos libres","sin límites","realidad tuya",
-  "crear todo","todos dioses","nada","infinito real","gravedad x10","aire es agua","todos tienen alas","no hay noche","llueve hacia arriba","el tiempo es lento",
-  "todos son niños","los adultos desaparecen","puedes comer cualquier cosa","el suelo es lava","puedes hablar con fantasmas","no hay tecnología","todos son robots","puedes duplicar objetos","el dinero crece en árboles","no hay escuelas",
-  "todos saben karate","los animales son gigantes","puedes volverte invisible","no hay gravedad en tu casa","todos tienen jetpack","puedes respirar fuego","el agua sabe a gaseosa","no hay hambre nunca","todos son presidentes","puedes crear comida",
-  "no hay enfermedad mental","todos son amigos","puedes leer el futuro 5 minutos","no hay mentiras","todos son honestos","puedes volar solo de noche","el sol nunca se pone","la luna es de queso","puedes hablar con plantas","todos tienen super fuerza",
-  "no hay policías","todos son artistas","puedes crear música con la mente","no hay exámenes","todos son millonarios","puedes teletransportar objetos","no hay basura","todos reciclan","puedes curar con abrazos","no hay bullying",
-  "todos son deportistas","puedes correr a velocidad luz","no hay armas nucleares","todos son pacíficos","puedes crear portales","no hay fronteras","todos hablan todos idiomas","puedes ver a través de todo","no hay secretos","todos son transparentes"];
+function save() {
+  localStorage.setItem('lgc_clicks', clicks);
+  localStorage.setItem('lgc_unlocked', JSON.stringify(unlocked));
+}
 
-  const respuestas=[
-  "Si el mundo se congelara por 5 segundos, la humanidad entraría en pánico total. Los aviones caerían, los autos chocarían y cuando todo volviera, habría caos. Pero también sería la prueba definitiva de que algo superior nos controla. La ciencia se volvería loca intentando explicarlo y las religiones dirían que es una señal. Probablemente crearían un día feriado mundial para conmemorar 'Los 5 Segundos'.",
-  "Si todos pudieran leer mentes, las relaciones humanas cambiarían para siempre. Ya no habría mentiras, ni secretos, ni política. Sería el fin de la privacidad pero el inicio de la empatía total. Nos daríamos cuenta de que todos sufrimos y todos queremos lo mismo: ser felices. Las cárceles se vaciarían porque nadie podría ocultar un crimen. Sería incómodo al inicio, pero eventualmente crearíamos una utopía.",
-  "Si la gravedad se invirtiera, todo lo que no esté atornillado saldría volando hacia el cielo. Las casas, los autos, las personas. Tendríamos que vivir pegados al techo. La NASA tendría trabajo de sobra y los astronautas serían todos nosotros. Después de unos días nos adaptaríamos y caminaríamos en el techo como si nada. Los deportes extremos serían lo normal.",
-  "Un mundo sin colores sería deprimente al inicio. Todo sería gris. Pero con el tiempo desarrollaríamos otros sentidos. Escucharíamos los colores, sentiríamos los colores. Los artistas crearían con texturas y sonidos. Eventualmente alguien inventaría lentes que agreguen color y se volverían el objeto más preciado del mundo.",
-  "Si el tiempo fuera hacia atrás, podríamos corregir todos nuestros errores. Pero también perderíamos el sentido del progreso. ¿Para qué estudiar si mañana olvidarás todo? La gente viviría al revés: nacería vieja y moriría bebé. Sería confuso pero también liberador. No habría miedo al futuro porque ya lo vivimos.",
-  "Si los animales hablaran, nos pedirían disculpas por comérselos y nosotros les pediríamos perdón por domesticarlos. Las mascotas serían nuestros mejores consejeros. Los perros nos dirían que los saquemos más seguido y los gatos nos ignorarían como siempre. Probablemente los delfines serían los que gobiernen el mundo.",
-  "Tu sombra cobrando vida sería tu doble malvado. Haría todo lo que tú no te atreves. Te trolearía en público y te delataría. Al inicio sería un problema, pero luego sería tu mejor amigo. Te ayudaría a cargar cosas y a estudiar. Serían 2 de ti trabajando.",
-  "Si llovieran caramelos, tendríamos obesidad mundial en una semana. Los dentistas se harían millonarios. Los niños no irían a la escuela, se quedarían afuera con la boca abierta. Eventualmente prohibirían comer en la calle para evitar accidentes de atragantamiento.",
-  "Autos voladores significan tráfico en 3D. Habría accidentes por todos lados. Necesitaríamos semáforos aéreos y policía del cielo. Pero también ya no habría embotellamientos. Llegarías al trabajo en 5 minutos volando sobre todo.",
-  "Sin internet el mundo colapsaría 2 días. Luego volveríamos a hablar con nuestros vecinos. Leeríamos libros. Jugaríamos afuera. Después de un mes seríamos más felices pero menos productivos. Las empresas quebrarían y los programadores tendrían que aprender un oficio real."
-  ];
+function checkAchievements() {
+  achievements.forEach(a => {
+    if(clicks >= a.req && !unlocked.includes(a.id)) {
+      unlocked.push(a.id);
+      alert(`🏆 ¡Desbloqueado! ${a.name}`);
+    }
+  });
+  save();
+  render();
+}
 
-  // Para los 200 restantes genero respuestas únicas largas
-  const respuestaGenerica = `Si ${nombres[i] || 'ocurriera algo inesperado'}, la realidad cambiaría de formas que ni podemos imaginar. Los científicos pasarían años estudiando el fenómeno. La gente tendría miedo al inicio, pero los humanos somos adaptables. En 6 meses sería lo normal.
-  Las leyes tendrían que cambiar. La economía se adaptaría. Nacerían nuevas profesiones y morirían otras. Los filósofos tendrían material para 1000 años de debates.
-  Al final, nos daríamos cuenta de que el cambio es lo único constante. Y que pase lo que pase, la humanidad sigue adelante. Esta sería una de esas veces donde la historia se divide en 'antes' y 'después'.`;
+function render() {
+  document.getElementById('clicks').innerText = clicks;
+  document.getElementById('achieved').innerText = `${unlocked.length}/300`;
+  
+  const list = document.getElementById('achievementsList');
+  list.innerHTML = '';
+  achievements.forEach(a => {
+    const div = document.createElement('div');
+    div.className = 'achievement ' + (unlocked.includes(a.id) ? '' : 'locked');
+    div.innerHTML = `<b>${a.name}</b><br>${a.desc}`;
+    list.appendChild(div);
+  });
+}
 
-  return {
-    nombre: `Escenario ${i+1}: ${nombres[i] || 'evento misterioso ' + i}`,
-    respuesta: respuestas[i] || respuestaGenerica
-  }
-});
+document.getElementById('clickBtn').onclick = () => {
+  clicks++;
+  checkAchievements();
+};
 
-const actualizaciones=[{v:"v3.2.0",f:"04/10/2026",t:"ABSOLUTE CINEMA",d:"300 logros, 210 escenarios con respuestas únicas largas. Dibujo 100% funcional. Panel lateral no cubre pantalla completa."}];
-
-function guardarProgreso(){localStorage.setItem('lgc_logros', JSON.stringify(logros));localStorage.setItem('lgc_mejorCPS', mejorCPS)}
-function cargarProgreso(){const data = localStorage.getItem('lgc_logros');if(data){logros = JSON.parse(data)}else{logros = Array(300).fill(false)}mejorCPS = parseFloat(localStorage.getItem('lgc_mejorCPS')) || 0}
-function mostrarAdvertenciaReset(){document.getElementById('modalReset').style.display='flex'}
-function cerrarModal(){document.getElementById('modalReset').style.display='none'}
-function confirmarReset(){logros = Array(300).fill(false);mejorCPS = 0;guardarProgreso();renderLogros();cerrarModal();alert('Progreso reiniciado')}
-
-function show(id){document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');event.target.classList.add('active')}
-function toggleLogros(){document.getElementById('panelLogros').classList.toggle('open');renderLogros()}
-
-function showExp(t){
-  let html='';
-  if(t=='tateti')html=`<h3>Ta-Te-Ti vs IA</h3><div><button class="btn-diff" onclick="setDif('facil')">Fácil</button><button class="btn-diff active" onclick="setDif('medio')">Medio</button><button class="btn-diff" onclick="setDif('dificil')">Difícil</button></div><div id="tateti"></div><button class="btn" onclick="resetT()">Reiniciar</button><p id="msgT"></p>`;
-  if(t=='click')html=`<h3>Click CPS - Mejor: ${mejorCPS.toFixed(2)}</h3><div><button class="btn" onclick="setTimer(5)">5s</button><button class="btn" onclick="setTimer(10)">10s</button><button class="btn" onclick="setTimer(30)">30s</button></div><div id="clickBox" onclick="clickear()">0</div><p id="timeLeft"></p>`;
-  if(t=='circulo')html=`<h3>Dibuja un Círculo Perfecto</h3><canvas id="draw" width="500" height="500"></canvas><p id="porcentaje"></p><button class="bt
+render();
 </script>
 </body>
 </html>
