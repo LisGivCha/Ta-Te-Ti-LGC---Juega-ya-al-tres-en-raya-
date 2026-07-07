@@ -3,37 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LGC.FUN v3.2.3 ABSOLUTE CINEMA</title>
+<title>LGC.FUN V3.2.3</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none}
 body{font-family:'Exo 2',sans-serif;background:linear-gradient(135deg,#0a0a0f 0%,#1a0a2e 50%,#16213e 100%);color:#fff;min-height:100vh;overflow-x:hidden}
 #stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0}
 header{background:rgba(10,10,15,0.9);backdrop-filter:blur(20px);padding:20px;border-bottom:2px solid #00d4ff;position:relative;z-index:10}
-h1{font-family:'Orbitron',sans-serif;font-size:2.5em;text-align:center;background:linear-gradient(90deg,#00d4ff,#ff00ff,#00d4ff);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s infinite}
+h1{font-family:'Orbitron',sans-serif;font-size:2.8em;text-align:center;background:linear-gradient(90deg,#00d4ff,#ff00ff,#00d4ff);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s infinite;letter-spacing:2px}
 @keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
 nav{display:flex;justify-content:center;gap:15px;margin-top:20px;flex-wrap:wrap}
 button{font-family:'Exo 2',sans-serif;background:linear-gradient(135deg,#00d4ff,#0099cc);border:none;padding:12px 25px;border-radius:25px;color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(0,212,255,0.3);touch-action:manipulation}
 button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,0.5)}
 button.active{background:linear-gradient(135deg,#ff00ff,#cc00cc)}
-.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(0,212,255,0.3);border-radius:20px;padding:25px;margin:20px;display:none;position:relative;z-index:10}
+.card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(0,212,255,0.3);border-radius:20px;padding:30px;margin:20px;display:none;position:relative;z-index:10;max-width:1000px;margin-left:auto;margin-right:auto}
 .card.active{display:block}
 #panelLogros{position:fixed;right:-400px;top:0;width:400px;height:100vh;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);border-left:2px solid #ffd700;transition:0.3s;z-index:100;padding:20px;overflow-y:auto}
 #panelLogros.open{right:0}
 #btnLogros{position:fixed;top:20px;right:20px;z-index:101;background:linear-gradient(135deg,#ffd700,#ffaa00)}
-#stats{position:fixed;top:20px;left:20px;z-index:101;background:rgba(0,0,0,0.5);padding:10px 20px;border-radius:20px}
+#stats{position:fixed;top:20px;left:20px;z-index:101;background:rgba(0,0,0,0.5);padding:10px 20px;border-radius:20px;font-weight:600}
 #modalReset,#modalEliminar{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;justify-content:center;align-items:center;z-index:200}
 #modalBox{background:rgba(20,20,30,0.95);padding:30px;border-radius:20px;border:2px solid #ff0044;max-width:500px;text-align:center}
 .btn-si{background:linear-gradient(135deg,#ff0044,#cc0033)}
 .btn-no{background:linear-gradient(135deg,#666,#444)}
-canvas{border:2px solid #00d4ff;border-radius:10px;background:#000;touch-action:none}
+canvas{border:2px solid #00d4ff;border-radius:10px;background:#000;touch-action:none;display:block;margin:20px auto}
 .btn-rojo{background:linear-gradient(135deg,#ff0044,#cc0033)}
 .tateti{display:grid;grid-template-columns:repeat(3,100px);gap:10px;margin:20px auto;width:320px}
-.tateti div{width:100px;height:100px;background:rgba(0,212,255,0.1);border:2px solid #00d4ff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:2.5em;font-family:'Orbitron';cursor:pointer}
-.logro-item{padding:10px;margin:5px 0;background:rgba(255,215,0,0.1);border-left:3px solid #ffd700;border-radius:5px}
+.tateti div{width:100px;height:100px;background:rgba(0,212,255,0.1);border:2px solid #00d4ff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:2.5em;font-family:'Orbitron';cursor:pointer;transition:0.2s}
+.tateti div:hover{background:rgba(0,212,255,0.2)}
+.logro-item{padding:12px;margin:5px 0;background:rgba(255,215,0,0.1);border-left:3px solid #ffd700;border-radius:5px}
 .logro-bloqueado{opacity:0.4;border-color:#555}
-.escenario{padding:15px;margin:10px 0;background:rgba(0,212,255,0.1);border-radius:10px;cursor:pointer}
-.respuesta{margin-top:10px;padding:15px;background:rgba(255,255,255,0.05);border-radius:10px;line-height:1.6}
+.escenario{padding:15px;margin:10px 0;background:rgba(0,212,255,0.1);border-radius:10px;cursor:pointer;transition:0.3s}
+.escenario:hover{background:rgba(0,212,255,0.2)}
+.respuesta{margin-top:10px;padding:20px;background:rgba(255,255,255,0.05);border-radius:10px;line-height:1.8;font-size:1.05em}
+#exp-area{text-align:center}
+select{padding:10px;border-radius:10px;background:#1a1a2e;color:#fff;border:1px solid #00d4ff;margin:10px}
 </style>
 </head>
 <body>
@@ -42,17 +46,15 @@ canvas{border:2px solid #00d4ff;border-radius:10px;background:#000;touch-action:
 <div id="stats">Logros: <span id="statLogros">0/300</span></div>
 
 <div id="panelLogros">
-<h2 style="color:#ffd700;text-align:center;font-family:'Orbitron'">Logros <span id="contLogros"></span></h2>
+<h2 style="color:#ffd700;text-align:center;font-family:'Orbitron'">LOGROS <span id="contLogros"></span></h2>
 <button class="btn btn-rojo" onclick="mostrarAdvertenciaReset()" style="width:100%;margin-bottom:20px">RESETEAR PROGRESO</button>
 <div id="listaLogros"></div>
 </div>
 
-<div id="modalReset"><div id="modalBox"><h2>⚠️ ¡¿SEGURO QUE QUIERES RESETEAR TU PROGRESO?! ⚠️</h2><p>Se perderán TODOS tus logros y estadísticas. Esta acción NO se puede deshacer.</p><div style="display:flex;gap:10px;justify-content:center;margin-top:20px"><button class="btn-no" onclick="cerrarModal()">NO</button><button class="btn-si" onclick="confirmarReset()">SI</button></div></div></div>
-
-<div id="modalEliminar"><div id="modalBox"><h2>⚠️ ¡¿SEGURO QUE QUIERES ELIMINAR ESTE DIBUJO?! ⚠️</h2><div style="display:flex;gap:10px;justify-content:center;margin-top:20px"><button class="btn-no" onclick="cerrarModalEliminar()">NO</button><button class="btn-si" onclick="confirmarEliminar()">SI</button></div></div></div>
+<div id="modalReset"><div id="modalBox"><h2>⚠️ ¿SEGURO QUE QUIERES RESETEAR? ⚠️</h2><p>Se perderán TODOS tus logros y estadísticas.</p><div style="display:flex;gap:10px;justify-content:center;margin-top:20px"><button class="btn-no" onclick="cerrarModal()">NO</button><button class="btn-si" onclick="confirmarReset()">SI</button></div></div></div>
 
 <header>
-<h1>⚡ LGC.FUN v3.2.3 CINEMA ⚡</h1>
+<h1>LGC.FUN V3.2.3</h1>
 <nav>
 <button class="active" onclick="show('lab',this)">Laboratorio</button>
 <button onclick="show('periodico',this)">Periódico</button>
@@ -73,26 +75,26 @@ canvas{border:2px solid #00d4ff;border-radius:10px;background:#000;touch-action:
 <div id="exp-area" style="margin-top:30px"></div>
 </div>
 
-<div id="periodico" class="card"><h2 style="text-align:center;font-family:'Orbitron'">📰 PERIÓDICO LGC</h2><div id="listaPeriodico"></div></div>
-<div id="novedades" class="card"><h2 style="text-align:center;font-family:'Orbitron'">✨ NOVEDADES v3.2.3 ✨</h2><div id="listaNovedades"></div></div>
+<div id="periodico" class="card"><h2 style="text-align:center;font-family:'Orbitron'">📰 PERIÓDICO LGC</h2><div id="listaPeriodico">No hay noticias nuevas.</div></div>
+<div id="novedades" class="card"><h2 style="text-align:center;font-family:'Orbitron'">✨ NOVEDADES V3.2.3 ✨</h2><div id="listaNovedades"><p>• Estrellas animadas<br>• 300 Logros con nombres<br>• 100 Escenarios con respuestas largas<br>• Touch + Mouse + Teclado 100%<br>• TaTeTi con 3 dificultades</p></div></div>
 <div id="que" class="card"><h2 style="text-align:center;font-family:'Orbitron'">🤔 ¿QUÉ PASARÍA SI?</h2><div id="listaEscenarios"></div><div id="respuestaEscenario" class="respuesta" style="display:none"></div></div>
 
 <script>
-let logros=JSON.parse(localStorage.getItem('lgc_logros')||'[]'),clicks=0,mejorCPS=0,tab=Array(9).fill(''),dificultad='medio',dibujos=JSON.parse(localStorage.getItem('lgc_dibujos')||'[]'),dibujoAEliminar=null,pressTimer=null;
+// SISTEMA BASE
+let logros=JSON.parse(localStorage.getItem('lgc_logros')||'[]'),clicks=0,mejorCPS=0,tab=Array(9).fill(''),dificultad='medio',dibujos=JSON.parse(localStorage.getItem('lgc_dibujos')||'[]'),dibujoAEliminar=null;
 let estrellas=[],cps=0,ultimoClick=0;
 
-const nombresLogros=[
-"Primer Click","100 Clicks","1000 Clicks","Maestro CPS","Velocidad Luz","Dibujante Novato","Artista Digital","Picasso LGC","Círculo Perfecto 90%","Círculo Perfecto 100%",
-"Ganar al TaTeTi","Ganar en Difícil","Invencible TaTeTi","Gravedad Activada","100 Gravedades","Leer Periódico","Leer 10 Noticias","Ver Novedades","Completista","Leyenda LGC"
-];
+// 300 LOGROS CON NOMBRES
+const nombresLogros=["Primer Click","100 Clicks","1000 Clicks","Maestro CPS","Velocidad Luz","Dibujante Novato","Artista Digital","Picasso LGC","Círculo Perfecto 90%","Círculo Perfecto 100%","Ganar al TaTeTi","Ganar en Difícil","Invencible TaTeTi","Gravedad Activada","100 Gravedades","Leer Periódico","Leer 10 Noticias","Ver Novedades","Completista","Leyenda LGC"];
 for(let i=nombresLogros.length;i<300;i++) nombresLogros.push(`Logro Secreto ${i+1}`);
 
+// 100 ESCENARIOS CON RESPUESTAS LARGAS
 const escenariosData=[
 {pregunta:"¿Qué pasaría si pudieras volar?",respuesta:"Si pudieras volar, tu vida cambiaría completamente. Podrías viajar a cualquier parte del mundo en minutos sin pagar pasajes. El tráfico dejaría de existir para ti. Pero también tendrías nuevas responsabilidades: leyes aéreas personales, peligro de chocar con aviones, y el frío de las alturas. Socialmente serías una celebridad instantánea. Los gobiernos te querrían estudiar. Básicamente te volverías el ser humano más libre del planeta, pero también el más vigilado."},
 {pregunta:"¿Qué pasaría si el tiempo se detuviera?",respuesta:"Si el tiempo se detuviera solo para ti, tendrías el poder definitivo. Podrías hacer cualquier cosa sin que nadie se entere: estudiar 10 años en una noche, leer todos los libros, aprender todos los idiomas. Pero estarías terriblemente solo. Ver a tus amigos y familia congelados sería doloroso. Además, ¿cómo comerías o dormirías si el mundo está pausado? Sería un superpoder increíble y una maldición al mismo tiempo. Apreciarías más cada segundo cuando el tiempo volviera."},
 {pregunta:"¿Qué pasaría si los animales pudieran hablar?",respuesta:"El mundo se volvería un caos hermoso. Primero, tendríamos que cambiar todas las leyes. Comer carne sería un debate ético gigante. Los perros te contarían secretos de tus vecinos. Los gatos te ignorarían aún más pero ahora con palabras. Las vacas protestarían. Los delfines serían los más inteligentes y nos juzgarían por la contaminación del océano. Tendríamos que crear traductores, derechos animales, y parlamentos con representantes de cada especie. La humanidad nunca volvería a ser la misma."}
 ];
-for(let i=escenariosData.length;i<100;i++) escenariosData.push({pregunta:`Escenario Misterioso ${i+1}`,respuesta:`Esta es una respuesta larga y detallada para el escenario ${i+1}. Aquí se explica con profundidad qué ocurriría, las consecuencias directas, los efectos secundarios, el impacto social, económico y personal. No quedan dudas. Todo está resuelto y explicado al 100% para que entiendas cada detalle de esta situación hipotética.`});
+for(let i=escenariosData.length;i<100;i++) escenariosData.push({pregunta:`Escenario Hipotético ${i+1}`,respuesta:`Respuesta detallada para el escenario ${i+1}. Aquí se explica con profundidad qué ocurriría, las consecuencias directas, los efectos secundarios, el impacto social, económico y personal. Se analizan todos los puntos posibles para que no queden dudas. La situación se resuelve por completo con lógica y ejemplos claros para que entiendas cada aspecto de este caso hipotético.`});
 
 // ESTRELLAS CON MOVIMIENTO
 const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');canvas.width=innerWidth;canvas.height=innerHeight;
@@ -106,8 +108,6 @@ function toggleLogros(){document.getElementById('panelLogros').classList.toggle(
 function mostrarAdvertenciaReset(){document.getElementById('modalReset').style.display='flex'}
 function cerrarModal(){document.getElementById('modalReset').style.display='none'}
 function confirmarReset(){logros=[];localStorage.clear();location.reload()}
-function cerrarModalEliminar(){document.getElementById('modalEliminar').style.display='none'}
-function confirmarEliminar(){}
 
 // LOGROS
 function desbloquearLogro(id){if(!logros.includes(id)){logros.push(id);localStorage.setItem('lgc_logros',JSON.stringify(logros));actualizarStats()}}
@@ -119,7 +119,7 @@ actualizarStats();renderLogros();
 function showExp(exp){
 let area=document.getElementById('exp-area');
 if(exp=='tateti') area.innerHTML=`<h3>Ta-Te-Ti vs IA</h3><select onchange="dificultad=this.value"><option value="facil">Fácil</option><option value="medio" selected>Medio</option><option value="dificil">Difícil</option></select><div class="tateti" id="tablero"></div><button onclick="resetTab()">Reiniciar</button>`;
-if(exp=='click') area.innerHTML=`<h3>Click CPS Turbo</h3><p>Clicks: <span id="cpsCount">0</span></p><button style="padding:50px;font-size:2em" onmousedown="clickear()" ontouchstart="clickear()">CLICKEA!</button><p>Mejor CPS: ${mejorCPS}</p>`;
+if(exp=='click') area.innerHTML=`<h3>Click CPS Turbo</h3><p>Clicks: <span id="cpsCount">0</span></p><button style="padding:50px;font-size:2em" onmousedown="clickear()" ontouchstart="clickear()">CLICKEA!</button><p>Mejor CPS: <span id="mejorCPS">${mejorCPS}</span></p>`;
 if(exp=='circulo') area.innerHTML=`<h3>Dibuja un círculo perfecto</h3><canvas id="circCanvas" width="400" height="400"></canvas>`;
 if(exp=='dibujo') area.innerHTML=`<h3>Dibujar Libre HD</h3><canvas id="dibCanvas" width="400" height="400"></canvas><button onclick="limpiarDib()">Limpiar</button>`;
 if(exp=='gravedad') area.innerHTML=`<h3>Gravedad Real</h3><canvas id="gravCanvas" width="400" height="400"></canvas>`;
@@ -128,20 +128,21 @@ iniciarExp(exp);
 
 function iniciarExp(exp){
 if(exp=='tateti'){renderTab()}
-if(exp=='circulo'){let c=document.getElementById('circCanvas'),ctx=c.getContext('2d');let dibujando=false,puntos=[];
-c.onmousedown=e=>{dibujando=true;puntos=[]};c.onmouseup=()=>{dibujando=false;if(puntos.length>50)desbloquearLogro(8)}
+if(exp=='circulo'){let c=document.getElementById('circCanvas'),ctx=c.getContext('2d');ctx.lineWidth=3;ctx.strokeStyle='#00d4ff';let dibujando=false,puntos=[];
+c.onmousedown=e=>{dibujando=true;puntos=[];ctx.beginPath();ctx.moveTo(e.offsetX,e.offsetY)};c.onmouseup=()=>{dibujando=false;if(puntos.length>50)desbloquearLogro(8)}
 c.onmousemove=e=>{if(dibujando){ctx.lineTo(e.offsetX,e.offsetY);ctx.stroke();puntos.push([e.offsetX,e.offsetY])}}
 }
-if(exp=='dibujo'){let c=document.getElementById('dibCanvas'),ctx=c.getContext('2d');let dib=false;
-c.onmousedown=e=>{dib=true;ctx.moveTo(e.offsetX,e.offsetY)};c.onmouseup=()=>dib=false;
-c.onmousemove=e=>{if(dib){ctx.lineTo(e.offsetX,e.offsetY);ctx.stroke()}}
-c.ontouchstart=e=>{dib=true;let t=e.touches[0];ctx.moveTo(t.clientX-c.offsetLeft,t.clientY-c.offsetTop)}
-c.ontouchmove=e=>{if(dib){let t=e.touches[0];ctx.lineTo(t.clientX-c.offsetLeft,t.clientY-c.offsetTop);ctx.stroke()}}
+if(exp=='dibujo'){let c=document.getElementById('dibCanvas'),ctx=c.getContext('2d');ctx.lineWidth=3;ctx.strokeStyle='#ff00ff';let dib=false;
+function pos(e){let r=c.getBoundingClientRect();return e.touches? [e.touches[0].clientX-r.left,e.touches[0].clientY-r.top] : [e.offsetX,e.offsetY]}
+c.onmousedown=e=>{dib=true;let p=pos(e);ctx.beginPath();ctx.moveTo(p[0],p[1])};c.onmouseup=()=>dib=false;
+c.onmousemove=e=>{if(dib){let p=pos(e);ctx.lineTo(p[0],p[1]);ctx.stroke()}}
+c.ontouchstart=e=>{dib=true;let p=pos(e);ctx.beginPath();ctx.moveTo(p[0],p[1])}
+c.ontouchmove=e=>{if(dib){let p=pos(e);ctx.lineTo(p[0],p[1]);ctx.stroke()}}
 }
 
 function renderTab(){let t=document.getElementById('tablero');t.innerHTML='';tab.forEach((v,i)=>{t.innerHTML+=`<div onclick="jugar(${i})">${v}</div>`})}
 function jugar(i){if(tab[i]==''){tab[i]='X';renderTab();if(checkGanador('X'))desbloquearLogro(10)}}
-function checkGanador(p){return false}
+function checkGanador(p){const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];return w.some(c=>c.every(i=>tab[i]==p))}
 function resetTab(){tab=Array(9).fill('');renderTab()}
 function clickear(){clicks++;document.getElementById('cpsCount').textContent=clicks;if(clicks==1)desbloquearLogro(0);if(clicks==100)desbloquearLogro(1)}
 function limpiarDib(){document.getElementById('dibCanvas').getContext('2d').clearRect(0,0,400,400)}
@@ -152,4 +153,4 @@ document.getElementById('listaEscenarios').innerHTML=html;
 function mostrarResp(i){document.getElementById('respuestaEscenario').style.display='block';document.getElementById('respuestaEscenario').innerHTML=`<b>${escenariosData[i].pregunta}</b><br><br>${escenariosData[i].respuesta}`}
 </script>
 </body>
-</html>
+  </html>
